@@ -1,6 +1,7 @@
 package com.youngtube.demo.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -14,8 +15,9 @@ public class PageController
     }
 
     @RequestMapping("/toLogin")
-    public String toLogin()
+    public String toLogin(Model model)
     {
+        model.addAttribute("loginStatus",true);
         return "login";
     }
 
