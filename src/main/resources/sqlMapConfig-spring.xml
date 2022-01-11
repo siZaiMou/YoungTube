@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <!-- 打印查询语句 -->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
+
+    <typeAliases>
+        <typeAlias type="com.youngtube.demo.entity.User" alias="user"></typeAlias>
+    </typeAliases>
+
+<!--    <plugins>-->
+<!--        <plugin interceptor="com.github.pagehelper.PageInterceptor">-->
+<!--            <property name="dialect" value="com.github.pagehelper.dialect.helper.MySqlDialect"/>-->
+<!--        </plugin>-->
+<!--    </plugins>-->
+
+    <mappers>
+        <mapper resource="com/youngtube/demo/mapper/UserMapper.xml"></mapper>
+    </mappers>
+
+</configuration>
