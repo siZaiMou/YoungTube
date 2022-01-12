@@ -33,10 +33,17 @@ public class PageController
         return "index";
     }
 
-    @RequestMapping("/getCategory")
-    public String loadCategory(Model model)
+    @RequestMapping("/getCategory1")
+    public String loadCategory1(Model model)
     {
-        model.addAttribute("categorys",videoService.findAllCategory());
+        model.addAttribute("categorys1",videoService.findAllCategory());
         return "index::top_bar_ul";
+    }
+
+    @RequestMapping("/getCategory2")
+    public String loadCategory2(Model model)
+    {
+        model.addAttribute("categorys2",videoService.findAllCategory());
+        return "index::right_bar_ul";
     }
 }

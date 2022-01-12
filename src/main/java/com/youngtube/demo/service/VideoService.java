@@ -13,4 +13,6 @@ public interface VideoService
     List<Video> findVideoToHomePage(int videoCategory);
 
     List<Video> findVideoToRecommend();
+
+    List<Video> findVideoToRank(int videoCategory);
 }

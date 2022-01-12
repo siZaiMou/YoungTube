@@ -22,6 +22,7 @@ public class VideoController
     @Autowired
     UserService userService;
 
+    //在主页为用户推荐6个视频，可刷新，不分区
     @RequestMapping("/loadOnRecommand")
     public String loadOnRecommand(Model model)
     {
@@ -29,9 +30,10 @@ public class VideoController
         Map<Integer,String> userNames = userService.findUserNames(videos);
         model.addAttribute("videos_recommend",videos);
         model.addAttribute("userNames_recommend",userNames);
-        return "index::video_recommend";
+        return "index::video_recommend"; //thymeleaf中的th:fragment结合ajax异步刷新数据
     }
 
+    //在主页按照分区为用户推荐8个视频，可刷新
     @RequestMapping("/loadOnHomePageWithCategory/{videoCategory}")
     public String loadOnHomePageWithCategory(Model model,@PathVariable("videoCategory")int videoCategory)
     {
@@ -40,6 +42,15 @@ public class VideoController
         model.addAttribute("videos",videos);
         model.addAttribute("userNames",userNames);
         return "index::video_homepage";
+    }
+
+    //7条分区热榜视频，不可刷新
+    @RequestMapping("/loadOnRankWithCategory/{videoCategory}")
+    public String loadOnRankWithCategory(Model model,@PathVariable("videoCategory")int videoCategory)
+    {
+        List<Video> videos = videoService.findVideoToRank(videoCategory);
+        model.addAttribute("videos_rank",videos);
+        return "index::video_rank_category";
     }
 
 }

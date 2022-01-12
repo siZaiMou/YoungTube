@@ -12,7 +12,12 @@ import java.util.List;
 public interface VideoMapper
 {
 
+    //查询8条推荐视频(分区)
     List<Video> find8ByCategory(int videoCategory);
 
+    //查询6条推荐视频(不分区)
     List<Video> findWithRecommend();
+
+    //查询7条分区热榜视频
+    List<Video> find7ByCategoryAndRank(int videoCategory);
 }
