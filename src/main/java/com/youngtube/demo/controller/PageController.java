@@ -14,6 +14,13 @@ public class PageController
     @Autowired
     VideoService videoService;
 
+    @RequestMapping("/framtest")
+    public String framtest(Model model)
+    {
+        model.addAttribute("categorys1",videoService.findAllCategory());
+        return "test::testul"+1;
+    }
+
     @RequestMapping("/toRegist")
     public String toRegist()
     {

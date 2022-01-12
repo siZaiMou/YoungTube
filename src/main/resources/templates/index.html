@@ -21,9 +21,22 @@
         window.onload = function () {
             //thymleaf整合ajax局部加载数据
             $('#top_barr').load("/pages/getCategory1");
+
             $('#video_recommend').load("/video/loadOnRecommand");
-            $('#video_homepage').load("/video/loadOnHomePageWithCategory/1");
-            $('#video_rank_category').load("/video/loadOnRankWithCategory/1");
+
+            $('#video_homepage1').load("/video/loadOnHomePageWithCategory/1");
+            $('#video_rank_category1').load("/video/loadOnRankWithCategory/1");
+            $('#video_homepage2').load("/video/loadOnHomePageWithCategory/2");
+            $('#video_rank_category2').load("/video/loadOnRankWithCategory/2");
+            $('#video_homepage3').load("/video/loadOnHomePageWithCategory/3");
+            $('#video_rank_category3').load("/video/loadOnRankWithCategory/3");
+            $('#video_homepage4').load("/video/loadOnHomePageWithCategory/4");
+            $('#video_rank_category4').load("/video/loadOnRankWithCategory/4");
+            $('#video_homepage5').load("/video/loadOnHomePageWithCategory/5");
+            $('#video_rank_category5').load("/video/loadOnRankWithCategory/5");
+            $('#video_homepage6').load("/video/loadOnHomePageWithCategory/6");
+            $('#video_rank_category6').load("/video/loadOnRankWithCategory/6");
+
             $('#right_barr').load("/pages/getCategory2");
         }
     </script>
@@ -212,9 +225,9 @@
                         <a href="#" class="dynamic" id="shuaxin"><i></i>39条新动态</a>
                     </div>
                 </div>
-                <ul id="video_homepage" class="pic-list__wrapper clearfix tab-cont__item tab-cont__cur">
+                <ul id="video_homepage1" class="pic-list__wrapper clearfix tab-cont__item tab-cont__cur">
                     <!-- 这里开始遍历 -->
-                    <li class="item" th:fragment="video_homepage" th:each="singleVideo,singleVideoStat:${videos}">
+                    <li class="item" th:fragment="video_homepage1" th:each="singleVideo,singleVideoStat:${videos}">
                         <a
                                 th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"
                                 class="img-link"> <img
@@ -246,8 +259,8 @@
                 </div>
                 <div class="main-side__cont">
                     <div class="tab-cont">
-                        <ul class="tab-cont__item main-rank" id="video_rank_category">
-                            <li class='item' th:fragment="video_rank_category"
+                        <ul class="tab-cont__item main-rank" id="video_rank_category1">
+                            <li class='item' th:fragment="video_rank_category1"
                                 th:each="singleVideo,singleVideoStat:${videos_rank}">
                                 <i class='n2' th:text="${singleVideoStat.count}">1</i>
                                 <a th:text="${singleVideo.videoName}"
@@ -267,8 +280,351 @@
             </div>
         </div>
 
-        <!--生活-->
+        <!-- 生活-->
+        <div class="mainCont clearfix" id="life" js-move="true">
+            <div class="pic-list fl" js-tab="true">
+                <div class="pic-list__title">
+                    <i class="icon icon-dance"></i>
+                    <h2>生活</h2>
+                    <div class="tab-title">
+                        <a href="#" class="cur">有新动态</a>
 
+                    </div>
+
+                    <div class="more-wrap">
+                        <a href="#" class="dynamic" id="shuaxin"><i></i>392条新动态</a>
+
+                    </div>
+                </div>
+                <ul id="video_homepage2" class="pic-list__wrapper clearfix tab-cont__item tab-cont__cur">
+                    <!-- 这里开始遍历 -->
+                    <li class="item" th:fragment="video_homepage2" th:each="singleVideo,singleVideoStat:${videos}">
+                        <a
+                                th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"
+                                class="img-link"> <img
+                                th:src="${singleVideo.videoFrontSrc}" alt="#">
+                            <span class="mask"></span> <span th:text="${singleVideo.videoViewCount}"
+                                                             class="time"></span>
+                        </a>
+                        <div class="img-info">
+                            <a th:text="${singleVideo.videoName}"
+                               th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"></a>
+                            <div class="btm">
+                                <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
+                                </div>
+                                <div class="online" th:utext="|<i></i>${singleVideo.videoViewCount}|">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="main-side fr" js-tab="true">
+                <div class="main-side__title">
+                    <div class="rank-t">
+                        <h3>排行</h3>
+                    </div>
+                    <div class="tab-title">
+                        <a href="#" class="cur">全部</a>
+                    </div>
+                </div>
+                <div class="main-side__cont">
+                    <div class="tab-cont">
+                        <ul class="tab-cont__item main-rank" id="video_rank_category2">
+                            <li class='item' th:fragment="video_rank_category2"
+                                th:each="singleVideo,singleVideoStat:${videos_rank}">
+                                <i class='n2' th:text="${singleVideoStat.count}">1</i>
+                                <a th:text="${singleVideo.videoName}"
+                                   th:href='|video.sf?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|'>
+                                    test
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <button type="button" class="more" id="chakan">
+                        查看更多<i></i>
+                    </button>
+
+                    <script type="text/javascript">
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <!-- 音乐-->
+        <div class="mainCont clearfix" id="music" js-move="true">
+            <div class="pic-list fl" js-tab="true">
+                <div class="pic-list__title">
+                    <i class="icon icon-dance"></i>
+                    <h2>音乐</h2>
+                    <div class="tab-title">
+                        <a href="#" class="cur">有新动态</a>
+
+                    </div>
+
+                    <div class="more-wrap">
+                        <a href="#" class="dynamic" id="shuaxin"><i></i>392条新动态</a>
+
+                    </div>
+                </div>
+                <ul id="video_homepage3" class="pic-list__wrapper clearfix tab-cont__item tab-cont__cur">
+                    <!-- 这里开始遍历 -->
+                    <li class="item" th:fragment="video_homepage3" th:each="singleVideo,singleVideoStat:${videos}">
+                        <a
+                                th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"
+                                class="img-link"> <img
+                                th:src="${singleVideo.videoFrontSrc}" alt="#">
+                            <span class="mask"></span> <span th:text="${singleVideo.videoViewCount}"
+                                                             class="time"></span>
+                        </a>
+                        <div class="img-info">
+                            <a th:text="${singleVideo.videoName}"
+                               th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"></a>
+                            <div class="btm">
+                                <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
+                                </div>
+                                <div class="online" th:utext="|<i></i>${singleVideo.videoViewCount}|">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="main-side fr" js-tab="true">
+                <div class="main-side__title">
+                    <div class="rank-t">
+                        <h3>排行</h3>
+                    </div>
+                    <div class="tab-title">
+                        <a href="#" class="cur">全部</a>
+                    </div>
+                </div>
+                <div class="main-side__cont">
+                    <div class="tab-cont">
+                        <ul class="tab-cont__item main-rank" id="video_rank_category3">
+                            <li class='item' th:fragment="video_rank_category3"
+                                th:each="singleVideo,singleVideoStat:${videos_rank}">
+                                <i class='n2' th:text="${singleVideoStat.count}">1</i>
+                                <a th:text="${singleVideo.videoName}"
+                                   th:href='|video.sf?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|'>
+                                    test
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <button type="button" class="more" id="chakan">
+                        查看更多<i></i>
+                    </button>
+
+                    <script type="text/javascript">
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <!-- 资讯-->
+        <div class="mainCont clearfix" id="news" js-move="true">
+            <div class="pic-list fl" js-tab="true">
+                <div class="pic-list__title">
+                    <i class="icon icon-dance"></i>
+                    <h2>资讯</h2>
+                    <div class="tab-title">
+                        <a href="#" class="cur">有新动态</a>
+                    </div>
+                    <div class="more-wrap">
+                        <a href="#" class="dynamic" id="shuaxin"><i></i>39条新动态</a>
+                    </div>
+                </div>
+                <ul id="video_homepage4" class="pic-list__wrapper clearfix tab-cont__item tab-cont__cur">
+                    <!-- 这里开始遍历 -->
+                    <li class="item" th:fragment="video_homepage4" th:each="singleVideo,singleVideoStat:${videos}">
+                        <a
+                                th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"
+                                class="img-link"> <img
+                                th:src="${singleVideo.videoFrontSrc}" alt="#">
+                            <span class="mask"></span> <span th:text="${singleVideo.videoViewCount}"
+                                                             class="time"></span>
+                        </a>
+                        <div class="img-info">
+                            <a th:text="${singleVideo.videoName}"
+                               th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"></a>
+                            <div class="btm">
+                                <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
+                                </div>
+                                <div class="online" th:utext="|<i></i>${singleVideo.videoViewCount}|">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="main-side fr" js-tab="true">
+                <div class="main-side__title">
+                    <div class="rank-t">
+                        <h3>排行</h3>
+                    </div>
+                    <div class="tab-title">
+                        <a href="#" class="cur">全部</a>
+                    </div>
+                </div>
+                <div class="main-side__cont">
+                    <div class="tab-cont">
+                        <ul class="tab-cont__item main-rank" id="video_rank_category4">
+                            <li class='item' th:fragment="video_rank_category4"
+                                th:each="singleVideo,singleVideoStat:${videos_rank}">
+                                <i class='n2' th:text="${singleVideoStat.count}">1</i>
+                                <a th:text="${singleVideo.videoName}"
+                                   th:href='|video.sf?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|'>
+                                    test
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <button type="button" class="more" id="chakan">
+                        查看更多<i></i>
+                    </button>
+
+                    <script type="text/javascript">
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <!--游戏-->
+        <div class="mainCont clearfix" id="game" js-move="true">
+            <div class="pic-list fl" js-tab="true">
+                <div class="pic-list__title">
+                    <i class="icon icon-dance"></i>
+                    <h2>游戏</h2>
+                    <div class="tab-title">
+                        <a href="#" class="cur">有新动态</a>
+                    </div>
+                    <div class="more-wrap">
+                        <a href="#" class="dynamic" id="shuaxin"><i></i>39条新动态</a>
+                    </div>
+                </div>
+                <ul id="video_homepage5" class="pic-list__wrapper clearfix tab-cont__item tab-cont__cur">
+                    <!-- 这里开始遍历 -->
+                    <li class="item" th:fragment="video_homepage5" th:each="singleVideo,singleVideoStat:${videos}">
+                        <a
+                                th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"
+                                class="img-link"> <img
+                                th:src="${singleVideo.videoFrontSrc}" alt="#">
+                            <span class="mask"></span> <span th:text="${singleVideo.videoViewCount}"
+                                                             class="time"></span>
+                        </a>
+                        <div class="img-info">
+                            <a th:text="${singleVideo.videoName}"
+                               th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"></a>
+                            <div class="btm">
+                                <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
+                                </div>
+                                <div class="online" th:utext="|<i></i>${singleVideo.videoViewCount}|">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="main-side fr" js-tab="true">
+                <div class="main-side__title">
+                    <div class="rank-t">
+                        <h3>排行</h3>
+                    </div>
+                    <div class="tab-title">
+                        <a href="#" class="cur">全部</a>
+                    </div>
+                </div>
+                <div class="main-side__cont">
+                    <div class="tab-cont">
+                        <ul class="tab-cont__item main-rank" id="video_rank_category5">
+                            <li class='item' th:fragment="video_rank_category5"
+                                th:each="singleVideo,singleVideoStat:${videos_rank}">
+                                <i class='n2' th:text="${singleVideoStat.count}">1</i>
+                                <a th:text="${singleVideo.videoName}"
+                                   th:href='|video.sf?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|'>
+                                    test
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <button type="button" class="more" id="chakan">
+                        查看更多<i></i>
+                    </button>
+
+                    <script type="text/javascript">
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <!--知识-->
+        <div class="mainCont clearfix" id="study" js-move="true">
+            <div class="pic-list fl" js-tab="true">
+                <div class="pic-list__title">
+                    <i class="icon icon-dance"></i>
+                    <h2>知识</h2>
+                    <div class="tab-title">
+                        <a href="#" class="cur">有新动态</a>
+                    </div>
+                    <div class="more-wrap">
+                        <a href="#" class="dynamic" id="shuaxin"><i></i>39条新动态</a>
+                    </div>
+                </div>
+                <ul id="video_homepage6" class="pic-list__wrapper clearfix tab-cont__item tab-cont__cur">
+                    <!-- 这里开始遍历 -->
+                    <li class="item" th:fragment="video_homepage6" th:each="singleVideo,singleVideoStat:${videos}">
+                        <a
+                                th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"
+                                class="img-link"> <img
+                                th:src="${singleVideo.videoFrontSrc}" alt="#">
+                            <span class="mask"></span> <span th:text="${singleVideo.videoViewCount}"
+                                                             class="time"></span>
+                        </a>
+                        <div class="img-info">
+                            <a th:text="${singleVideo.videoName}"
+                               th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"></a>
+                            <div class="btm">
+                                <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
+                                </div>
+                                <div class="online" th:utext="|<i></i>${singleVideo.videoViewCount}|">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="main-side fr" js-tab="true">
+                <div class="main-side__title">
+                    <div class="rank-t">
+                        <h3>排行</h3>
+                    </div>
+                    <div class="tab-title">
+                        <a href="#" class="cur">全部</a>
+                    </div>
+                </div>
+                <div class="main-side__cont">
+                    <div class="tab-cont">
+                        <ul class="tab-cont__item main-rank" id="video_rank_category6">
+                            <li class='item' th:fragment="video_rank_category6"
+                                th:each="singleVideo,singleVideoStat:${videos_rank}">
+                                <i class='n2' th:text="${singleVideoStat.count}">1</i>
+                                <a th:text="${singleVideo.videoName}"
+                                   th:href='|video.sf?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|'>
+                                    test
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <button type="button" class="more" id="chakan">
+                        查看更多<i></i>
+                    </button>
+
+                    <script type="text/javascript">
+                    </script>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>

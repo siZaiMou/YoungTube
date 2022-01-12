@@ -8,21 +8,16 @@
     <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
     <script th:src="@{/notcommon/bilibiliIndex/js/script.js}"></script>
     <script>
-
         window.onload=function()
         {
-            $("#testul").load("/pages/getCategory");
+            $("#testul1").load("/pages/framtest");
         }
-
-
     </script>
 </head>
 <body>
-    <button id="btn" value="dian" onclick="clc()"></button>
-    <div id="testul">
-        <ul th:fragment="testul" th:each="category:${categorys}">
-            <li th:text="${category.categoryName}">1</li>
+
+        <ul id="testul1">
+            <li  th:fragment="testul1" th:each="category:${categorys1}" th:text="${category.categoryName}">1</li>
         </ul>
-    </div>
 </body>
 </html>

@@ -41,7 +41,7 @@ public class VideoController
         Map<Integer,String> userNames = userService.findUserNames(videos);
         model.addAttribute("videos",videos);
         model.addAttribute("userNames",userNames);
-        return "index::video_homepage";
+        return "index::video_homepage"+videoCategory;
     }
 
     //7条分区热榜视频，不可刷新
@@ -50,7 +50,7 @@ public class VideoController
     {
         List<Video> videos = videoService.findVideoToRank(videoCategory);
         model.addAttribute("videos_rank",videos);
-        return "index::video_rank_category";
+        return "index::video_rank_category"+videoCategory;
     }
 
 }
