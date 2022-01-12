@@ -19,6 +19,11 @@
     <script th:src="@{/notcommon/bilibiliIndex/js/script.js}"></script>
     <script th:inline="javascript">
         window.onload = function () {
+            $('#life').hide()
+            $('#music').hide()
+            $('#news').hide()
+            $('#game').hide()
+            $('#study').hide()
             //thymleaf整合ajax局部加载数据
             $('#top_barr').load("/pages/getCategory1");
 
@@ -26,19 +31,41 @@
 
             $('#video_homepage1').load("/video/loadOnHomePageWithCategory/1");
             $('#video_rank_category1').load("/video/loadOnRankWithCategory/1");
-            $('#video_homepage2').load("/video/loadOnHomePageWithCategory/2");
-            $('#video_rank_category2').load("/video/loadOnRankWithCategory/2");
-            $('#video_homepage3').load("/video/loadOnHomePageWithCategory/3");
-            $('#video_rank_category3').load("/video/loadOnRankWithCategory/3");
-            $('#video_homepage4').load("/video/loadOnHomePageWithCategory/4");
-            $('#video_rank_category4').load("/video/loadOnRankWithCategory/4");
-            $('#video_homepage5').load("/video/loadOnHomePageWithCategory/5");
-            $('#video_rank_category5').load("/video/loadOnRankWithCategory/5");
-            $('#video_homepage6').load("/video/loadOnHomePageWithCategory/6");
-            $('#video_rank_category6').load("/video/loadOnRankWithCategory/6");
 
             $('#right_barr').load("/pages/getCategory2");
         }
+    </script>
+    <script>
+        $(window).scroll(function() {
+            var scrollTop = $(this).scrollTop();
+            var scrollHeight = $(document).height();
+            var windowHeight = $(this).height();
+            //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+            if (scrollTop + windowHeight == scrollHeight) {
+
+                $('#video_homepage2').load("/video/loadOnHomePageWithCategory/2");
+                $('#video_rank_category2').load("/video/loadOnRankWithCategory/2");
+                $('#video_homepage3').load("/video/loadOnHomePageWithCategory/3");
+                $('#video_rank_category3').load("/video/loadOnRankWithCategory/3");
+                $('#video_homepage4').load("/video/loadOnHomePageWithCategory/4");
+                $('#video_rank_category4').load("/video/loadOnRankWithCategory/4");
+                $('#video_homepage5').load("/video/loadOnHomePageWithCategory/5");
+                $('#video_rank_category5').load("/video/loadOnRankWithCategory/5");
+                $('#video_homepage6').load("/video/loadOnHomePageWithCategory/6");
+                $('#video_rank_category6').load("/video/loadOnRankWithCategory/6");
+
+                $('#life').show();
+                $('#music').show();
+                $('#news').show();
+                $('#game').show();
+                $('#study').show();
+                
+                if($('.loadmoreDiv a')){
+                    $('.loadmoreDiv a').click();
+                }
+//         alert("bottom reached !");
+            }
+        });
     </script>
 </head>
 
@@ -655,5 +682,8 @@
 
         </script>
 -->
+<div id="active_content" class="content">
+</div>
+
 </body>
 </html>
