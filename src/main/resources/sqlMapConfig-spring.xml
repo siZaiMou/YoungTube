@@ -9,6 +9,8 @@
 
     <typeAliases>
         <typeAlias type="com.youngtube.demo.entity.User" alias="user"></typeAlias>
+        <typeAlias type="com.youngtube.demo.entity.VideoCategory" alias="category"></typeAlias>
+        <typeAlias type="com.youngtube.demo.entity.Video" alias="video"></typeAlias>
     </typeAliases>
 
 <!--    <plugins>-->
@@ -19,6 +21,8 @@
 
     <mappers>
         <mapper resource="com/youngtube/demo/mapper/UserMapper.xml"></mapper>
+        <mapper resource="com/youngtube/demo/mapper/CategoryMapper.xml"></mapper>
+        <mapper resource="com/youngtube/demo/mapper/VideoMapper.xml"></mapper>
     </mappers>
 
 </configuration>

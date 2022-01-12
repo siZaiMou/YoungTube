@@ -12,7 +12,7 @@ public class User
     private String userPetName;//用户昵称
     private String userSignature="这个人很神秘，什么都没有写";
     private String userPassword;
-    private String userHeadSrc = "static/common/pictures/user/userhead/defaulthead.png";
+    private String userHeadSrc = "/common/pictures/user/userhead/defaulthead.png";
     private String userName;//用户真实姓名
     private String userLicense;
     private String userSex;

@@ -7,16 +7,23 @@
     <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/reset.css}">
     <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/common.css}">
     <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/index.css}">
-    <link th:href="@{/notcommon/bilibiliIndex/css/yk_dynamic2.css}" rel="stylesheet">
-    <link th:href="@{/common/css/bootstrap.min.css}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/emojione/1.5.2/assets/sprites/emojione.sprites.css"
-          media="screen">
+<!--    <link th:href="@{/notcommon/bilibiliIndex/css/yk_dynamic2.css}" rel="stylesheet">-->
+<!--    <link th:href="@{/common/css/bootstrap.min.css}" rel="stylesheet">-->
+<!--    <link rel="stylesheet" type="text/css"-->
+<!--          href="https://cdnjs.cloudflare.com/ajax/libs/emojione/1.5.2/assets/sprites/emojione.sprites.css"-->
+<!--          media="screen">-->
     <!--    <link rel="stylesheet" type="text/css" href="css/emojionearea.min.css" media="screen">-->
     <script th:src="@{/notcommon/Homepage/js/jquery.min.js}"></script>
     <script th:src="@{/common/js/jquery-3.3.1.js}"></script>
     <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
     <script th:src="@{/notcommon/bilibiliIndex/js/script.js}"></script>
+    <script th:inline="javascript">
+        window.onload = function () {
+            $('#top_barr').load("/pages/getCategory");
+            $('#video_recommend').load("/video/loadOnRecommand");
+            $('#video_homepage').load("/video/loadOnHomePageWithCategory/1");
+        }
+    </script>
 </head>
 
 <body>
@@ -36,20 +43,26 @@
                         <li class="item"><a href="Shopping.sf">商品购买</a>
                         <li class="item"><a href="videoFileTop">我要投稿</a>
                         <li class="item"><a href="forum.sf">进入论坛</a></li>
-                        <li class="item" style="width: 300px;" contenteditable="true"><a style="color: #0AB5DA">输入搜索内容</a></li>
-                        <li class="item"><a href="forum.sf"><img src="/common/pictures/system/searchlogo.png" style="margin-top: 7px; height: 30px;width: 30px;border-radius:50%;overflow: hidden"></a></li>
+                        <li class="item" style="width: 300px;" contenteditable="true"><a
+                                style="color: #0AB5DA">输入搜索内容</a></li>
+                        <li class="item"><a href="forum.sf"><img src="/common/pictures/system/searchlogo.png"
+                                                                 style="margin-top: 7px; height: 30px;width: 30px;border-radius:50%;overflow: hidden"></a>
+                        </li>
                     </ul>
                 </div>
                 <div class="header-top__user">
-                    <div th:if="${session.nowUser}==null" class="login-box">
-                        <a th:href="@{/pages/toLogin}">登录</a> <span></span> <a th:href="@{/pages/toRegist}">注册</a>
+                    <div id="notlogin" th:if="${session.nowUser}==null" class="login-box">
+                        <a th:href="@{/pages/toLogin}">登录</a>
+                        <span></span>
+                        <a th:href="@{/pages/toRegist}">注册</a>
                     </div>
 
                     <div th:if="${session.nowUser}!=null" class="login-box">
                         <img th:src="${session.nowUser.userHeadSrc}"
                              style="margin-top: 7px; height: 30px;width: 30px;border-radius:50%;overflow: hidden">
 
-                        <p class="login-box" onmouseout="asjdh()" onmouseover="project()"><a href="yk_dynamic2.html">消息</a></p>
+                        <p class="login-box" onmouseout="asjdh()" onmouseover="project()"><a
+                                href="yk_dynamic2.html">消息</a></p>
                         <p class="login-box"><a href="yk_dynamic2.html">动态</a></p>
                         <p class="login-box"><a href="personal_index.html">收藏</a></p>
                         <p class="login-box"><a href="history.html">历史</a></p>
@@ -58,14 +71,14 @@
 
                 </div>
                 <div th:if="${session.nowUser}!=null" class="header-top__user">
-                        <ul id="hovertb" onmouseout="asjdh()" onmouseover="project()"
-                            style="position: absolute; margin-top: 45px;margin-right: 320px;">
-                            <li><a href="#">回复我的</a></li>
-                            <li><a href="#">@我的</a></li>
-                            <li><a href="#">收到的赞</a></li>
-                            <li><a href="#">系统通知</a></li>
-                            <li><a href="#">我的消息</a></li>
-                        </ul>
+                    <ul id="hovertb" onmouseout="asjdh()" onmouseover="project()"
+                        style="position: absolute; margin-top: 45px;margin-right: 320px;">
+                        <li><a href="#">回复我的</a></li>
+                        <li><a href="#">@我的</a></li>
+                        <li><a href="#">收到的赞</a></li>
+                        <li><a href="#">系统通知</a></li>
+                        <li><a href="#">我的消息</a></li>
+                    </ul>
                 </div>
             </div>
             <script type="text/javascript">
@@ -99,88 +112,26 @@
 <nav id="nav">
     <div class="page-width clearfix">
         <ul class="nav-list">
-            <li class="item item-home"><a href="index.sf" class="link">首页</a>
-            </li>
-            <li class="item"><a href="testshabi.sf" class="link">
-                <div class="num">
-                    <i>887</i>
-                </div>
-                动画
-            </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
-                <div class="num">
-                    <i>23</i>
-                </div>
-                番剧
-            </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
-                <div class="num">
-                    <i>999+</i>
-                </div>
-                音乐
-            </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
-                <div class="num">
-                    <i>152</i>
-                </div>
-                舞蹈
-            </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
-                <div class="num">
-                    <i>999+</i>
-                </div>
-                游戏
-            </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
-                <div class="num">
-                    <i>999+</i>
-                </div>
-                科技
-            </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
-                <div class="num">
-                    <i>999+</i>
-                </div>
-                生活
-            </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
-                <div class="num">
-                    <i>77</i>
-                </div>
-                鬼畜
-            </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
-                <div class="num">
-                    <i>416</i>
-                </div>
-                时尚
-            </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
-                <div class="num">
-                    <i>100</i>
-                </div>
-                广告
-            </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
-                <div class="num">
-                    <i>999+</i>
-                </div>
-                娱乐
-            </a></li>
-            <li class="item"><a href="testshabi.sf" class="link">
-                <div class="num">
-                    <i>916</i>
-                </div>
-                影视
-            </a></li>
+            <span id="top_barr">
+                <span th:fragment="top_bar_ul" th:each="category:${categorys}">
+                 <li class="item">
+                     <a class="link" style="" th:text="${category.categoryName}">
+                         动画
+                     </a>
+                       <div class="num">
+                             <i th:text="${category.categoryId}">887</i>
+                         </div>
+                 </li>
+                </span>
+            </span>
             <li class="item item-square"><a href="testshabi.sf" class="link">广场</a>
                 <div class="nav-square__hover">
                     <ul>
-                        <!-- <li><a href="#"><i class="icon-activity"></i>活动中心</a></li>
-              <li><a href="#"><i class="icon-game"></i>游戏中心</a></li>
-              <li><a href="#"><i class="icon-news"></i>新闻中心</a></li>
-              <li><a href="#"><i class="icon-friend"></i>画友</a></li>
-              <li><a href="#"><i class="icon-tv"></i>芒果TV</a></li>-->
+                        <li><a href="#"><i class="icon-activity"></i>活动中心</a></li>
+                        <li><a href="#"><i class="icon-game"></i>游戏中心</a></li>
+                        <li><a href="#"><i class="icon-news"></i>新闻中心</a></li>
+                        <li><a href="#"><i class="icon-friend"></i>画友</a></li>
+                        <li><a href="#"><i class="icon-tv"></i>芒果TV</a></li>
                     </ul>
                     <!--
             <a href="#" class="activity"><img src="images/cont/nav-square__img.jpg" alt="#"></a> -->
@@ -191,7 +142,7 @@
         </ul>
         <div class="nav-gif" id="qiulingyang">
             <img
-                    src="<%=request.getContextPath()%>/static/bilibiliIndex/images/cont/nav_img.gif"
+                    th:src="@{/notcommon/bilibiliIndex/images/cont/nav_img.gif}"
                     alt="求领养">
         </div>
     </div>
@@ -202,13 +153,13 @@
         <div class="slider fl">
             <div class="slider-img">
                 <a href="#" slider-title="pic1"><img
-                        src="<%=request.getContextPath()%>/static/bilibiliIndex/images/cont/slider_img1.png"
+                        th:src="@{/notcommon/bilibiliIndex/images/cont/slider_img1.png}"
                         alt="#"></a> <a href="#" slider-title="pic2"><img
-                    src="<%=request.getContextPath()%>/static/bilibiliIndex/images/cont/slider_img2.png"
+                    th:src="@{/notcommon/bilibiliIndex/images/cont/slider_img2.png}"
                     alt="#"></a> <a href="#" slider-title="pic3"><img
-                    src="<%=request.getContextPath()%>/static/bilibiliIndex/images/cont/slider_img3.png"
+                    th:src="@{/notcommon/bilibiliIndex/images/cont/slider_img3.png}"
                     alt="#"></a> <a href="#" slider-title="pic4"><img
-                    src="<%=request.getContextPath()%>/static/bilibiliIndex/images/cont/slider_img4.png"
+                    th:src="@{/notcommon/bilibiliIndex/images/cont/slider_img4.png}"
                     alt="#"></a>
             </div>
             <div class="slider-title">
@@ -219,20 +170,21 @@
             </div>
             <a href="#" class="slider-more">More</a>
         </div>
+
         <div class="banner-list fr">
-            <ul>
-                <c:forEach items="${fuck }" var="fuck">
+            <ul id="video_recommend">
+                <span th:fragment="video_recommend" th:each="singVideo,singleVideoStatus:${videos_recommend}">
                     <li><a
-                            href="video.sf?dizhi=${fuck.videoAddress}&shipingID=${fuck.videoID}">
-                        <img src="<%=request.getContextPath()%>${fuck.videoImage}"
+                            th:href="|video.sf?dizhi=${singVideo.videoSrc}&shipingID=${singVideo.videoId}|">
+                        <img th:src="${singVideo.videoFrontSrc}"
                              alt="#">
                         <div class="info">
-                            <p class="title">${fuck.videoName }</p>
-                            <p class="author">up主：admin</p>
-                            <p class="play">播放：${fuck.videolookTime}</p>
+                            <p class="title" th:text="${singVideo.videoName}">名称</p>
+                            <p class="author" th:text="|up主:${userNames_recommend[singleVideoStatus.index]}|">up主：admin</p>
+                            <p class="play" th:text="|播放量:${singVideo.videoViewCount}|">播放量</p>
                         </div>
                     </a></li>
-                </c:forEach>
+                </span>
             </ul>
             <a href="#" class="btn btn-prev">昨日</a> <a href="#"
                                                        class="btn btn-next">一周</a>
@@ -240,12 +192,12 @@
     </div>
 </div>
 
+
 <div id="main">
     <div class="page-width">
         <!-- 推广 -->
 
-
-        <!-- 舞蹈 -->
+        <!-- 动画 -->
         <div class="mainCont clearfix" id="dance" js-move="true">
             <div class="pic-list fl" js-tab="true">
                 <div class="pic-list__title">
@@ -257,34 +209,32 @@
                     </div>
 
                     <div class="more-wrap">
-                        <a href="#" class="dynamic" id="shuaxin"><i></i>392条新动态</a>
+                        <a href="#" class="dynamic" id="shuaxin"><i></i>39条新动态</a>
 
                     </div>
                 </div>
-                <ul class="pic-list__wrapper clearfix tab-cont__item tab-cont__cur">
+                <ul id="video_homepage" class="pic-list__wrapper clearfix tab-cont__item tab-cont__cur">
                     <!-- 这里开始遍历 -->
-                    <c:forEach items="${list}" var="list">
+                    <span th:fragment="video_homepage" th:each="singleVideo,singleVideoStat:${videos}">
                         <li class="item"><a
-                                href="video.sf?dizhi=${list.videoAddress}&shipingID=${list.videoID}"
+                                th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"
                                 class="img-link"> <img
-                                src="<%=request.getContextPath()%>${list.videoImage}" alt="#">
-                            <span class="mask"></span> <span class="time">${list.videoTime}</span>
+                                th:src="${singleVideo.videoFrontSrc}" alt="#">
+                            <span class="mask"></span> <span th:text="${singleVideo.videoViewCount}" class="time"></span>
                         </a>
                             <div class="img-info">
-                                <a
-                                        href="video.sf?dizhi=${list.videoAddress}&shipingID=${list.videoID}">${list.videoName
-                                    }</a>
+                                <a th:text="${singleVideo.videoName}" th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"></a>
                                 <div class="btm">
-                                    <div class="user">
+                                    <div class="user" th:text="|${userNames[singleVideoStat.index]}|">
                                         <i></i>admin
                                     </div>
-                                    <div class="online">
-                                        <i></i>${list.videolookTime}
+                                    <div class="online" th:text="${singleVideo.videoViewCount}">
+                                        <i></i>100
                                     </div>
                                 </div>
                             </div>
                         </li>
-                    </c:forEach>
+                    </span>
                 </ul>
             </div>
             <div class="main-side fr" js-tab="true">

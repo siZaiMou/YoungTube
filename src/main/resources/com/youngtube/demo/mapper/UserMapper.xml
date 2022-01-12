@@ -14,4 +14,8 @@
         select * from user where userPetName=#{userPetName} and userPassword=#{userPassword}
     </select>
 
+    <select id="findOneByUserId" resultType="user">
+        select * from user where userId=#{userId}
+    </select>
+
 </mapper>

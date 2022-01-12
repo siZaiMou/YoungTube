@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{/notcommon/Homepage/js/jquery.min.js}"></script>
+    <script th:src="@{/common/js/jquery-3.3.1.js}"></script>
+    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script th:src="@{/notcommon/bilibiliIndex/js/script.js}"></script>
+    <script>
+
+        window.onload=function()
+        {
+            $("#testul").load("/pages/getCategory");
+        }
+
+
+    </script>
+</head>
+<body>
+    <button id="btn" value="dian" onclick="clc()"></button>
+    <div id="testul">
+        <ul th:fragment="testul" th:each="category:${categorys}">
+            <li th:text="${category.categoryName}">1</li>
+        </ul>
+    </div>
+</body>
+</html>

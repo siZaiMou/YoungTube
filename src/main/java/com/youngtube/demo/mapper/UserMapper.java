@@ -12,4 +12,6 @@ public interface UserMapper
     void insertOne(User user);
 
     User findByUserPetName(@Param("userPetName")String userPetName, @Param("userPassword") String userPassword);
+
+    User findOneByUserId(@Param("userId") int videoUpId);
 }
