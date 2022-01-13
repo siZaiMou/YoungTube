@@ -45,4 +45,11 @@ public class VideoServiceImpl implements VideoService
     {
         return videoMapper.find7ByCategoryAndRank(videoCategory);
     }
+
+    //播放页,按videoId查询一个视频
+    @Override
+    public Video findOneByVideoId(int videoId)
+    {
+        return videoMapper.findOneById(videoId);
+    }
 }

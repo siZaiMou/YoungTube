@@ -1,19 +1,11 @@
 <!DOCTYPE html>
 <html lang="ch" xmlns:th="http://www.thymeleaf.org">
-<<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-%>
 <head>
-    <base href="<%=basePath%>">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script src="<%=request.getContextPath()%>/static/Homepage/js/jquery.min.js"></script>
+    <script th:src="@{/notcommon/Homepage/js/jquery.min.js}"></script>
 
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/static/Homepage/videoPlay/font/iconfont.css">
-    <script src="<%=request.getContextPath()%>/static/Homepage/js/bluebird.min.js"></script>
+    <link rel="stylesheet"th:href="@{/notcommon/Homepage/videoPlay/font/iconfont.css}">
+    <script th:src="@{/notcommon/Homepage/js/bluebird.min.js}"></script>
     <script type="text/javascript">
         function isIE() {
             if (!!window.ActiveXObject || "ActiveXObject" in window) {
@@ -32,11 +24,15 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     </script>
 
     <link rel="stylesheet"
-          href="<%=request.getContextPath()%>/static/Homepage/video/css/bootstrap.min.css">
+          th:href="@{/notcommon/Homepage/video/css/bootstrap.min.css}">
 
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/static/Homepage/video/css/dashboard.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/static/Homepage/video/css/popuo-box.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/static/Homepage/videoPlay/css/DPlayer.min.css">
+    <link rel="stylesheet" th:href="@{/notcommon/Homepage/video/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/notcommon/Homepage/video/css/popuo-box.css}">
+    <link rel="stylesheet" th:href="@{/notcommon/Homepage/videoPlay/css/DPlayer.min.css}">
+
+    <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/common.css}">
+    <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/index.css}">
 
     <style type="text/css">
         body {
@@ -286,7 +282,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
     <title>YoungTube-视频区</title>
     <link rel="stylesheet"
-          href="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/css/stardust-video.0.64b497703fccef5418339a77909e7a530175d7e6.css">
+          th:href="@{/notcommon/Homepage/videoPlay/static/css/stardust-video.0.64b497703fccef5418339a77909e7a530175d7e6.css}">
     <style type="text/css">
         * {
             margin: 0;
@@ -502,7 +498,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         }
     </style>
 
-    <style type="text/css">.mini-header {
+    <style type="text/css">
+        .mini-header {
         position: absolute;
         z-index: 1;
         width: 100%;
@@ -521,7 +518,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     }
     </style>
 
-    <style type="text/css">.nav-link .nav-link-ul {
+    <style type="text/css">
+        .nav-link .nav-link-ul {
         height: 36px;
         display: flex;
         align-items: center;
@@ -637,7 +635,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     }
     </style>
 
-    <style type="text/css">.mini-type .nav-user-center .user-con .item .name {
+    <style type="text/css">
+        .mini-type .nav-user-center .user-con .item .name {
         color: #212121;
         text-shadow: none;
     }
@@ -718,7 +717,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     }
     </style>
 
-    <style type="text/css">.bili-header-m .nav-search-box,
+    <style type="text/css">
+        .bili-header-m .nav-search-box,
     .international-header .nav-search-box {
         margin: 0 10px;
         width: 500px;
@@ -815,7 +815,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     </style>
 
 
-    <style type="text/css">@font-face {
+    <style type="text/css">
+        @font-face {
         font-family: "bilifont";
         src: url(https://s1.hdslb.com/bfs/seed/jinkela/header-v2/asserts/iconfont.eot);
         /* IE9 */
@@ -1222,379 +1223,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 </head>
 
 <body>
-<div id="internationalHeader" class="international-header report-wrap-module">
-    <div class="mini-header m-header mini-type">
-        <div class="mini-header__content mini-header--login">
-            <div class="nav-link">
-                <ul class="nav-link-ul mini">
-                    <li class="nav-link-item">
-                    <span>
-                        <div role="tooltip" id="van-popover-9663" aria-hidden="true"
-                             class="van-popover van-popper popover-channe" tabindex="0" style="display: none;"><!---->
-                        </div>
-                        <a href="//www.bilibili.com" class="link van-popover__reference"
-                           aria-describedby="van-popover-9663" tabindex="0">
-                            <i class="bilifont bili-Navbar_logo"></i>
-                            主站
-                            <i class="bilifont bili-general_pullup_s"></i>
-                        </a>
-                    </span>
-                    </li>
-                    <li class="nav-link-item">
-                        <a href="//www.bilibili.com/anime/" target="_blank" class="link">番剧</a>
-                    </li>
-                    <li class="nav-link-item">
-                    <span>
-                        <div role="tooltip" id="van-popover-5145" aria-hidden="true"
-                             class="van-popover van-popper popover-game" tabindex="0" style="display: none;"><!---->
-                        </div>
-                        <a href="//game.bilibili.com" target="_blank" class="link van-popover__reference"
-                           aria-describedby="van-popover-5145" tabindex="0">游戏中心</a>
-                    </span>
-                    </li>
-                    <li class="nav-link-item">
-                    <span>
-                        <div role="tooltip" id="van-popover-6286" aria-hidden="true"
-                             class="van-popover van-popper popover-live" tabindex="0" style="display: none;"><!---->
-                        </div>
-                        <a href="//live.bilibili.com" target="_blank" class="link van-popover__reference"
-                           aria-describedby="van-popover-6286" tabindex="0">直播</a>
-                    </span>
-                    </li>
-                    <li class="nav-link-item">
-                        <a href="//show.bilibili.com/platform/home.html?msource=pc_web" target="_blank"
-                           class="link">会员购</a>
-                    </li>
-                    <li class="nav-link-item">
-                    <span>
-                        <div role="tooltip" id="van-popover-7875" aria-hidden="true"
-                             class="van-popover van-popper popover-manga" tabindex="0" style="display: none;"><!---->
-                        </div>
-                        <a href="//manga.bilibili.com?from=bill_top_mnav" target="_blank"
-                           class="link van-popover__reference" aria-describedby="van-popover-7875" tabindex="0">漫画</a>
-                    </span>
-                    </li>
-                    <li class="nav-link-item">
-                        <a href="//www.bilibili.com/v/game/match/" target="_blank" class="link">赛事</a>
-                    </li><!----><!---->
-                    <li class="nav-link-item">
-                    <span>
-                        <div role="tooltip" id="van-popover-417" aria-hidden="true"
-                             class="van-popover van-popper popover-app-download" tabindex="0" style="display: none;"><!---->
-                            <p class="txt">扫码下载手机客户端</p>
-                        </div>
-                        <a href="//app.bilibili.com" target="_blank" class="link van-popover__reference"
-                           aria-describedby="van-popover-417" tabindex="0">
-                            <i class="bilifont bili-icon_dingdao_xiazaiapp"></i>下载APP</a>
-                    </span>
-                    </li>
-                </ul>
-            </div>
-            <div class="nav-search-box">
-                <div class="nav-search">
-                    <form id="nav_searchform">
-                        <input type="text" autocomplete="off" accesskey="s" x-webkit-speech=""
-                               x-webkit-grammar="builtin:translate" placeholder="要用嘶吼来玩的恐怖游戏？"
-                               class="nav-search-keyword">
-                        <div class="nav-search-btn">
-                            <button type="button" class="bilifont bili-icon_dingdao_sousuo nav-search-submit"></button>
-                        </div>
-                    </form><!----><!----></div>
-            </div>
-
-            <div class="nav-user-center">
-                <div class="user-con search-icon"><a href="//search.bilibili.com/" target="_blank"><i
-                        class="bilifont bili-icon_dingdao_sousuo"></i></a></div>
-                <div class="user-con signin">
-                    <div data-v-7230af51="" class="item"><span data-v-7230af51="">
-                        <div role="tooltip"
-                             id="van-popover-8778"
-                             aria-hidden="true"
-                             class="van-popover van-popper van-popper-nav van-popper-avatar"
-                             tabindex="0"
-                             style="width: 280px; display: none;"><!---->
-                            <div data-v-7230af51="" class="vp-container">
-                                <a data-v-7230af51=""
-                                   href="//space.bilibili.com"
-                                   target="_blank" class="avatar">
-                                    <div data-v-7230af51="" class="avatar-decorate-empty"></div>
-                                    <img data-v-7230af51=""
-                                         src="//i0.hdslb.com/bfs/face/10122b6bd6c14e2b47763989c5bafff9cb9b533c.jpg@70w_70h_1c_100q.webp"
-                                         alt=""
-                                         class="avatar-img">
-                                    <svg data-v-7230af51="" aria-hidden="true"
-                                         class="svg-icon vip-icon"><!---->
-                                    </svg>
-                                </a>
-                                <p
-                                        data-v-7230af51="" class="nickname nickname--"
-                                        style="padding-top: 42px;">又出bug了_
-                                </p><!---->
-                                <div
-                                        data-v-7230af51="" class="level-content"><div data-v-7230af51=""
-                                                                                      class="level-info">
-                                    <span data-v-7230af51="" class="grade">等级 3</span>
-                                    <span data-v-7230af51="" class="progress">
-                                        3395 / 4500
-                                    </span>
-                                </div>
-                                    <a data-v-7230af51="" href="https://account.bilibili.com/account/record?type=exp"
-                                       target="_blank"
-                                       class="level-link"><div data-v-7230af51="" class="level-bar">
-                                        <div
-                                                data-v-7230af51=""
-                                                class="level-progress"
-                                                style="width: 75%;">
-
-                                        </div>
-                                    </div>
-                                    </a>
-                                    <div
-                                            data-v-7230af51="" class="level-intro">
-                                        <p data-v-7230af51="" class="level-intro__title">作为LV3，你可以：</p>
-                                        <div data-v-7230af51="" class="level-intro__content">1、发射个性弹幕（彩色、高级、顶部、底部）<br>2、参与视频互动（评论、添加tag）<br>3、投稿成为偶像</div>
-                                        <a data-v-7230af51=""
-                                           href="//www.bilibili.com/blackboard/help.html#%E4%BC%9A%E5%91%98%E7%AD%89%E7%BA%A7%E7%9B%B8%E5%85%B3?id=7251c4ab69d44a8ebbbd276dea46d790"
-                                           target="_blank" class="level-intro__link">会员等级相关说明
-                                            <svg data-v-7230af51="" aria-hidden="true" class="svg-icon">
-                                                <use data-v-7230af51="" xlink:href="#bili-icon_caozuo_xiangyou">
-                                                </use>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div
-                                        data-v-7230af51="" class="coins"><div data-v-7230af51=""
-                                                                              class="coins-container"><div
-                                        data-v-7230af51="" class="info"><svg data-v-7230af51="" aria-hidden="true"
-                                                                             class="add-one-icon"><use
-                                        data-v-7230af51=""
-                                        xlink:href="#bili-yingbi"></use></svg><a
-                                        data-v-7230af51="" href="https://account.bilibili.com/site/coin" target="_blank"
-                                        title="硬币"
-                                        class="jump"><svg data-v-7230af51="" aria-hidden="true" class="coins-icon"><use
-                                        data-v-7230af51="" xlink:href="#bili-icon_dingdao_yingbi"></use></svg><span
-                                        data-v-7230af51="" class="money">295.5</span></a><span data-v-7230af51=""
-                                                                                               class="login-award">登录奖励</span><a
-                                        data-v-7230af51="" href="https://pay.bilibili.com/paywallet-fe/bb_balance.html"
-                                        target="_blank" title="B币"><svg data-v-7230af51="" aria-hidden="true"
-                                                                        class="coins-icon"><use
-                                        data-v-7230af51="" xlink:href="#bili-icon_dingdao_Bbi"></use></svg><span
-                                        data-v-7230af51=""
-                                        class="money">0</span></a></div><div
-                                        data-v-7230af51="" class="contact"><a data-v-7230af51=""
-                                                                              href="https://passport.bilibili.com/account/security#/bindmail"
-                                                                              target="_blank" class="email"><i
-                                        data-v-7230af51=""
-                                        class="bilifont email-icon"></i><span
-                                        data-v-7230af51="" class="email-mark"></span><span data-v-7230af51=""
-                                                                                           class="contact-tips email-tips">前去绑定邮箱</span></a><a
-                                        data-v-7230af51=""
-                                        href="https://passport.bilibili.com/account/security#/bindphone"
-                                        target="_blank" class="phone"><i data-v-7230af51=""
-                                                                         class="bilifont phone-icon phone-icon--bind"></i>
-                                    <!----><span data-v-7230af51=""
-                                                 class="contact-tips phone-tips">已绑定</span></a></div></div>
-                                    <!----></div><div data-v-7230af51="" class="counts"><a data-v-7230af51=""
-                                                                                           href="//space.bilibili.com/351009749/fans/follow"
-                                                                                           target="_blank"
-                                                                                           class="count-item"><div
-                                    data-v-7230af51="" class="item-key">关注</div><div data-v-7230af51=""
-                                                                                     class="item-value"><span
-                                    data-v-7230af51="" class="item-num">--</span><span data-v-7230af51=""
-                                                                                       class="item-unit"></span></div></a><a
-                                    data-v-7230af51="" href="//space.bilibili.com/351009749/fans/fans" target="_blank"
-                                    class="count-item"><div data-v-7230af51="" class="item-key">粉丝</div><div
-                                    data-v-7230af51=""
-                                    class="item-value"><span
-                                    data-v-7230af51="" class="item-num">--</span><span data-v-7230af51=""
-                                                                                       class="item-unit"></span></div></a><a
-                                    data-v-7230af51="" href="//space.bilibili.com/351009749/dynamic" target="_blank"
-                                    class="count-item"><div data-v-7230af51="" class="item-key">动态</div><div
-                                    data-v-7230af51=""
-                                    class="item-value"><span
-                                    data-v-7230af51="" class="item-num">--</span><span data-v-7230af51=""
-                                                                                       class="item-unit"></span></div></a></div><div
-                                    data-v-7230af51="" class="links"><a data-v-7230af51=""
-                                                                        href="https://account.bilibili.com/account/home"
-                                                                        target="_blank" class="link-item"><div
-                                    data-v-7230af51="" class="link-title"><i data-v-7230af51=""
-                                                                             class="link-icon bilifont bili-icon_dingdao_gerenzhongxin"></i>
-            个人中心
-          </div></a><a data-v-7230af51="" href="https://member.bilibili.com/v2#/upload-manager/article" target="_blank"
-                       class="link-item"><div data-v-7230af51="" class="link-title"><i data-v-7230af51=""
-                                                                                       class="link-icon bilifont bili-icon_dingdao_tougaoguanli"></i>
-            投稿管理
-          </div></a><a data-v-7230af51="" href="https://pay.bilibili.com/" target="_blank" class="link-item"><div
-                                    data-v-7230af51="" class="link-title"><i data-v-7230af51=""
-                                                                             class="link-icon bilifont bili-icon_dingdao_qianbao"></i>
-            B币钱包
-          </div></a><a data-v-7230af51="" href="https://show.bilibili.com/orderlist" target="_blank" class="link-item"><div
-                                    data-v-7230af51="" class="link-title"><i data-v-7230af51=""
-                                                                             class="link-icon bilifont bili-icon_dingdao_dingdanzhongxin"></i>
-            订单中心
-          </div></a><a data-v-7230af51="" href="https://link.bilibili.com/p/center/index" target="_blank"
-                       class="link-item"><div data-v-7230af51="" class="link-title"><i data-v-7230af51=""
-                                                                                       class="link-icon bilifont bili-icon_dingdao_zhibozhongxin"></i>
-            直播中心
-          </div></a><a data-v-7230af51="" href="https://www.bilibili.com/v/cheese/mine" target="_blank"
-                       class="link-item"><div data-v-7230af51="" class="link-title"><i data-v-7230af51=""
-                                                                                       class="link-icon bilifont bili-icon_dingdao_cheese"></i>
-            我的课程
-          </div></a></div><!----><div data-v-7230af51="" class="logout"><a data-v-7230af51=""
-                                                                           href="https://account.bilibili.com/login?act=exit"><i
-                                    data-v-7230af51="" class="link-icon bilifont bili-icon_dingdao_dengchu"></i>
-          退出
-        </a></div></div></div> <div data-v-7230af51="" class="mini-avatar van-popover__reference"
-                                    aria-describedby="van-popover-8778" tabindex="0"><img data-v-7230af51=""
-                                                                                          src="//i0.hdslb.com/bfs/face/10122b6bd6c14e2b47763989c5bafff9cb9b533c.jpg@70w_70h_1c_100q.webp"
-                                                                                          alt="" class=""></div></span>
-                    </div>
-                    <div data-v-3e099990="" class="item"><span data-v-3e099990=""><div role="tooltip"
-                                                                                       id="van-popover-4629"
-                                                                                       aria-hidden="true"
-                                                                                       class="van-popover van-popper van-popper-vip"
-                                                                                       tabindex="0"
-                                                                                       style="width: 260px; display: none;"><!----> </div> <div
-                            data-v-3e099990="" class="mini-vip van-popover__reference"
-                            aria-describedby="van-popover-4629" tabindex="0"><!----><span data-v-3e099990=""
-                                                                                          target="_blank" class="name">
-      大会员</span></div></span></div>
-                    <div data-v-cba1b22a="" class="item">
-                        <div data-v-7adc35f6="" data-v-cba1b22a="" class="nav-item">
-                            <div data-v-7adc35f6="" class="t"><!----><!----><a data-v-cba1b22a="" data-v-7adc35f6=""
-                                                                               href="//message.bilibili.com/new"
-                                                                               target="_blank"><span data-v-cba1b22a=""
-                                                                                                     data-v-7adc35f6=""
-                                                                                                     class="name">消息</span></a>
-                            </div><!---->
-                            <div data-v-7adc35f6="" class="i-frame" style="display: none;">
-                                <iframe data-v-7adc35f6="" src="//message.bilibili.com/pages/nav/index_new_pc_sync"
-                                        frameborder="0" width="100%" height="100%"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                    <div data-v-7fd0073e="" class="item">
-                        <div data-v-73e9d354="" data-v-7fd0073e="" class="nav-item">
-                            <div data-v-73e9d354="" class="t"><!---->
-                                <div data-v-73e9d354="" class="bp-red-point"></div>
-                                <a data-v-7fd0073e="" data-v-73e9d354="" href="//t.bilibili.com" target="_blank"><span
-                                        data-v-7fd0073e="" data-v-73e9d354="" class="name">动态</span></a></div><!---->
-                        </div>
-                    </div>
-                    <div data-v-59fb22a8="" class="item"><span data-v-59fb22a8=""><div role="tooltip"
-                                                                                       id="van-popover-6409"
-                                                                                       aria-hidden="true"
-                                                                                       class="van-popover van-popper van-popper-favorite"
-                                                                                       tabindex="0"
-                                                                                       style="width: 520px; display: none;"><!----> <div
-                            data-v-59fb22a8="" class="vp-container"><div data-v-59fb22a8=""
-                                                                         class="tabs-panel"><!----></div>
-                        <!----></div></div> <div data-v-59fb22a8="" class="mini-favorite van-popover__reference"
-                                                 aria-describedby="van-popover-6409" tabindex="0"><span
-                            data-v-59fb22a8=""><span data-v-59fb22a8="" class="name">收藏</span>
-                        <!----></span></div></span></div>
-                    <div data-v-ff0e1236="" class="item"><span data-v-ff0e1236=""><div role="tooltip"
-                                                                                       id="van-popover-4360"
-                                                                                       aria-hidden="true"
-                                                                                       class="van-popover van-popper van-popper-history"
-                                                                                       tabindex="0"
-                                                                                       style="width: 370px; display: none;"><!----> <div
-                            data-v-ff0e1236="" class="vp-container"><div data-v-ff0e1236="" class="tab-header"><div
-                            data-v-ff0e1236="" class="tab-item tab-item--active">视频历史</div><div data-v-ff0e1236=""
-                                                                                                class="tab-item">专栏</div></div><div
-                            data-v-ff0e1236="" class="panel"><!----><!----></div></div></div> <div data-v-ff0e1236=""
-                                                                                                   class="mini-history van-popover__reference"
-                                                                                                   aria-describedby="van-popover-4360"
-                                                                                                   tabindex="0"><span
-                            data-v-ff0e1236=""><span data-v-ff0e1236="" class="name">历史</span></span></div></span></div>
-                    <div class="item"><a href="https://member.bilibili.com/v2#/home" target="_blank"><span class="name">创作中心</span></a>
-                    </div>
-                </div>
-                <div data-v-37c6f684=""><span data-v-37c6f684=""><div role="tooltip" id="van-popover-1542"
-                                                                      aria-hidden="true"
-                                                                      class="van-popover van-popper van-popper-upload"
-                                                                      tabindex="0" style="width: 304px; display: none;"><!----> <div
-                        data-v-37c6f684="" class="vp-container"><a data-v-37c6f684=""
-                                                                   href="//member.bilibili.com/v2#/upload/text/apply"
-                                                                   target="_blank" class="upload-item"><i
-                        data-v-37c6f684="" class="bilifont bili-icon_dingdao_wenzhangtougao"></i><span
-                        data-v-37c6f684="" class="item-title">专栏投稿</span></a><a data-v-37c6f684=""
-                                                                                href="//member.bilibili.com/v2#/upload/audio"
-                                                                                target="_blank" class="upload-item"><i
-                        data-v-37c6f684="" class="bilifont bili-icon_dingdao_yinpintougao"></i><span data-v-37c6f684=""
-                                                                                                     class="item-title">音频投稿</span></a><a
-                        data-v-37c6f684="" href="//member.bilibili.com/v2#/upload/video/frame" target="_blank"
-                        class="upload-item"><i data-v-37c6f684=""
-                                               class="bilifont bili-icon_dingdao_shipintougao"></i><span
-                        data-v-37c6f684="" class="item-title">视频投稿</span></a><a data-v-37c6f684=""
-                                                                                href="//member.bilibili.com/v2#/upload-manager/article"
-                                                                                target="_blank" class="upload-item"><i
-                        data-v-37c6f684="" class="bilifont bili-icon_dingdao_tougaoguanli1"></i><span data-v-37c6f684=""
-                                                                                                      class="item-title">投稿管理</span></a></div></div> <span
-                        data-v-37c6f684="" class="mini-upload van-popover__reference"
-                        aria-describedby="van-popover-1542" tabindex="0">
-      投稿
-    </span></span></div>
-            </div>
-        </div>
-    </div><!----><!----></div>
-
-<%--↑侧边栏--%>
-<div style="width: 100%;height: 40px;">
-    <div style="">
-        <div style="margin-left: 90%;">
-
-            <%
-            if (request.getSession().getAttribute("userName") == null)
-            {
-            %>
-            <button class="btn btn-primary ladda-button" data-style="expand-left" id="login">
-				<span class="ladda-label"><a href="login.sf"
-                                             style="font-size: 10px; color: white; text-decoration: none">登录</a></span>
-            </button>
-
-            <button class="btn btn-primary ladda-button" data-style="expand-left" id="zhuce">
-				<span class="ladda-label"><a href="zhuce.sf"
-                                             style="font-size: 10px; color: white; text-decoration: none">注册</a></span>
-            </button>
-            <%
-            }
-            else
-            {
-            %>
+<!--    引入顶部导航条-->
+<div th:replace="/header.html::#header1"></div>
 
 
-            <button class="btn btn-primary ladda-button" data-style="expand-left" id="userxinxi">
-				<span class="ladda-label"><a href="User_full_information.sf"
-                                             style="font-size: 10px; color: white; text-decoration: none">
-						欢迎你的登录: <span style="color: red"><%=request.getSession().getAttribute("userName")%></span>
-				</a></span>
-            </button>
-
-
-            <%
-            }
-            %>
-        </div>
-
-
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $("#userxinxi").click(function () {
-                    location.href = "User_full_information.sf";
-                });
-                $("#login").click(function () {
-                    location.href = "login.sf";
-                });
-                $("#zhuce").click(function () {
-                    location.href = "zhuce.sf";
-                });
-            });
-        </script>
-    </div>
-
-</div>
 <script src="http://cdn.jsdelivr.net/bluebird/3.5.0/bluebird.min.js"></script>
 
 <script type="text/javascript">
@@ -1616,12 +1248,13 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 </script>
 
 
-<script src="<%=request.getContextPath()%>/static/Homepage/videoPlay/js/DPlayer.min.js"></script>
+<script th:src="@{/notcommon/Homepage/videoPlay/js/DPlayer.min.js}"></script>
+<script>
+    window.onload=function ()
+    {}
 
+</script>
 
-<%--<div id="biliMainHeader" style="height:56px">--%>
-    <%--<!-- 头部导航位置 -->--%>
-    <%--</div>--%>
 
 <div id="video-page-app">
 
@@ -1637,25 +1270,23 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         <div class="l-con">
 
             <div id="viewbox_report" class="video-info report-wrap-module report-scroll-module"><!-- 视频标题位置 -->
-                <h1 title="${videoEntity.videoName}" class="video-title"><!---->
-                    <span class="tit tr-fix">${videoEntity.videoName}</span></h1>
+                <h1 th:title="${video.videoName}" class="video-title"><!---->
+                    <span class="tit tr-fix" th:text="${video.videoName}">videoName</span></h1>
 
                 <div class="video-data">
 	     				<span class="a-crumbs">
 
 	     				<a target="_blank" href="//www.bilibili.com/v/cinephile/">影视</a>
-	     				<i class="van-icon-general_enter_s"></i>
-	     				<a target="_blank" href="//www.bilibili.com/v/cinephile/montage/">影视剪辑</a>
 	     			  </span>
 
-                    <span>2017-08-22 16:01:45</span>
+                    <span th:text="${video.videoIssuingTime}">2017-08-22 16:01:45</span>
                     <span title="本日日排行数据过期后，再纳入本稿件的历史排行数据进行对比得出" class="rank">  最高全站日排行1名</span>
 
                 </div>
 
                 <div class="video-data">
-                    <span title="总播放数--" class="view">--播放 · </span>
-                    <span title="历史累计弹幕数--" class="dm">--弹幕</span>
+                    <span title="总播放数--" class="view" th:text="|${video.videoViewCount}播放 · |"></span>
+                    <span title="历史累计弹幕数--" class="dm" th:text="|${video.videoViewCount}弹幕  |"></span>
                 </div>
             </div>
 
@@ -1679,18 +1310,18 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
             <div id="arc_toolbar_report" class="video-toolbar report-wrap-module report-scroll-module">
 
                 <div class="ops">
-	     			   	<span title="点赞数0" class="like"><i class="van-icon-videodetails_like" style=""></i>--
+	     			   	<span title="点赞数0" class="like"><i class="van-icon-videodetails_like" style=""></i>[[${video.videoPraiseCount}]]
                        </span>
                     <span title="投硬币枚数" class="coin"><canvas width="34" height="34" class="ring-progress"
                                                              style="width:34px;height:34px;left:-3px;top:-3px;"></canvas>
                         <!----><i class="van-icon-videodetails_throw" style=""></i>
-      --
+                        [[${video.videoCoinCount}]]
                        </span>
                     <span title="收藏人数" class="collect"><canvas width="34" height="34" class="ring-progress"
                                                                style="width:34px;height:34px;left:-3px;top:-3px;"></canvas>
-                        <!----><i class="van-icon-videodetails_collec" style=""></i>--
+                        <!----><i class="van-icon-videodetails_collec" style=""></i>[[${video.videoFavoriteCount}]]
                       </span>
-                    <span title="分享" class="share"><i class="van-icon-videodetails_share"></i>--
+                    <span title="分享" class="share"><i class="van-icon-videodetails_share"></i>[[${video.videoTransmitCount}]]
                        </span>
                 </div>
 
@@ -1705,8 +1336,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
             <div id="v_desc" class="video-desc report-wrap-module report-scroll-module">
 
-                <div class="info open">${videoEntity.videoName}<a target="_blank" href=""></a>
-                    大会员免费观看
+                <div class="info open">[[${video.videoName}]]<a target="_blank" href=""></a>
+                    [[${video.videoIntroduction}]]
                 </div>
             </div>
 
@@ -1736,7 +1367,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                     <div class="all-comments">
                         <div class="all-comments-info">
                             <!-- 这里是自定义的js -->
-                            <script src="<%=request.getContextPath()%>/static/adminjs/videojs.js"></script>
+                            <script th:src="@{/notcommon/adminjs/videojs.js}"></script>
 
 
                             <div class="box">
@@ -1838,17 +1469,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                         </script>
                         <script type="text/javascript">
 
-                            /* $(document).ready(function(){
-                                 //alert("测试");//打算在页面加载时 用ajax 根据用户名查询出用户的头像地址
-                                $.post("userHand",function(test){
-                                    var ht=eval("("+test+")");
-                                     $.each(ht,function(index,m){
-
-                                           });
-                                         //alert(html);
-                                     $("#userHand").html(html);
-                            });
-                            });  */
                         </script>
                         <div align="center" style="margin-top: 30px">
                             <button type="button" id="buttonhide">动态留言板</button>&nbsp;&nbsp;&nbsp;&nbsp;<button
@@ -2046,22 +1666,22 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                 <div class="u-face has-pendant"><a
                         href="https://space.bilibili.com/207539637?spm_id_from=333.788.b_765f7570696e666f.1"
                         target="_blank" report-id="head" class="fa"><img
-                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/tx1.webp" width="48"
+                        th:src="${up.userHeadSrc}" width="48"
                         height="48" class="up-face"><img
-                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/tx2.png" width="80"
+                        th:src="@{/notcommon/Homepage/videoPlay/static/image/tx2.png}" width="80"
                         height="80" class="pendant"><!----><i class="auth o-auth"></i></a></div>
 
 
                 <div class="u-info">
                     <div class="name" style="line-height:40px;height:40px;"><!----><a
-                            href="//space.bilibili.com/207539637" target="_blank" report-id="name" class="username">哔哩哔哩放映姬</a><a
+                            href="//space.bilibili.com/207539637" target="_blank" report-id="name" class="username">[[${up.userPetName}]]</a><a
                             href="//message.bilibili.com/#whisper/mid207539637" target="_blank" class="message"><i
                             class="van-icon-videodetails_messag"></i>发消息</a>
                     </div><!---->
                 </div>
                 <div class="btn-panel"><!---->
                     <div class="default-btn follow-btn b-gz not-follow"><span><i class="van-icon-general_addto_s"></i>
-        关注 <span>12.0万</span></span><!----><!---->
+        关注 <span>12.0万(假)</span></span><!----><!---->
                     </div>
                 </div>
             </div>
@@ -2072,8 +1692,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                     <div class="Dplayer_danmu" style="width: 100%;">
                         <div class="Dplayer_watching"
                              style="line-height:inherit;height:40px;background-color: #f4f4f4 ">
-                            <span class="Dplayer-watching-number" title="这个数据是假的">24</span>
-                            人正在观看,<span class="danmuku_num">100</span>条弹幕
+                            <span class="Dplayer-watching-number">24</span>
+                            人正在观看,<span class="danmuku_num">[[${video.videoDanmuCount}]]</span>条弹幕
                         </div>
 
                         <ul class="Dplayer_list">
@@ -2117,322 +1737,12 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                                                                                     style="display:none;"></span>
                                 </div>
                             </div>
-                            <div class="info"><a href="/video/av7276464/?spm_id_from=333.788.videocard.0"
+                            <div class="info"><a href="/video/av7276464/videoPlay.html?spm_id_from=333.788.videocard.0"
                                                  title="实习老师粉笔画让网友跪服 神还原《你的名字》" class="title">实习老师粉笔画让网友跪服 神还原《你的名字》</a>
                                 <div class="count up"><a href="//space.bilibili.com/583792/" target="_blank">H·D</a>
                                 </div>
                                 <div class="count">
                                     172.2万播放 · 1.4万弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/3.webp"
-                                        alt="【大陆官方预告片】《你的名字。》大陆官方预告片！！！首发“初见版”预告！！！！" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">01:50</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="/video/av7185185/?spm_id_from=333.788.videocard.1"
-                                                 title="【大陆官方预告片】《你的名字。》大陆官方预告片！！！首发“初见版”预告！！！！" class="title">【大陆官方预告片】《你的名字。》大陆官方预告片！！！首发“初见版”预告！！！！</a>
-                                <div class="count up"><a href="//space.bilibili.com/1791122/" target="_blank">贴吧坦克君</a>
-                                </div>
-                                <div class="count">
-                                    111.4万播放 · 6814弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/4.webp"
-                                        alt="【1080P字幕版】《你的名字。》交响乐团音乐会" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">2:01:37</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="/video/av70323398/?spm_id_from=333.788.videocard.2"
-                                                 title="【1080P字幕版】《你的名字。》交响乐团音乐会"
-                                                 class="title">【1080P字幕版】《你的名字。》交响乐团音乐会</a>
-                                <div class="count up"><a href="//space.bilibili.com/7349630/" target="_blank">lh9831</a>
-                                </div>
-                                <div class="count">
-                                    3.1万播放 · 771弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/5.webp"
-                                        alt="你身在何方 【你的名字AMV】" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">03:39</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="/video/av7449411/?spm_id_from=333.788.videocard.3"
-                                                 title="你身在何方 【你的名字AMV】" class="title">你身在何方 【你的名字AMV】</a>
-                                <div class="count up"><a href="//space.bilibili.com/60783/" target="_blank">FCSMio</a>
-                                </div>
-                                <div class="count">
-                                    149.6万播放 · 3.0万弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/6.webp"
-                                        alt="【预告】你的名字。真人版（预定2019年5月）" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">01:35</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="/video/av22543323/?spm_id_from=333.788.videocard.4"
-                                                 title="【预告】你的名字。真人版（预定2019年5月）"
-                                                 class="title">【预告】你的名字。真人版（预定2019年5月）</a>
-                                <div class="count up"><a href="//space.bilibili.com/15823178/" target="_blank">柴犬三号</a>
-                                </div>
-                                <div class="count">
-                                    67.9万播放 · 2541弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/7.webp"
-                                        alt="【陈乐一】你的名字ED《なんでもないや(没什么大不了)》【超清完整版】" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">04:54</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="/video/av38878747/?spm_id_from=333.788.videocard.5"
-                                                 title="【陈乐一】你的名字ED《なんでもないや(没什么大不了)》【超清完整版】" class="title">【陈乐一】你的名字ED《なんでもないや(没什么大不了)》【超清完整版】</a>
-                                <div class="count up"><a href="//space.bilibili.com/1693461/" target="_blank">千鳥かなめ</a>
-                                </div>
-                                <div class="count">
-                                    137.0万播放 · 3724弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/8.webp"
-                                        alt="《你的名字》中那些你不知道的彩蛋/细节" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">09:23</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="/video/av7391417/?spm_id_from=333.788.videocard.6"
-                                                 title="《你的名字》中那些你不知道的彩蛋/细节" class="title">《你的名字》中那些你不知道的彩蛋/细节</a>
-                                <div class="count up"><a href="//space.bilibili.com/2733216/" target="_blank">中二少年晓凯</a>
-                                </div>
-                                <div class="count">
-                                    274.7万播放 · 2.1万弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/9.webp"
-                                        alt="【木吉他】超好听！你的名字ost黄昏之时【奏有】" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">03:07</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="/video/av7331952/?spm_id_from=333.788.videocard.7"
-                                                 title="【木吉他】超好听！你的名字ost黄昏之时【奏有】"
-                                                 class="title">【木吉他】超好听！你的名字ost黄昏之时【奏有】</a>
-                                <div class="count up"><a href="//space.bilibili.com/9134070/" target="_blank">奏有</a>
-                                </div>
-                                <div class="count">
-                                    119.0万播放 · 1.4万弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/10.webp"
-                                        alt="【你的名字】宫水三叶的千层套路" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">02:00</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="/video/av75619385/?spm_id_from=333.788.videocard.8"
-                                                 title="【你的名字】宫水三叶的千层套路" class="title">【你的名字】宫水三叶的千层套路</a>
-                                <div class="count up"><a href="//space.bilibili.com/8083661/" target="_blank">法国腌肉</a>
-                                </div>
-                                <div class="count">
-                                    3.7万播放 · 79弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/11.webp"
-                                        alt="【你的名字】鲲鲲与乔碧萝的爱情故事" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">01:51</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="/video/av64716928/?spm_id_from=333.788.videocard.9"
-                                                 title="【你的名字】鲲鲲与乔碧萝的爱情故事" class="title">【你的名字】鲲鲲与乔碧萝的爱情故事</a>
-                                <div class="count up"><a href="//space.bilibili.com/8918982/"
-                                                         target="_blank">机巧绅士不会受伤w</a></div>
-                                <div class="count">
-                                    400.0万播放 · 1.7万弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/12.webp"
-                                        alt="日本街头唱《你的名字》火花 RADWIMPS【平冈优也】" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">07:59</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="/video/av66519837/?spm_id_from=333.788.videocard.10"
-                                                 title="日本街头唱《你的名字》火花 RADWIMPS【平冈优也】" class="title">日本街头唱《你的名字》火花
-                                RADWIMPS【平冈优也】</a>
-                                <div class="count up"><a href="//space.bilibili.com/396658959/" target="_blank">平岡優也</a>
-                                </div>
-                                <div class="count">
-                                    102.3万播放 · 3242弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/13.webp"
-                                        alt="《你的名字》有多火？引各国粉丝来朝圣，惊现情侣还原经典场景！" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">03:19</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="" title="《你的名字》有多火？引各国粉丝来朝圣，惊现情侣还原经典场景！" class="title">《你的名字》有多火？引各国粉丝来朝圣，惊现情侣还原经典场景！</a>
-                                <div class="count up"><a href="" target="_blank">友曰旅行</a></div>
-                                <div class="count">
-                                    13.6万播放 · 1172弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/133.webp"
-                                        alt="【新海诚式圣地巡礼】从现在起，我将追寻「你的名字」。【君名圣地巡礼攻略】" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">21:57</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="/video/av78150143/?spm_id_from=333.788.videocard.12"
-                                                 title="【新海诚式圣地巡礼】从现在起，我将追寻「你的名字」。【君名圣地巡礼攻略】" class="title">【新海诚式圣地巡礼】从现在起，我将追寻「你的名字」。【君名圣地巡礼攻略】</a>
-                                <div class="count up"><a href="//space.bilibili.com/10794511/" target="_blank">画邴充饥</a>
-                                </div>
-                                <div class="count">
-                                    21.2万播放 · 3330弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/14.webp"
-                                        alt="【王司徒】前前前世（你的名字）" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">04:43</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="/video/av7413041/?spm_id_from=333.788.videocard.13"
-                                                 title="【王司徒】前前前世（你的名字）" class="title">【王司徒】前前前世（你的名字）</a>
-                                <div class="count up"><a href="//space.bilibili.com/1706344/" target="_blank">昔日友人</a>
-                                </div>
-                                <div class="count">
-                                    176.6万播放 · 3.1万弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/15.webp"
-                                        alt="【Chin×Rikinn】前前前世【你的名字。】" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">03:03</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="/video/av41904646/?spm_id_from=333.788.videocard.18"
-                                                 title="【Chin×Rikinn】前前前世【你的名字。】"
-                                                 class="title">【Chin×Rikinn】前前前世【你的名字。】</a>
-                                <div class="count up"><a href="//space.bilibili.com/2488966/"
-                                                         target="_blank">Chin_cc</a></div>
-                                <div class="count">
-                                    6.0万播放 · 186弹幕
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-page-card">
-                        <div class="card-box">
-                            <div class="pic-box">
-                                <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/16.webp"
-                                        alt="【马云】钱钱钱逝【你的钱包主题曲】" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">03:39</span></div>
-                                <div class="watch-later-video van-watchlater"><span class="wl-tips"
-                                                                                    style="display:none;"></span></div>
-                            </div>
-                            <div class="info"><a href="/video/av16123990/?spm_id_from=333.788.videocard.19"
-                                                 title="【马云】钱钱钱逝【你的钱包主题曲】" class="title">【马云】钱钱钱逝【你的钱包主题曲】</a>
-                                <div class="count up"><a href="//space.bilibili.com/2283296/" target="_blank">小猪P_</a>
-                                </div>
-                                <div class="count">
-                                    115.5万播放 · 7539弹幕
                                 </div>
                             </div>
                         </div>
@@ -2463,51 +1773,25 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 </div>
 
 
-<%--<div class="Dplayer_box" style="margin-bottom: 2px;margin-top: 30px">--%>
-    <%--<div class="player_av">--%>
-        <%--<div id="player1"></div>--%>
-        <%--</div>--%>
+<!--播放器-->
+<script th:inline="javascript">
 
-    <%--<div class="Dplayer_danmu">--%>
-        <%--<div class="Dplayer_watching">--%>
-            <%--<span class="Dplayer-watching-number" title="这个数据是假的">24</span>--%>
-            <%--人正在观看,<span class="danmuku_num">100</span>条弹幕--%>
-            <%--</div>--%>
-
-        <%--<ul class="Dplayer_list">--%>
-            <%--<li>时间</li>--%>
-            <%--<li>发送内容</li>--%>
-            <%--<li>用户类型</li>--%>
-            <%--</ul>--%>
-        <%--<ul class="list_ovefiow">--%>
-
-            <%--</ul>--%>
-
-        <%--</div>--%>
-    <%--</div>--%>
-
-
-<%--<div class="alert_back">加载中</div>--%>
-
-
-<script>
-
-    console.log(" %c 该项目基于Dplayer.js", 'color:red')
+    console.log(" %c基于Dplayer.js", 'color:red')
     var dp = new DPlayer({
         element: document.getElementById('player1'),
         video: {
 
-            url: '/bilibili<%=request.getAttribute("dizhi")%>',
+            url: /*[[${video.videoSrc}]]*/'url',
             pic: '',
 
         },
         danmaku: {
-            id: '<%=request.getAttribute("shipingID")%>',
-
-            api: "/bilibili/insertdanmu/",
+            id: /*[[${video.videoId}]]*/'id',
+            user:/*[[${session.nowUser.userId}]]*/'user',
+            api: "/danmu/insertDanmu/",
 
             /* api: 'http://127.0.0.1:8000/get_dm',*/
-            addition: ['/bilibili/insertdanmu/']
+            // addition: ['https://s-sh-17-dplayercdn.oss.dogecdn.com/1678963.json']
         }
     });
 
@@ -2532,15 +1816,16 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
             .replace(/\b(\d)\b/g, "0$1");
     }
 
-    $(document).ready(function () {
+    // $(document).ready(function () {
+    window.onload=function(){
 
         $.ajax({
-            url: "/bilibili/insertdanmu/v3/",
+            url: "/danmu/insertDanmu/v3/",
             type: 'GET',
-            data: {'id': '<%=request.getAttribute("shipingID")%>'},
+            data: {'id': /*[[${video.videoId}]]*/'id'},
             success: function (data) {
                 var obj = JSON.parse(data);
-                //alert(obj.data)
+                // alert(obj.data)
                 if (obj.code == 0) {
                     var danmaku = obj.data;
                     //ddd=obj.data;
@@ -2568,13 +1853,12 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         });
 
 
-    });
+    };
 
 
 </script>
 
-<%--<link rel="stylesheet"--%>
-<%--href="<%=request.getContextPath()%>/static/Homepage/video/css/style.css">--%>
+
 
 <!-- 评论区 -->
 

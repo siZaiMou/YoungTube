@@ -440,6 +440,10 @@ header {
   z-index: 999;
   background: url(../images/header_bg.jpg) no-repeat center -10px;
 }
+#header1 {
+  position: relative;
+  z-index: 999;
+}
 /* page_top */
 #page_top {
   position: relative;

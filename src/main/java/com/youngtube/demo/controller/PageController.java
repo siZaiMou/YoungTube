@@ -1,11 +1,17 @@
 package com.youngtube.demo.controller;
 
+import com.youngtube.demo.entity.User;
 import com.youngtube.demo.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/pages")
@@ -13,6 +19,7 @@ public class PageController
 {
     @Autowired
     VideoService videoService;
+
 
     @RequestMapping("/framtest")
     public String framtest(Model model)
@@ -35,9 +42,30 @@ public class PageController
     }
 
     @RequestMapping("/toIndex")
-    public String toIndex()
+    public String toIndex(HttpSession session)
     {
+        if(session.getAttribute("nowUser")==null)
+        {
+            User us = new User();
+            us.setUserId(-1);
+            session.setAttribute("nowUser",us);
+        }
+
         return "index";
+    }
+
+    @RequestMapping("/toVideoPlay/{videoId}")
+    public String toVideoPlay(@PathVariable("videoId")int videoId,HttpSession session)
+    {
+
+        if(session.getAttribute("nowUser")==null)
+        {
+            User us = new User();
+            us.setUserId(-1);
+            session.setAttribute("nowUser",us);
+        }
+
+        return "forward:/video/loadOneWithUp/"+videoId;
     }
 
     @RequestMapping("/getCategory1")

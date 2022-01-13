@@ -16,4 +16,8 @@
         select videoId,videoName,videoSrc from video order by videoViewCount desc limit 7
     </select>
 
+    <select id="findOneById" resultType="video">
+        select * from video where videoId=#{videoId}
+    </select>
+
 </mapper>

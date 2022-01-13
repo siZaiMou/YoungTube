@@ -13,4 +13,6 @@ public interface UserService
     User login(User user);
 
     Map<Integer, String> findUserNames(List<Video> videos);
+
+    User findOneByUserId(int videoUpId);
 }

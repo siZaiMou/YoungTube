@@ -7,23 +7,17 @@
     <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/reset.css}">
     <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/common.css}">
     <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/index.css}">
-    <!--    <link th:href="@{/notcommon/bilibiliIndex/css/yk_dynamic2.css}" rel="stylesheet">-->
-    <!--    <link th:href="@{/common/css/bootstrap.min.css}" rel="stylesheet">-->
-    <!--    <link rel="stylesheet" type="text/css"-->
-    <!--          href="https://cdnjs.cloudflare.com/ajax/libs/emojione/1.5.2/assets/sprites/emojione.sprites.css"-->
-    <!--          media="screen">-->
-    <!--    <link rel="stylesheet" type="text/css" href="css/emojionearea.min.css" media="screen">-->
     <script th:src="@{/notcommon/Homepage/js/jquery.min.js}"></script>
     <script th:src="@{/common/js/jquery-3.3.1.js}"></script>
     <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
     <script th:src="@{/notcommon/bilibiliIndex/js/script.js}"></script>
     <script th:inline="javascript">
         window.onload = function () {
-            $('#life').hide()
-            $('#music').hide()
-            $('#news').hide()
-            $('#game').hide()
-            $('#study').hide()
+            $('#area2').hide()
+            $('#area3').hide()
+            $('#area4').hide()
+            $('#area5').hide()
+            $('#area6').hide()
             //thymleaf整合ajax局部加载数据
             $('#top_barr').load("/pages/getCategory1");
 
@@ -42,24 +36,15 @@
             var windowHeight = $(this).height();
             //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
             if (scrollTop + windowHeight == scrollHeight) {
-
-                $('#video_homepage2').load("/video/loadOnHomePageWithCategory/2");
-                $('#video_rank_category2').load("/video/loadOnRankWithCategory/2");
-                $('#video_homepage3').load("/video/loadOnHomePageWithCategory/3");
-                $('#video_rank_category3').load("/video/loadOnRankWithCategory/3");
-                $('#video_homepage4').load("/video/loadOnHomePageWithCategory/4");
-                $('#video_rank_category4').load("/video/loadOnRankWithCategory/4");
-                $('#video_homepage5').load("/video/loadOnHomePageWithCategory/5");
-                $('#video_rank_category5').load("/video/loadOnRankWithCategory/5");
-                $('#video_homepage6').load("/video/loadOnHomePageWithCategory/6");
-                $('#video_rank_category6').load("/video/loadOnRankWithCategory/6");
-
-                $('#life').show();
-                $('#music').show();
-                $('#news').show();
-                $('#game').show();
-                $('#study').show();
-                
+                for(i=2;i<=6;i++)
+                {
+                    $('#video_homepage'+i).load("/video/loadOnHomePageWithCategory/"+i);
+                    $('#video_rank_category'+i).load("/video/loadOnRankWithCategory/"+i);
+                }
+                for(j=2;j<=6;j++)
+                {
+                    $('#area'+j).show();
+                }
                 if($('.loadmoreDiv a')){
                     $('.loadmoreDiv a').click();
                 }
@@ -71,87 +56,10 @@
 
 <body>
 
-<header id="header">
-    <div id="page_top">
-        <div class="bg-wrap">
-            <div class="bg"></div>
-            <div class="mask"></div>
-        </div>
-        <div class="header-top">
-            <div class="page-width clearfix">
-                <div class="header-top__nav">
-                    <ul>
-                        <li class="item item-home"><a th:href="@{/pages/toIndex}">主站</a></li>
-                        <!-- <li class="item"><a href="Shopping.sf">周边</a></li> -->
-                        <li class="item"><a href="Shopping.sf">商品购买</a>
-                        <li class="item"><a href="videoFileTop">我要投稿</a>
-                        <li class="item"><a href="forum.sf">进入论坛</a></li>
-                        <li class="item" style="width: 300px;" contenteditable="true"><a
-                                style="color: #0AB5DA">输入搜索内容</a></li>
-                        <li class="item"><a href="forum.sf"><img src="/common/pictures/system/searchlogo.png"
-                                                                 style="margin-top: 7px; height: 30px;width: 30px;border-radius:50%;overflow: hidden"></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="header-top__user">
-                    <div id="notlogin" th:if="${session.nowUser}==null" class="login-box">
-                        <a th:href="@{/pages/toLogin}">登录</a>
-                        <span></span>
-                        <a th:href="@{/pages/toRegist}">注册</a>
-                    </div>
+<!--    引入顶部导航条-->
+    <div th:replace="/header.html::#header"></div>
 
-                    <div th:if="${session.nowUser}!=null" class="login-box">
-                        <img th:src="${session.nowUser.userHeadSrc}"
-                             style="margin-top: 7px; height: 30px;width: 30px;border-radius:50%;overflow: hidden">
-
-                        <p class="login-box" onmouseout="asjdh()" onmouseover="project()"><a
-                                href="yk_dynamic2.html">消息</a></p>
-                        <p class="login-box"><a href="yk_dynamic2.html">动态</a></p>
-                        <p class="login-box"><a href="personal_index.html">收藏</a></p>
-                        <p class="login-box"><a href="history.html">历史</a></p>
-                        <p class="login-box"><a href="personal_index.html">上传视频</a></p>
-                    </div>
-
-                </div>
-                <div th:if="${session.nowUser}!=null" class="header-top__user">
-                    <ul id="hovertb" onmouseout="asjdh()" onmouseover="project()"
-                        style="position: absolute; margin-top: 45px;margin-right: 320px;">
-                        <li><a href="#">回复我的</a></li>
-                        <li><a href="#">@我的</a></li>
-                        <li><a href="#">收到的赞</a></li>
-                        <li><a href="#">系统通知</a></li>
-                        <li><a href="#">我的消息</a></li>
-                    </ul>
-                </div>
-            </div>
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $("#hovertb").hide();
-
-                })
-
-                function asjdh() {//移出
-                    $("#hovertb").hide();
-                }
-
-                function project() {//移入
-                    $("#hovertb").show();
-                }
-            </script>
-        </div>
-    </div>
-    </div>
-    </div>
-    <div class="header-c">
-        <div class="page-width">
-            <a href="#" id="header_logo"></a>
-            <p id="header_title"></p>
-
-            <div class="header-title">YoungTube (゜-゜)つロ 干杯~</div>
-        </div>
-    </div>
-</header>
-
+<!--分区和推荐给用户的视频-->
 <nav id="nav">
     <div class="page-width clearfix">
         <ul class="nav-list">
@@ -213,18 +121,18 @@
             </div>
             <a href="#" class="slider-more">More</a>
         </div>
-
+<!--给用户推荐的6个视频-->
         <div class="banner-list fr">
             <ul id="video_recommend">
-                <li th:fragment="video_recommend" th:each="singVideo,singleVideoStatus:${videos_recommend}"><a
-                        th:href="|video.sf?dizhi=${singVideo.videoSrc}&shipingID=${singVideo.videoId}|">
-                    <img th:src="${singVideo.videoFrontSrc}"
+                <li th:fragment="video_recommend" th:each="singleVideo,singleVideoStatus:${videos_recommend}"><a
+                        th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|">
+                    <img th:src="${singleVideo.videoFrontSrc}"
                          alt="#">
                     <div class="info">
-                        <p class="title" th:text="${singVideo.videoName}">名称</p>
+                        <p class="title" th:text="${singleVideo.videoName}">名称</p>
                         <p class="author"
                            th:text="|up主:${userNames_recommend[singleVideoStatus.index]}|">up主：admin</p>
-                        <p class="play" th:text="|播放量:${singVideo.videoViewCount}|">播放量</p>
+                        <p class="play" th:text="|播放量:${singleVideo.videoViewCount}|">播放量</p>
                     </div>
                 </a></li>
             </ul>
@@ -234,13 +142,13 @@
     </div>
 </div>
 
-
+<!--各分区-->
 <div id="main">
     <div class="page-width">
         <!-- 推广 -->
 
         <!-- 动画 -->
-        <div class="mainCont clearfix" id="dance" js-move="true">
+        <div class="mainCont clearfix" id="area1" js-move="true">
             <div class="pic-list fl" js-tab="true">
                 <div class="pic-list__title">
                     <i class="icon icon-dance"></i>
@@ -256,7 +164,7 @@
                     <!-- 这里开始遍历 -->
                     <li class="item" th:fragment="video_homepage1" th:each="singleVideo,singleVideoStat:${videos}">
                         <a
-                                th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"
+                                th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"
                                 class="img-link"> <img
                                 th:src="${singleVideo.videoFrontSrc}" alt="#">
                             <span class="mask"></span> <span th:text="${singleVideo.videoViewCount}"
@@ -264,7 +172,7 @@
                         </a>
                         <div class="img-info">
                             <a th:text="${singleVideo.videoName}"
-                               th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"></a>
+                               th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"></a>
                             <div class="btm">
                                 <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
                                 </div>
@@ -291,7 +199,7 @@
                                 th:each="singleVideo,singleVideoStat:${videos_rank}">
                                 <i class='n2' th:text="${singleVideoStat.count}">1</i>
                                 <a th:text="${singleVideo.videoName}"
-                                   th:href='|video.sf?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|'>
+                                   th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|">
                                     test
                                 </a>
                             </li>
@@ -308,7 +216,7 @@
         </div>
 
         <!-- 生活-->
-        <div class="mainCont clearfix" id="life" js-move="true">
+        <div class="mainCont clearfix" id="area2" js-move="true">
             <div class="pic-list fl" js-tab="true">
                 <div class="pic-list__title">
                     <i class="icon icon-dance"></i>
@@ -327,7 +235,7 @@
                     <!-- 这里开始遍历 -->
                     <li class="item" th:fragment="video_homepage2" th:each="singleVideo,singleVideoStat:${videos}">
                         <a
-                                th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"
+                                th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"
                                 class="img-link"> <img
                                 th:src="${singleVideo.videoFrontSrc}" alt="#">
                             <span class="mask"></span> <span th:text="${singleVideo.videoViewCount}"
@@ -335,7 +243,7 @@
                         </a>
                         <div class="img-info">
                             <a th:text="${singleVideo.videoName}"
-                               th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"></a>
+                               th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"></a>
                             <div class="btm">
                                 <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
                                 </div>
@@ -362,7 +270,7 @@
                                 th:each="singleVideo,singleVideoStat:${videos_rank}">
                                 <i class='n2' th:text="${singleVideoStat.count}">1</i>
                                 <a th:text="${singleVideo.videoName}"
-                                   th:href='|video.sf?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|'>
+                                   th:href='|@{/pages/toVideoPlay}/${singleVideo.videoId}|'>
                                     test
                                 </a>
                             </li>
@@ -379,7 +287,7 @@
         </div>
 
         <!-- 音乐-->
-        <div class="mainCont clearfix" id="music" js-move="true">
+        <div class="mainCont clearfix" id="area3" js-move="true">
             <div class="pic-list fl" js-tab="true">
                 <div class="pic-list__title">
                     <i class="icon icon-dance"></i>
@@ -398,7 +306,7 @@
                     <!-- 这里开始遍历 -->
                     <li class="item" th:fragment="video_homepage3" th:each="singleVideo,singleVideoStat:${videos}">
                         <a
-                                th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"
+                                th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"
                                 class="img-link"> <img
                                 th:src="${singleVideo.videoFrontSrc}" alt="#">
                             <span class="mask"></span> <span th:text="${singleVideo.videoViewCount}"
@@ -406,7 +314,7 @@
                         </a>
                         <div class="img-info">
                             <a th:text="${singleVideo.videoName}"
-                               th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"></a>
+                               th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"></a>
                             <div class="btm">
                                 <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
                                 </div>
@@ -433,7 +341,7 @@
                                 th:each="singleVideo,singleVideoStat:${videos_rank}">
                                 <i class='n2' th:text="${singleVideoStat.count}">1</i>
                                 <a th:text="${singleVideo.videoName}"
-                                   th:href='|video.sf?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|'>
+                                   th:href='|@{/pages/toVideoPlay}/${singleVideo.videoId}|'>
                                     test
                                 </a>
                             </li>
@@ -450,7 +358,7 @@
         </div>
 
         <!-- 资讯-->
-        <div class="mainCont clearfix" id="news" js-move="true">
+        <div class="mainCont clearfix" id="area4" js-move="true">
             <div class="pic-list fl" js-tab="true">
                 <div class="pic-list__title">
                     <i class="icon icon-dance"></i>
@@ -466,7 +374,7 @@
                     <!-- 这里开始遍历 -->
                     <li class="item" th:fragment="video_homepage4" th:each="singleVideo,singleVideoStat:${videos}">
                         <a
-                                th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"
+                                th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"
                                 class="img-link"> <img
                                 th:src="${singleVideo.videoFrontSrc}" alt="#">
                             <span class="mask"></span> <span th:text="${singleVideo.videoViewCount}"
@@ -474,7 +382,7 @@
                         </a>
                         <div class="img-info">
                             <a th:text="${singleVideo.videoName}"
-                               th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"></a>
+                               th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"></a>
                             <div class="btm">
                                 <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
                                 </div>
@@ -501,7 +409,7 @@
                                 th:each="singleVideo,singleVideoStat:${videos_rank}">
                                 <i class='n2' th:text="${singleVideoStat.count}">1</i>
                                 <a th:text="${singleVideo.videoName}"
-                                   th:href='|video.sf?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|'>
+                                   th:href='|@{/pages/toVideoPlay}/${singleVideo.videoId}|'>
                                     test
                                 </a>
                             </li>
@@ -518,7 +426,7 @@
         </div>
 
         <!--游戏-->
-        <div class="mainCont clearfix" id="game" js-move="true">
+        <div class="mainCont clearfix" id="area5" js-move="true">
             <div class="pic-list fl" js-tab="true">
                 <div class="pic-list__title">
                     <i class="icon icon-dance"></i>
@@ -534,7 +442,7 @@
                     <!-- 这里开始遍历 -->
                     <li class="item" th:fragment="video_homepage5" th:each="singleVideo,singleVideoStat:${videos}">
                         <a
-                                th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"
+                                th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"
                                 class="img-link"> <img
                                 th:src="${singleVideo.videoFrontSrc}" alt="#">
                             <span class="mask"></span> <span th:text="${singleVideo.videoViewCount}"
@@ -542,7 +450,7 @@
                         </a>
                         <div class="img-info">
                             <a th:text="${singleVideo.videoName}"
-                               th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"></a>
+                               th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"></a>
                             <div class="btm">
                                 <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
                                 </div>
@@ -569,7 +477,7 @@
                                 th:each="singleVideo,singleVideoStat:${videos_rank}">
                                 <i class='n2' th:text="${singleVideoStat.count}">1</i>
                                 <a th:text="${singleVideo.videoName}"
-                                   th:href='|video.sf?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|'>
+                                   th:href='|@{/pages/toVideoPlay}/${singleVideo.videoId}|'>
                                     test
                                 </a>
                             </li>
@@ -586,7 +494,7 @@
         </div>
 
         <!--知识-->
-        <div class="mainCont clearfix" id="study" js-move="true">
+        <div class="mainCont clearfix" id="area6" js-move="true">
             <div class="pic-list fl" js-tab="true">
                 <div class="pic-list__title">
                     <i class="icon icon-dance"></i>
@@ -602,7 +510,7 @@
                     <!-- 这里开始遍历 -->
                     <li class="item" th:fragment="video_homepage6" th:each="singleVideo,singleVideoStat:${videos}">
                         <a
-                                th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"
+                                th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"
                                 class="img-link"> <img
                                 th:src="${singleVideo.videoFrontSrc}" alt="#">
                             <span class="mask"></span> <span th:text="${singleVideo.videoViewCount}"
@@ -610,7 +518,7 @@
                         </a>
                         <div class="img-info">
                             <a th:text="${singleVideo.videoName}"
-                               th:href="|video.html?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|"></a>
+                               th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"></a>
                             <div class="btm">
                                 <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
                                 </div>
@@ -637,7 +545,7 @@
                                 th:each="singleVideo,singleVideoStat:${videos_rank}">
                                 <i class='n2' th:text="${singleVideoStat.count}">1</i>
                                 <a th:text="${singleVideo.videoName}"
-                                   th:href='|video.sf?dizhi=${singleVideo.videoSrc}&shipingID=${singleVideo.videoId}|'>
+                                   th:href='|@{/pages/toVideoPlay}/${singleVideo.videoId}|'>
                                     test
                                 </a>
                             </li>
@@ -656,12 +564,12 @@
     </div>
 </div>
 
-
+<!--右侧导航条，可锚点跳转-->
 <div id="sideBar">
     <div class="sideBar-list">
         <br>
         <p id="right_barr">
-            <a href="#" th:fragment="right_bar_ul" th:each="category:${categorys2}" th:text="${category.categoryName}">动漫</a>
+            <a th:fragment="right_bar_ul" th:each="category,categoryStat:${categorys2}" th:href="|#area${categoryStat.count}|"  th:text="${category.categoryName}">动漫</a>
         </p>
         <a href="#"><i></i>排序</a>
     </div>

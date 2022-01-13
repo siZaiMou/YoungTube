@@ -11,6 +11,7 @@
         <typeAlias type="com.youngtube.demo.entity.User" alias="user"></typeAlias>
         <typeAlias type="com.youngtube.demo.entity.VideoCategory" alias="category"></typeAlias>
         <typeAlias type="com.youngtube.demo.entity.Video" alias="video"></typeAlias>
+        <typeAlias type="com.youngtube.demo.entity.Danmu" alias="danmu"></typeAlias>
     </typeAliases>
 
 <!--    <plugins>-->
@@ -23,6 +24,7 @@
         <mapper resource="com/youngtube/demo/mapper/UserMapper.xml"></mapper>
         <mapper resource="com/youngtube/demo/mapper/CategoryMapper.xml"></mapper>
         <mapper resource="com/youngtube/demo/mapper/VideoMapper.xml"></mapper>
+        <mapper resource="com/youngtube/demo/mapper/DanmuMapper.xml"></mapper>
     </mappers>
 
 </configuration>

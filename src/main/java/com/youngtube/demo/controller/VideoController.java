@@ -1,5 +1,6 @@
 package com.youngtube.demo.controller;
 
+import com.youngtube.demo.entity.User;
 import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.service.UserService;
 import com.youngtube.demo.service.VideoService;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +40,7 @@ public class VideoController
     public String loadOnHomePageWithCategory(Model model,@PathVariable("videoCategory")int videoCategory)
     {
         List<Video> videos = videoService.findVideoToHomePage(videoCategory);
+        Collections.shuffle(videos); //乱序，数据不够，测试使用
         Map<Integer,String> userNames = userService.findUserNames(videos);
         model.addAttribute("videos",videos);
         model.addAttribute("userNames",userNames);
@@ -49,8 +52,21 @@ public class VideoController
     public String loadOnRankWithCategory(Model model,@PathVariable("videoCategory")int videoCategory)
     {
         List<Video> videos = videoService.findVideoToRank(videoCategory);
+        Collections.shuffle(videos); //乱序，数据不够，测试使用
         model.addAttribute("videos_rank",videos);
         return "index::video_rank_category"+videoCategory;
     }
 
+    //根据视频id获得视频和up主信息，返回视频播放界面
+    @RequestMapping("/loadOneWithUp/{videoId}")
+    public String getLoadOneWithUp(@PathVariable("videoId")int videoId,Model model)
+    {
+        Video video = new Video();
+        User up = new User();
+        video = videoService.findOneByVideoId(videoId);
+        up = userService.findOneByUserId(video.getVideoUpId());
+        model.addAttribute("video",video);
+        model.addAttribute("up",up);
+        return "videoPlay";
+    }
 }

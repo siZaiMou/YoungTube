@@ -3,6 +3,7 @@ package com.youngtube.demo.mapper;
 import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.entity.VideoCategory;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface VideoMapper
 
     //查询7条分区热榜视频
     List<Video> find7ByCategoryAndRank(int videoCategory);
+
+    Video findOneById(@Param("videoId")int videoId);
 }

@@ -12,7 +12,7 @@
     <script>
         $(function () {
             var nowUser = '[[${session.nowUser}]]';
-            if (nowUser.length > 0) {
+            if (nowUser!=null&&nowUser.userId> 0) {
                 alert("您已登录，无需重复登录!");
                 location.href = "/pages/toIndex";
             }

@@ -60,4 +60,10 @@ public class UserServiceImpl implements UserService
 
         return userName;
     }
+
+    @Override
+    public User findOneByUserId(int videoUpId)
+    {
+        return userMapper.findOneByUserId(videoUpId);
+    }
 }

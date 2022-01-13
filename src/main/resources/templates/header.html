@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+    <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/common.css}">
+    <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/index.css}">
+    <script th:src="@{/notcommon/Homepage/js/jquery.min.js}"></script>
+    <script th:src="@{/common/js/jquery-3.3.1.js}"></script>
+    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script th:src="@{/notcommon/bilibiliIndex/js/script.js}"></script>
+</head>
+<body>
+<header id="header">
+    <div id="page_top">
+        <div class="bg-wrap">
+            <div class="bg"></div>
+            <div class="mask"></div>
+        </div>
+        <div class="header-top">
+            <div class="page-width clearfix">
+                <div class="header-top__nav">
+                    <ul>
+                        <li class="item item-home"><a th:href="@{/pages/toIndex}">主站</a></li>
+                        <!-- <li class="item"><a href="Shopping.sf">周边</a></li> -->
+                        <li class="item"><a href="Shopping.sf">商品购买</a>
+                        <li class="item"><a href="videoFileTop">我要投稿</a>
+                        <li class="item"><a href="forum.sf">进入论坛</a></li>
+                        <li class="item" style="width: 300px;" contenteditable="true"><a
+                                style="color: #0AB5DA">输入搜索内容</a></li>
+                        <li class="item"><a href="forum.sf"><img src="/common/pictures/system/searchlogo.png"
+                                                                 style="margin-top: 7px; height: 30px;width: 30px;border-radius:50%;overflow: hidden"></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="header-top__user">
+                    <div id="notlogin" th:if="${session.nowUser.userId}<=0" class="login-box">
+                        <a th:href="@{/pages/toLogin}">登录</a>
+                        <span></span>
+                        <a th:href="@{/pages/toRegist}">注册</a>
+                    </div>
+
+                    <div th:if="${session.nowUser.userId}>0" class="login-box">
+                        <img th:src="${session.nowUser.userHeadSrc}"
+                             style="margin-top: 7px; height: 30px;width: 30px;border-radius:50%;overflow: hidden">
+
+                        <p class="login-box" onmouseout="asjdh()" onmouseover="project()"><a
+                                href="yk_dynamic2.html">消息</a></p>
+                        <p class="login-box"><a href="yk_dynamic2.html">动态</a></p>
+                        <p class="login-box"><a href="personal_index.html">收藏</a></p>
+                        <p class="login-box"><a href="history.html">历史</a></p>
+                        <p class="login-box"><a href="personal_index.html">上传视频</a></p>
+                    </div>
+
+                </div>
+                <div th:if="${session.nowUser.userId}>0" class="header-top__user">
+                    <ul id="hovertb" onmouseout="asjdh()" onmouseover="project()"
+                        style="position: absolute; margin-top: 45px;margin-right: 320px;">
+                        <li><a href="#">回复我的</a></li>
+                        <li><a href="#">@我的</a></li>
+                        <li><a href="#">收到的赞</a></li>
+                        <li><a href="#">系统通知</a></li>
+                        <li><a href="#">我的消息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#hovertb").hide();
+
+                })
+
+                function asjdh() {//移出
+                    $("#hovertb").hide();
+                }
+
+                function project() {//移入
+                    $("#hovertb").show();
+                }
+            </script>
+        </div>
+    </div>
+
+    <div class="header-c">
+        <div class="page-width">
+            <a href="#" id="header_logo"></a>
+            <p id="header_title"></p>
+
+            <div class="header-title">YoungTube (゜-゜)つロ 干杯~</div>
+        </div>
+    </div>
+</header>
+<header id="header1">
+    <div id="page_top">
+        <div class="bg-wrap">
+            <div class="bg"></div>
+            <div class="mask"></div>
+        </div>
+        <div class="header-top">
+            <div class="page-width clearfix">
+                <div class="header-top__nav">
+                    <ul>
+                        <li class="item item-home"><a th:href="@{/pages/toIndex}">主站</a></li>
+                        <!-- <li class="item"><a href="Shopping.sf">周边</a></li> -->
+                        <li class="item"><a href="Shopping.sf">商品购买</a>
+                        <li class="item"><a href="videoFileTop">我要投稿</a>
+                        <li class="item"><a href="forum.sf">进入论坛</a></li>
+                        <li class="item" style="width: 300px;" contenteditable="true"><a
+                                style="color: #0AB5DA">输入搜索内容</a></li>
+                        <li class="item"><a href="forum.sf"><img src="/common/pictures/system/searchlogo.png"
+                                                                 style="margin-top: 7px; height: 30px;width: 30px;border-radius:50%;overflow: hidden"></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="header-top__user">
+                    <div id="notlogin" th:if="${session.nowUser.userId}<=0" class="login-box">
+                        <a th:href="@{/pages/toLogin}">登录</a>
+                        <span></span>
+                        <a th:href="@{/pages/toRegist}">注册</a>
+                    </div>
+
+                    <div th:if="${session.nowUser.userId}>0" class="login-box">
+                        <img th:src="${session.nowUser.userHeadSrc}"
+                             style="margin-top: 7px; height: 30px;width: 30px;border-radius:50%;overflow: hidden">
+
+                        <p class="login-box" onmouseout="asjdh()" onmouseover="project()"><a
+                                href="yk_dynamic2.html">消息</a></p>
+                        <p class="login-box"><a href="yk_dynamic2.html">动态</a></p>
+                        <p class="login-box"><a href="personal_index.html">收藏</a></p>
+                        <p class="login-box"><a href="history.html">历史</a></p>
+                        <p class="login-box"><a href="personal_index.html">上传视频</a></p>
+                    </div>
+
+                </div>
+                <div th:if="${session.nowUser.userId}>0" class="header-top__user">
+                    <ul id="hovertb" onmouseout="asjdh()" onmouseover="project()"
+                        style="position: absolute; margin-top: 45px;margin-right: 320px;">
+                        <li><a href="#">回复我的</a></li>
+                        <li><a href="#">@我的</a></li>
+                        <li><a href="#">收到的赞</a></li>
+                        <li><a href="#">系统通知</a></li>
+                        <li><a href="#">我的消息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#hovertb").hide();
+
+                })
+
+                function asjdh() {//移出
+                    $("#hovertb").hide();
+                }
+
+                function project() {//移入
+                    $("#hovertb").show();
+                }
+            </script>
+        </div>
+    </div>
+</header>
+</body>
+</html>
