@@ -1249,9 +1249,13 @@
 
 
 <script th:src="@{/notcommon/Homepage/videoPlay/js/DPlayer.min.js}"></script>
-<script>
+<script th:inline="javascript">
     window.onload=function ()
-    {}
+    {
+        loadDanmu();
+        var vid=/*[[${video.videoId}]]*/'1';
+        $("#video_relate").load("/video/loadOnRelate/"+vid);
+    }
 
 </script>
 
@@ -1286,7 +1290,7 @@
 
                 <div class="video-data">
                     <span title="总播放数--" class="view" th:text="|${video.videoViewCount}播放 · |"></span>
-                    <span title="历史累计弹幕数--" class="dm" th:text="|${video.videoViewCount}弹幕  |"></span>
+                    <span title="历史累计弹幕数--" class="dm" th:text="|${video.videoDanmuCount}弹幕  |"></span>
                 </div>
             </div>
 
@@ -1351,7 +1355,7 @@
                     <li class="tag">
 
                         <a href="//search.bilibili.com/all?keyword=%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97&amp;from_source=video_tag"
-                           target="_blank">${videoEntity.videoName}</a><!----><!---->
+                           target="_blank">${video.videoName}</a><!----><!---->
                     </li><!----><a class="btn-add"><span class="one"></span><span class="two"></span></a><!---->
                 </ul>
             </div><!---->
@@ -1724,29 +1728,32 @@
                     相关推荐
 
                 </div>
+<!--                推荐20条视频-->
                 <div class="rec-list"><!----><!----><!---->
-                    <div class="video-page-card">
-                        <div class="card-box">
+                    <div class="video-page-card" id="video_relate">
+                        <div class="card-box" th:fragment="video_relate" th:each="singleVideo,singleVideoStat:${videos_relate}">
                             <div class="pic-box">
                                 <div class="pic"><a href=""><img
-                                        src="<%=request.getContextPath()%>/static/Homepage/videoPlay/static/image/2.webp"
-                                        alt="实习老师粉笔画让网友跪服 神还原《你的名字》" width="168" height="95"></a><span
-                                        class="mask-video"></span><span class="duration">04:26</span>
+                                        th:src="${singleVideo.videoFrontSrc}"
+                                        th:alt="${singleVideo.videoName}" width="168" height="95"></a><span
+                                        class="mask-video"></span><span class="duration">[[${singleVideo.videoDuring}]]</span>
                                 </div>
                                 <div class="watch-later-video van-watchlater"><span class="wl-tips"
                                                                                     style="display:none;"></span>
                                 </div>
                             </div>
-                            <div class="info"><a href="/video/av7276464/videoPlay.html?spm_id_from=333.788.videocard.0"
-                                                 title="实习老师粉笔画让网友跪服 神还原《你的名字》" class="title">实习老师粉笔画让网友跪服 神还原《你的名字》</a>
-                                <div class="count up"><a href="//space.bilibili.com/583792/" target="_blank">H·D</a>
+                            <div class="info"><a th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"
+                                                 title="实习老师粉笔画让网友跪服 神还原《你的名字》" class="title">[[${singleVideo.videoName}]]</a>
+                                <div class="count up"><a href="//space.bilibili.com/583792/" target="_blank" th:text="|${userNames[singleVideoStat.index]}|">H·D</a>
                                 </div>
                                 <div class="count">
-                                    172.2万播放 · 1.4万弹幕
+                                    [[${singleVideo.videoViewCount}]]播放 · [[${singleVideo.videoDanmuCount}]]弹幕
                                 </div>
                             </div>
                         </div>
+
                     </div>
+
                 </div>
 
 
@@ -1817,8 +1824,8 @@
     }
 
     // $(document).ready(function () {
-    window.onload=function(){
-
+    function loadDanmu()
+    {
         $.ajax({
             url: "/danmu/insertDanmu/v3/",
             type: 'GET',
@@ -1850,10 +1857,8 @@
                     dp.seek($(this).attr("time"))
                 });
             }
-        });
-
-
-    };
+        })
+    }
 
 
 </script>

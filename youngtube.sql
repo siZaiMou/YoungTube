@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 11/01/2022 15:17:58
+ Date: 13/01/2022 20:30:32
 */
 
 SET NAMES utf8mb4;
@@ -65,60 +65,6 @@ CREATE TABLE `blacklist`  (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for click
--- ----------------------------
-DROP TABLE IF EXISTS `click`;
-CREATE TABLE `click`  (
-  `userId` int NOT NULL,
-  `videoId` int NOT NULL,
-  `clickDate` datetime NULL DEFAULT NULL,
-  `clickType` int NULL DEFAULT NULL,
-  PRIMARY KEY (`userId`, `videoId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of click
--- ----------------------------
-
--- ----------------------------
--- Table structure for coin
--- ----------------------------
-DROP TABLE IF EXISTS `coin`;
-CREATE TABLE `coin`  (
-  `userId` int NOT NULL,
-  `videoId` int NOT NULL,
-  `coinCount` int NULL DEFAULT NULL,
-  `coinDate` datetime NULL DEFAULT NULL,
-  PRIMARY KEY (`userId`, `videoId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of coin
--- ----------------------------
-
--- ----------------------------
--- Table structure for comment
--- ----------------------------
-DROP TABLE IF EXISTS `comment`;
-CREATE TABLE `comment`  (
-  `commentId` int NOT NULL AUTO_INCREMENT,
-  `userId` int NULL DEFAULT NULL,
-  `videoId` int NULL DEFAULT NULL,
-  `commentContent` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `commentPraise` int NULL DEFAULT NULL,
-  `commentDislike` int NULL DEFAULT NULL,
-  `commentDate` datetime NULL DEFAULT NULL,
-  `fatherCommentId` int NULL DEFAULT NULL,
-  `commentAuditStatus` int NULL DEFAULT 0,
-  `videoCommentIsTop` int NULL DEFAULT 0,
-  PRIMARY KEY (`commentId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of comment
--- ----------------------------
-
--- ----------------------------
 -- Table structure for danmu
 -- ----------------------------
 DROP TABLE IF EXISTS `danmu`;
@@ -127,7 +73,7 @@ CREATE TABLE `danmu`  (
   `videoId` int NULL DEFAULT NULL,
   `userId` int NULL DEFAULT NULL,
   `dcontent` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `dsize` int NULL DEFAULT NULL,
+  `dsize` int NULL DEFAULT 0,
   `dcolor` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `dtime` float NULL DEFAULT NULL,
   `dSendTime` datetime NULL DEFAULT NULL,
@@ -139,6 +85,14 @@ CREATE TABLE `danmu`  (
 -- ----------------------------
 -- Records of danmu
 -- ----------------------------
+INSERT INTO `danmu` VALUES (1, 2, 3, 'tet001', 0, '16777215', 9.01842, '2022-01-13 04:58:27', 0, 0);
+INSERT INTO `danmu` VALUES (2, 2, 3, 'rtatest002', 0, '6610199', 8.73241, '2022-01-13 04:58:41', 0, 0);
+INSERT INTO `danmu` VALUES (3, 2, 3, 'eee', 0, '6610199', 31.9706, '2022-01-13 04:59:04', 2, 0);
+INSERT INTO `danmu` VALUES (4, 2, 3, 'ee', 0, '16777215', 0, '2022-01-13 05:03:02', 0, 0);
+INSERT INTO `danmu` VALUES (12, 2, 3, 'eeq', 0, '16777215', 2.64987, '2022-01-13 07:17:27', 0, 0);
+INSERT INTO `danmu` VALUES (13, 2, 3, 'rrr', 0, '16777215', 2.08052, '2022-01-13 07:35:51', 0, 0);
+INSERT INTO `danmu` VALUES (14, 2, 3, '你好', 0, '16777215', 8.00525, '2022-01-13 07:44:32', 0, 0);
+INSERT INTO `danmu` VALUES (15, 1, 3, 'eehellow', 0, '16777215', 24.1496, '2022-01-13 09:55:08', 0, 0);
 
 -- ----------------------------
 -- Table structure for dynamic
@@ -150,7 +104,7 @@ CREATE TABLE `dynamic`  (
   `dynamicContent` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `dynamicIsTop` int NULL DEFAULT 0,
   PRIMARY KEY (`dynamicId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dynamic
@@ -172,7 +126,7 @@ CREATE TABLE `dynamiccomment`  (
   `commentAuditStatus` int NULL DEFAULT 0,
   `dynamicCommentIsTop` int NULL DEFAULT 0,
   PRIMARY KEY (`commentId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dynamiccomment
@@ -324,22 +278,6 @@ CREATE TABLE `suggestion`  (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for transmit
--- ----------------------------
-DROP TABLE IF EXISTS `transmit`;
-CREATE TABLE `transmit`  (
-  `userId` int NOT NULL,
-  `videoId` int NOT NULL,
-  `transmitMode` int NULL DEFAULT 0,
-  `transmitDate` datetime NULL DEFAULT NULL,
-  PRIMARY KEY (`userId`, `videoId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of transmit
--- ----------------------------
-
--- ----------------------------
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
@@ -363,12 +301,13 @@ CREATE TABLE `user`  (
   `userCoin` int NULL DEFAULT 0,
   PRIMARY KEY (`userId`) USING BTREE,
   UNIQUE INDEX `userPetName`(`userPetName`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES (3, 'avavaava', '这个人很神秘，什么都没有写', 'e10adc3949ba59abbe56e057f20f883e', '/common/pictures/user/userhead/defaulthead.png', NULL, NULL, NULL, '山东省临沂市', '122.6.184.73', '16865213017', NULL, 0, 100, 0, '2022-01-11 04:52:01', 0);
+INSERT INTO `user` VALUES (5, '资深up主', '这个人很神秘，什么都没有写', 'e10adc3949ba59abbe56e057f20f883e', '/common/pictures/user/userhead/defaulthead.png', NULL, NULL, NULL, '山东省临沂市', '122.6.184.73', '19812323123', NULL, 0, 100, 0, '2022-01-12 00:39:31', 0);
 
 -- ----------------------------
 -- Table structure for video
@@ -380,18 +319,27 @@ CREATE TABLE `video`  (
   `videoIntroduction` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `videoCategory` int NULL DEFAULT NULL,
   `videoFrontSrc` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `vidioSrc` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `videoSrc` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `videoViewCount` int NULL DEFAULT 0,
   `videoIssuingTime` datetime NULL DEFAULT NULL,
   `videoAuditStatus` int NULL DEFAULT 0,
   `videoUpId` int NULL DEFAULT NULL,
   `videoTeenagerMode` int NULL DEFAULT 0,
+  `videoDuring` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`videoId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of video
 -- ----------------------------
+INSERT INTO `video` VALUES (1, '某科学的超电磁炮精剪', '喜欢我二次元吗?', 1, '/video/videoFont/paojie.png', '/video/paojie.mp4', 0, '2022-01-12 09:03:12', 0, 5, 0, '02:29');
+INSERT INTO `video` VALUES (2, '刀剑神域', '喜欢我刀剑神域吗?', 1, '/video/videoFont/daojian.png', '/video/meimei.mp4', 0, '2022-01-12 09:03:14', 0, 5, 0, '04:31');
+INSERT INTO `video` VALUES (3, '随机对对子不要笑蹭饭大挑战', '喜欢我p大将吗?', 2, '/video/videoFont/wuyu.png', '/video/xiaoyuan.mp4', 11021, '2022-01-12 09:03:16', 0, 5, 0, '01:25');
+INSERT INTO `video` VALUES (4, '嘉然的战争', '欧内的手哈嘉嘉', 1, '/video/videoFont/bilansuo.png', '/video/longnvpu.mp4', 0, '2022-01-12 09:05:08', 0, 5, 0, '03:02');
+INSERT INTO `video` VALUES (5, '小艾锐评', '早该图图了', 3, '/video/videoFont/zhiyuxiang.png', '/video/longnvpu.mp4', 0, '2022-01-12 12:18:41', 0, 3, 0, '02:15');
+INSERT INTO `video` VALUES (6, '温暖二次元', '闹挺大', 1, '/video/videoFont/zhongerbing.png', '/video/longnvpu.mp4', 231, '2022-01-12 12:19:44', 0, 5, 0, '05:23');
+INSERT INTO `video` VALUES (7, '美国疫情现状', 'winwin', 3, '/video/videoFont/daojian.png', '/video/longnvpu.mp4', 0, '2022-01-12 13:05:28', 0, 5, 0, '06:44');
+INSERT INTO `video` VALUES (8, '回家', '下北泽金曲', 4, '/video/videoFont/wuyu.png', '/video/paojie.mp4', 31, '2022-01-12 13:06:35', 0, 3, 0, '01:58');
 
 -- ----------------------------
 -- Table structure for videocategory
@@ -415,6 +363,60 @@ INSERT INTO `videocategory` VALUES (6, '知识');
 INSERT INTO `videocategory` VALUES (7, 'vlog');
 INSERT INTO `videocategory` VALUES (8, '科技');
 INSERT INTO `videocategory` VALUES (9, '体育');
+
+-- ----------------------------
+-- Table structure for videoclick
+-- ----------------------------
+DROP TABLE IF EXISTS `videoclick`;
+CREATE TABLE `videoclick`  (
+  `userId` int NOT NULL,
+  `videoId` int NOT NULL,
+  `clickDate` datetime NULL DEFAULT NULL,
+  `clickType` int NULL DEFAULT NULL,
+  PRIMARY KEY (`userId`, `videoId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of videoclick
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for videocoin
+-- ----------------------------
+DROP TABLE IF EXISTS `videocoin`;
+CREATE TABLE `videocoin`  (
+  `userId` int NOT NULL,
+  `videoId` int NOT NULL,
+  `coinCount` int NULL DEFAULT NULL,
+  `coinDate` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`userId`, `videoId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of videocoin
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for videocomment
+-- ----------------------------
+DROP TABLE IF EXISTS `videocomment`;
+CREATE TABLE `videocomment`  (
+  `commentId` int NOT NULL AUTO_INCREMENT,
+  `userId` int NULL DEFAULT NULL,
+  `videoId` int NULL DEFAULT NULL,
+  `commentContent` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `commentPraise` int NULL DEFAULT NULL,
+  `commentDislike` int NULL DEFAULT NULL,
+  `commentDate` datetime NULL DEFAULT NULL,
+  `fatherCommentId` int NULL DEFAULT NULL,
+  `commentAuditStatus` int NULL DEFAULT 0,
+  `videoCommentIsTop` int NULL DEFAULT 0,
+  PRIMARY KEY (`commentId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of videocomment
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for videofavorite
@@ -444,6 +446,22 @@ CREATE TABLE `videotag`  (
 
 -- ----------------------------
 -- Records of videotag
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for videotransmit
+-- ----------------------------
+DROP TABLE IF EXISTS `videotransmit`;
+CREATE TABLE `videotransmit`  (
+  `userId` int NOT NULL,
+  `videoId` int NOT NULL,
+  `transmitMode` int NULL DEFAULT 0,
+  `transmitDate` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`userId`, `videoId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of videotransmit
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;

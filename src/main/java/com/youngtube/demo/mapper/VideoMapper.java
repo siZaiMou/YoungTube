@@ -17,10 +17,12 @@ public interface VideoMapper
     List<Video> find8ByCategory(int videoCategory);
 
     //查询6条推荐视频(不分区)
-    List<Video> findWithRecommend();
+    List<Video> find6WithRecommend();
 
     //查询7条分区热榜视频
     List<Video> find7ByCategoryAndRank(int videoCategory);
 
     Video findOneById(@Param("videoId")int videoId);
+
+    List<Video> find20WithVideoId();
 }

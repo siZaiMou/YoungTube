@@ -59,14 +59,28 @@ public class VideoController
 
     //根据视频id获得视频和up主信息，返回视频播放界面
     @RequestMapping("/loadOneWithUp/{videoId}")
-    public String getLoadOneWithUp(@PathVariable("videoId")int videoId,Model model)
+    public String loadOneWithUp(@PathVariable("videoId")int videoId,Model model)
     {
-        Video video = new Video();
-        User up = new User();
-        video = videoService.findOneByVideoId(videoId);
-        up = userService.findOneByUserId(video.getVideoUpId());
+        Video video = videoService.findOneByVideoId(videoId);
+        User up = userService.findOneByUserId(video.getVideoUpId());
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
         model.addAttribute("video",video);
         model.addAttribute("up",up);
         return "videoPlay";
+    }
+
+    //查询与当前视频相关联的20个视频
+    @RequestMapping("/loadOnRelate/{videoId}")
+    public String loadOnRelate(@PathVariable("videoId")int videoId,Model model)
+    {
+        List<Video> videos = videoService.findVideoToRelate(videoId);
+        Map<Integer,String> userNames = userService.findUserNames(videos);
+        model.addAttribute("videos_relate",videos);
+        System.out.println(videos);
+        model.addAttribute("userNames",userNames);
+        return "videoPlay::video_relate";
     }
 }

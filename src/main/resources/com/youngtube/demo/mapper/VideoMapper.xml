@@ -5,19 +5,23 @@
 
 
     <select id="find8ByCategory" resultType="video">
-        select * from video limit 8
+        select videoId,videoName,videoFrontSrc,videoViewCount,videoAuditStatus,videoUpId,videoTeenagerMode,videoDuring from video limit 8
     </select>
 
-    <select id="findWithRecommend" resultType="video">
-        select * from video limit 6
+    <select id="find6WithRecommend" resultType="video">
+        select videoId,videoName,videoFrontSrc,videoViewCount,videoAuditStatus,videoUpId,videoTeenagerMode from video limit 6
     </select>
 
     <select id="find7ByCategoryAndRank" resultType="video">
-        select videoId,videoName,videoSrc from video order by videoViewCount desc limit 7
+        select videoId,videoName,videoAuditStatus,videoTeenagerMode from video order by videoViewCount desc limit 7
     </select>
 
     <select id="findOneById" resultType="video">
         select * from video where videoId=#{videoId}
+    </select>
+
+    <select id="find20WithVideoId" resultType="video">
+        select videoId,videoName,videoFrontSrc,videoViewCount,videoAuditStatus,videoUpId,videoTeenagerMode,videoDuring from video limit 20
     </select>
 
 </mapper>

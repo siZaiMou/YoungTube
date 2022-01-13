@@ -15,4 +15,6 @@ public interface DanmuMapper
     void insertOne(Danmu danmu);
 
     List<Danmu> findDanmuByVideoId(@Param("videoId")int id);
+
+    Integer findDanmuCountByVideoId(@Param("videoId")int id);
 }

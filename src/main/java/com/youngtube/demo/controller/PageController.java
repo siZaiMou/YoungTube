@@ -64,7 +64,6 @@ public class PageController
             us.setUserId(-1);
             session.setAttribute("nowUser",us);
         }
-
         return "forward:/video/loadOneWithUp/"+videoId;
     }
 

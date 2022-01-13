@@ -46,6 +46,11 @@ public class DanmuController
     @ResponseBody
     public String getDanmu(int id)
     {
+        System.out.println();
+        System.out.println();
+        System.out.println("vvvv"+id);
+        System.out.println();
+        System.out.println();
         String danmus = danmuService.getJsonDanmuByVideoId(id);
         return danmus;
 //        return "{\"code\":0, \"data\":[ [20.188,0,16777215,\"小明\",\"好家伙，我直接好家伙\"], [1.188,0,16777215,\"小华\",\"好，我知道\"]]}";

@@ -17,4 +17,6 @@ public interface VideoService
     List<Video> findVideoToRank(int videoCategory);
 
     Video findOneByVideoId(int videoId);
+
+    List<Video> findVideoToRelate(int videoId);
 }

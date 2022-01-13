@@ -13,4 +13,8 @@
         select * from danmu where videoId=#{videoId}
     </select>
 
+    <select id="findDanmuCountByVideoId" resultType="java.lang.Integer">
+        select count(danmuId) from danmu where videoId=#{videoId}
+    </select>
+
 </mapper>
