@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 13/01/2022 20:30:32
+ Date: 14/01/2022 17:57:47
 */
 
 SET NAMES utf8mb4;
@@ -80,7 +80,7 @@ CREATE TABLE `danmu`  (
   `position` int NULL DEFAULT NULL,
   `danmuAuditStatus` int NULL DEFAULT 0,
   PRIMARY KEY (`danmuId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of danmu
@@ -93,6 +93,8 @@ INSERT INTO `danmu` VALUES (12, 2, 3, 'eeq', 0, '16777215', 2.64987, '2022-01-13
 INSERT INTO `danmu` VALUES (13, 2, 3, 'rrr', 0, '16777215', 2.08052, '2022-01-13 07:35:51', 0, 0);
 INSERT INTO `danmu` VALUES (14, 2, 3, '你好', 0, '16777215', 8.00525, '2022-01-13 07:44:32', 0, 0);
 INSERT INTO `danmu` VALUES (15, 1, 3, 'eehellow', 0, '16777215', 24.1496, '2022-01-13 09:55:08', 0, 0);
+INSERT INTO `danmu` VALUES (16, 3, 3, 'baga', 0, '16777215', 4.49409, '2022-01-14 06:27:01', 0, 0);
+INSERT INTO `danmu` VALUES (17, 3, 3, '欧西给', 0, '16777215', 11.6002, '2022-01-14 06:27:08', 0, 0);
 
 -- ----------------------------
 -- Table structure for dynamic
@@ -104,7 +106,7 @@ CREATE TABLE `dynamic`  (
   `dynamicContent` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `dynamicIsTop` int NULL DEFAULT 0,
   PRIMARY KEY (`dynamicId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dynamic
@@ -126,7 +128,7 @@ CREATE TABLE `dynamiccomment`  (
   `commentAuditStatus` int NULL DEFAULT 0,
   `dynamicCommentIsTop` int NULL DEFAULT 0,
   PRIMARY KEY (`commentId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dynamiccomment
@@ -155,7 +157,7 @@ CREATE TABLE `favorite`  (
   `favoriteName` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `userId` int NULL DEFAULT NULL,
   PRIMARY KEY (`favoriteId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of favorite
@@ -205,7 +207,7 @@ CREATE TABLE `message`  (
   `messageAuditStatus` int NULL DEFAULT 0,
   `messageStatus` int NULL DEFAULT 0,
   PRIMARY KEY (`messageId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of message
@@ -271,7 +273,7 @@ CREATE TABLE `suggestion`  (
   `assessorId` int NULL DEFAULT NULL,
   `assessDate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`suggestionId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of suggestion
@@ -412,11 +414,15 @@ CREATE TABLE `videocomment`  (
   `commentAuditStatus` int NULL DEFAULT 0,
   `videoCommentIsTop` int NULL DEFAULT 0,
   PRIMARY KEY (`commentId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of videocomment
 -- ----------------------------
+INSERT INTO `videocomment` VALUES (1, 3, 1, '私密马赛test111', 0, 0, '2022-01-14 07:47:16', 0, 0, 0);
+INSERT INTO `videocomment` VALUES (2, 3, 1, 'hello hello 听得到吗', 0, 0, '2022-01-14 07:47:41', 0, 0, 0);
+INSERT INTO `videocomment` VALUES (3, 3, 1, '捏麻麻地', 0, 0, '2022-01-14 08:57:22', 0, 0, 0);
+INSERT INTO `videocomment` VALUES (4, 3, 1, '你好你好', 0, 0, '2022-01-14 08:59:58', 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for videofavorite
@@ -442,7 +448,7 @@ CREATE TABLE `videotag`  (
   `tagName` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `videoId` int NULL DEFAULT NULL,
   PRIMARY KEY (`tagId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of videotag

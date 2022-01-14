@@ -3,6 +3,8 @@ package com.youngtube.demo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
+
 @SpringBootTest
 class DemoApplicationTests
 {
@@ -10,6 +12,8 @@ class DemoApplicationTests
     @Test
     void contextLoads()
     {
+        Date date = new Date();
+        System.out.println(date);
     }
 
 }

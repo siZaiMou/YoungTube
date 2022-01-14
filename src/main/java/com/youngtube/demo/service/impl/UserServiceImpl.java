@@ -2,6 +2,7 @@ package com.youngtube.demo.service.impl;
 
 import com.youngtube.demo.entity.User;
 import com.youngtube.demo.entity.Video;
+import com.youngtube.demo.entity.VideoComment;
 import com.youngtube.demo.mapper.UserMapper;
 import com.youngtube.demo.service.UserService;
 import com.youngtube.demo.untils.Md5Util;
@@ -48,6 +49,7 @@ public class UserServiceImpl implements UserService
         return userMapper.findByUserPetName(user.getUserPetName(),user.getUserPassword());
     }
 
+    //查询视频up主的用户名
     @Override
     public Map<Integer, String> findUserNames(List<Video> videos)
     {
@@ -65,5 +67,19 @@ public class UserServiceImpl implements UserService
     public User findOneByUserId(int videoUpId)
     {
         return userMapper.findOneByUserId(videoUpId);
+    }
+
+    //查询每条评论的用户信息，性能待使用redis优化
+    @Override
+    public Map<Integer, User> findCommentUsers(List<VideoComment> videoComments_hot)
+    {
+        Map<Integer,User> commentUsers = new HashMap<>();
+        int len = videoComments_hot.size();
+        for(int i=0;i<len;i++)
+        {
+            VideoComment comment = videoComments_hot.get(i);
+            commentUsers.put(i,userMapper.findOneByUserId(comment.getUserId()));
+        }
+        return commentUsers;
     }
 }

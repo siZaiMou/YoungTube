@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.youngtube.demo.mapper.CommentMapper">
+
+    <insert id="insertOneVideoComment" parameterType="videoComment">
+        insert into videoComment
+        values (#{commentId}, #{userId}, #{videoId}, #{commentContent},
+                #{commentPraise}, #{commentDislike}, #{commentDate}, #{fatherCommentId},
+                #{commentAuditStatus}, #{videoCommentIsTop})
+    </insert>
+
+    <select id="findVideoCommentByVideoIdWithHot" resultType="videoComment">
+        select * from videoComment where videoId=#{videoId} order by commentPraise desc,commentDislike asc
+    </select>
+
+    <select id="findVideoCommentByVideoIdWithNew" resultType="videoComment">
+        select * from videoComment where videoId=#{videoId} order by commentDate desc
+    </select>
+
+</mapper>

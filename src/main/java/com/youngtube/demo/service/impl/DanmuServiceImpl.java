@@ -17,6 +17,7 @@ public class DanmuServiceImpl implements DanmuService
 
     @Autowired
     UserMapper userMapper;
+
     //写入弹幕，高并发场景下应使用消息队列,此处模拟
     @Override
     public int saveDanmu(Danmu danmu)
@@ -32,6 +33,7 @@ public class DanmuServiceImpl implements DanmuService
         return 0;
     }
 
+    //将查询到的弹幕转化为dplayer要求的json格式
     @Override
     public String getJsonDanmuByVideoId(int id)
     {
