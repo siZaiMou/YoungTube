@@ -9,10 +9,7 @@ import com.youngtube.demo.untils.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService
@@ -83,9 +80,38 @@ public class UserServiceImpl implements UserService
         return commentUsers;
     }
 
+    //修改硬币量(投币)
     @Override
     public void changeUserCoin(int userId, int coinCount)
     {
         userMapper.updateUserCoinByUserId(userId,coinCount);
     }
+
+    //查询用户的粉丝数
+    @Override
+    public int findUserFansCount(int userId)
+    {
+        return userMapper.findUserFansCount(userId);
+    }
+
+    //查看用户是否关注该UP主
+    @Override
+    public boolean findUserIsFollow(int followUserId, int followedUserId)
+    {
+        return userMapper.findOneUserFollow(followUserId,followedUserId)>0?true:false;
+    }
+
+    @Override
+    public void saveFollow(int followUserId, int followedUserId,int followMode)
+    {
+        userMapper.insertOneUserFollow(followUserId,followedUserId,new Date(),followMode);
+    }
+
+    @Override
+    public void cancelFollow(int followUserId, int followedUserId)
+    {
+        userMapper.deleteOneUserFollow(followUserId,followedUserId);
+    }
+
+
 }

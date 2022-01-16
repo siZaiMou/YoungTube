@@ -1257,6 +1257,7 @@
         sendComment();
         videoPraise();
         videoCoin();
+        upFollow();
     }
 
 </script>
@@ -1356,7 +1357,7 @@
                                         }
                                         $("#video_praise").html("<i id=\"video_praise_count\" class=\"van-icon-videodetails_like\" style=\"\"></i>" + cnt);
                                         $("#video_praise_count").css("color", "#757575");
-
+                                        $("#video_praise").unbind("click");
                                     });
                                 });
                             } else//未点赞
@@ -1367,6 +1368,7 @@
                                     $.post("/video/sendVideoPraise", {"videoId": vid, "userId": uid}, function () {
                                         $("#video_praise").html("<i id=\"video_praise_count\" class=\"van-icon-videodetails_like\" style=\"\"></i>" + (parseInt($("#video_praise").text()) + 1));
                                         $("#video_praise_count").css("color", "#00a1d6");
+                                        $("#video_praise").unbind("click");
                                     });
                                 });
                             }
@@ -1386,6 +1388,7 @@
                         }
                     }
 
+                    //视频投币相关事件
                     function videoCoin() {
                         var nowUser = /*[[${session.nowUser}]]*/'nowUser';
                         var vid =/*[[${video.videoId}]]*/'1';
@@ -1472,7 +1475,7 @@
                     <div class="comment"></div>
                     <div class="all-comments">
                         <div class="all-comments-info">
-                            <!-- 这里是自定义的js -->
+                            <!-- 这里是自定义的js,视频评论发送 -->
                             <script th:inline="javascript">
                                 function sendComment() {
                                     var html = "";
@@ -1816,11 +1819,67 @@
                     </div><!---->
                 </div>
                 <div class="btn-panel"><!---->
-                    <div class="default-btn follow-btn b-gz not-follow"><span><i class="van-icon-general_addto_s"></i>
-        关注 <span>12.0万(假)</span></span><!----><!---->
+                    <div class="default-btn follow-btn b-gz not-follow"><span id="follow"><i class="van-icon-general_addto_s"></i>
+        关注 <span>[[${up.userFans}]]</span></span><!----><!---->
                     </div>
                 </div>
             </div>
+            <script th:inline="javascript">
+                function upFollow() //关注视频up主相关
+                {
+                    var nowUser = /*[[${session.nowUser}]]*/'nowUser';
+                    var isFollow = false;
+                    if (nowUser != null && nowUser.userId > 0) //已登录
+                    {
+                        var followedUserId =/*[[${up.userId}]]*/'1';
+                        var followUserId =/*[[${session.nowUser.userId}]]*/'3';
+
+                        $.ajaxSettings.async = false;
+                        $.get("/user/userIsFollow", {
+                            "followUserId": followUserId,
+                            "followedUserId": followedUserId
+                        }, function (flag) {
+                            isFollow = flag;
+                        });
+                        $.ajaxSettings.async = true;
+                        var nowFans=/*[[${up.userFans}]]*/'2';
+                        var nowFansCount=parseInt(nowFans);
+
+                        if (isFollow == 'true') {
+                            $("#follow").html("<i class=\"van-icon-general_addto_s\"></i>\n" +
+                                "        已关注 <span>[[${up.userFans}]]</span>");
+                            $("#follow").click(function () {
+                                $.post("/user/cancelFollow", {
+                                    "followUserId": followUserId,
+                                    "followedUserId": followedUserId
+                                }, function (data) {
+                                    $("#follow").html("<i class=\"van-icon-general_addto_s\"></i>\n" +
+                                        "        关注 <span>"+(nowFansCount-1)+"</span>");
+                                    $("#follow").unbind("click");
+                                });
+                            });
+                        } else {
+                            $("#follow").html("<i class=\"van-icon-general_addto_s\"></i>\n" +
+                                "        关注 <span>[[${up.userFans}]]</span>");
+                            $("#follow").click(function () {
+                                $.post("/user/sendFollow", {
+                                    "followUserId": followUserId,
+                                    "followedUserId": followedUserId
+                                }, function (data) {
+                                    $("#follow").html("<i class=\"van-icon-general_addto_s\"></i>\n" +
+                                        "        已关注 <span>"+(nowFansCount+1)+"</span>");
+                                    $("#follow").unbind("click");
+                                });
+                            });
+                        }
+                    } else {
+                        $("#follow").click(function () {
+                            alert("请先登录");
+                        })
+                    }
+
+                }
+            </script>
             <div id="danmukuBox" class="danmaku-box" style="height: 300px">
                 <div class="danmaku-wrap" style="background-color: white">
 

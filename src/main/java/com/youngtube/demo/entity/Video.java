@@ -23,5 +23,5 @@ public class Video
     private int videoCoinCount = 0;
     private int videoTransmitCount = 0;
     private int videoDanmuCount = 0;
-    private String videoDuring;
+    private String videoDuring;//时长(显示用)
 }

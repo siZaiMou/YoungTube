@@ -21,4 +21,12 @@ public interface UserService
     Map<Integer,User> findCommentUsers(List<VideoComment> videos_hot);
 
     void changeUserCoin(int userId, int coinCount);
+
+    int findUserFansCount(int userId);
+
+    boolean findUserIsFollow(int followUserId, int followedUserId);
+
+    void saveFollow(int followUserId, int followedUserId,int followMode);
+
+    void cancelFollow(int followUserId, int followedUserId);
 }

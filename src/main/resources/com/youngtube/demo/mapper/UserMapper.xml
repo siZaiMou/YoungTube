@@ -11,15 +11,47 @@
     </insert>
 
     <select id="findByUserPetName" resultType="user">
-        select * from user where userPetName=#{userPetName} and userPassword=#{userPassword}
+        select *
+        from user
+        where userPetName = #{userPetName}
+          and userPassword = #{userPassword}
     </select>
 
     <select id="findOneByUserId" resultType="user">
-        select * from user where userId=#{userId}
+        select *
+        from user
+        where userId = #{userId}
     </select>
 
     <update id="updateUserCoinByUserId">
-        update user set userCoin=userCoin-#{coinCount} where userId=#{userId}
+        update user
+        set userCoin=userCoin - #{coinCount}
+        where userId = #{userId}
     </update>
+
+    <select id="findUserFansCount" resultType="java.lang.Integer">
+        select count(followUserId)
+        from follow
+        where followedUserId = #{userId}
+    </select>
+
+    <select id="findOneUserFollow" resultType="java.lang.Integer">
+        select count(*)
+        from follow
+        where followUserId = #{followUserId}
+          and followedUserId = #{followedUserId}
+    </select>
+
+    <insert id="insertOneUserFollow">
+        insert into follow
+        values (#{followUserId}, #{followedUserId}, #{followDate}, #{followMode})
+    </insert>
+
+    <delete id="deleteOneUserFollow">
+        delete
+        from follow
+        where followUserId = #{followUserId}
+          and followedUserId = #{followedUserId}
+    </delete>
 
 </mapper>

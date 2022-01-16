@@ -71,8 +71,10 @@ public class VideoController
         User up = userService.findOneByUserId(video.getVideoUpId());
         int praiseCount = interactionService.getVideoPraiseCount(videoId);
         int coinCount = interactionService.getVideoCoinCount(videoId);
+        int userFans = userService.findUserFansCount(video.getVideoUpId());
         video.setVideoPraiseCount(praiseCount);
         video.setVideoCoinCount(coinCount);
+        up.setUserFans(userFans);
         model.addAttribute("video",video);
         model.addAttribute("up",up);
         return "videoPlay";
@@ -101,7 +103,6 @@ public class VideoController
     @ResponseBody
     public void cancelVideoPraise(int videoId,int userId)
     {
-        System.out.println("test111");
         interactionService.deleteVideoPraise(videoId,userId);
     }
 

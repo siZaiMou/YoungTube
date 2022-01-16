@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -58,4 +59,25 @@ public class UserController
         return "login";
     }
 
+    @RequestMapping("/userIsFollow")
+    @ResponseBody
+    public boolean userIsFollow(int followUserId,int followedUserId)
+    {
+        return userService.findUserIsFollow(followUserId,followedUserId);
+    }
+
+    @RequestMapping("/sendFollow")
+    @ResponseBody
+    public void sendFollow(int followUserId,int followedUserId,@RequestParam(value="followMode",required = false,defaultValue = "0")int followMode)
+    {
+        System.out.println("hello");
+        userService.saveFollow(followUserId,followedUserId,followMode);
+    }
+
+    @RequestMapping("/cancelFollow")
+    @ResponseBody
+    public void cancelFollow(int followUserId,int followedUserId)
+    {
+        userService.cancelFollow(followUserId,followedUserId);
+    }
 }

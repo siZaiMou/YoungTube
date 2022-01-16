@@ -5,16 +5,21 @@
 
 
     <insert id="insertOne" parameterType="danmu">
-        insert into danmu values(#{danmuId},#{videoId},#{userId},#{dcontent},#{dsize},#{dcolor},#{dtime},#{dSendTime}
-        ,#{position},#{danmuAuditStatus})
+        insert into danmu
+        values ( #{danmuId}, #{videoId}, #{userId}, #{dcontent}, #{dsize}, #{dcolor}, #{dtime}, #{dSendTime}
+               , #{position}, #{danmuAuditStatus})
     </insert>
 
     <select id="findDanmuByVideoId" resultType="danmu">
-        select * from danmu where videoId=#{videoId}
+        select *
+        from danmu
+        where videoId = #{videoId}
     </select>
 
     <select id="findDanmuCountByVideoId" resultType="java.lang.Integer">
-        select count(danmuId) from danmu where videoId=#{videoId}
+        select count(danmuId)
+        from danmu
+        where videoId = #{videoId}
     </select>
 
 </mapper>

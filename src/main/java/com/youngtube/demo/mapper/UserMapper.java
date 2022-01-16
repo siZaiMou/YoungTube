@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+
 @Mapper
 @Repository
 public interface UserMapper
@@ -16,4 +18,12 @@ public interface UserMapper
     User findOneByUserId(@Param("userId") int videoUpId);
 
     void updateUserCoinByUserId(@Param("userId")int userId, @Param("coinCount")int coinCount);
+
+    Integer findUserFansCount(@Param("userId")int userId);
+
+    Integer findOneUserFollow(@Param("followUserId")int followUserId,@Param("followedUserId")int followedUserId);
+
+    void insertOneUserFollow(@Param("followUserId")int followUserId, @Param("followedUserId")int followedUserId, @Param("followDate")Date followDate,@Param("followMode")int mode);
+
+    void deleteOneUserFollow(@Param("followUserId")int followUserId,@Param("followedUserId")int followedUserId);
 }

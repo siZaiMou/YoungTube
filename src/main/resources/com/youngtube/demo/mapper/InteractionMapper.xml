@@ -5,31 +5,48 @@
 
 
     <insert id="insertOneVideoPraise">
-        insert into videoClick values(#{userId},#{videoId},#{praiseDate},0)
+        insert into videoClick
+        values (#{userId}, #{videoId}, #{praiseDate}, 0)
     </insert>
 
     <delete id="deleteOneVideoPraise">
-        delete from videoClick where userId=#{userId} and videoId=#{videoId}
+        delete
+        from videoClick
+        where userId = #{userId}
+          and videoId = #{videoId}
     </delete>
 
     <select id="findVideoPraiseCount" resultType="java.lang.Integer">
-        select count(userId) from videoClick where videoId=#{videoId} and clickType=0
+        select count(userId)
+        from videoClick
+        where videoId = #{videoId}
+          and clickType = 0
     </select>
 
     <select id="findVideoPraiseByVideoIdAndUserId" resultType="java.lang.Integer">
-        select count(*) from videoClick where videoId=#{videoId} and userId=#{userId} and clickType=0
+        select count(*)
+        from videoClick
+        where videoId = #{videoId}
+          and userId = #{userId}
+          and clickType = 0
     </select>
 
     <insert id="insertOneVideoCoin">
-        insert into videoCoin values(#{userId},#{videoId},#{coinCount},#{coinDate})
+        insert into videoCoin
+        values (#{userId}, #{videoId}, #{coinCount}, #{coinDate})
     </insert>
 
     <select id="findVideoCoinByVideoIdAndUserId" resultType="java.lang.Integer">
-        select count(*) from videoCoin where videoId=#{videoId} and userId=#{userId}
+        select count(*)
+        from videoCoin
+        where videoId = #{videoId}
+          and userId = #{userId}
     </select>
 
     <select id="findVideoCoinCount" resultType="java.lang.Integer">
-        select  COALESCE(sum(coinCount),0) from videoCoin where videoId=#{videoId}
+        select COALESCE(sum(coinCount), 0)
+        from videoCoin
+        where videoId = #{videoId}
     </select>
 
 </mapper>

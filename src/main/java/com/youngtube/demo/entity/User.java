@@ -25,4 +25,5 @@ public class User
     private int userIsUp = 0;
     private Date registTime=new Date();
     private int userCoin = 20;
+    private int userFans=0;//粉丝数
 }
