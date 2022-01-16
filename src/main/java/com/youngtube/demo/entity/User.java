@@ -24,5 +24,5 @@ public class User
     private int userReputation = 100;
     private int userIsUp = 0;
     private Date registTime=new Date();
-    private int userCoin = 0;
+    private int userCoin = 20;
 }

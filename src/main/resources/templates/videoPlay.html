@@ -1255,6 +1255,8 @@
         var vid =/*[[${video.videoId}]]*/'1';
         $('#video_relate').load("/video/loadOnRelate/" + vid);
         sendComment();
+        videoPraise();
+        videoCoin();
     }
 
 </script>
@@ -1314,11 +1316,12 @@
             <div id="arc_toolbar_report" class="video-toolbar report-wrap-module report-scroll-module">
 
                 <div class="ops">
-	     			   	<span title="点赞数0" class="like"><i class="van-icon-videodetails_like" style=""></i>[[${video.videoPraiseCount}]]
+	     			   	<span id="video_praise" title="点赞数0" type="number" class="like"><i id="video_praise_count"
+                                                                                           class="van-icon-videodetails_like"
+                                                                                           style=""></i>[[${video.videoPraiseCount}]]
                        </span>
-                    <span title="投硬币枚数" class="coin"><canvas width="34" height="34" class="ring-progress"
-                                                             style="width:34px;height:34px;left:-3px;top:-3px;"></canvas>
-                        <!----><i class="van-icon-videodetails_throw" style=""></i>
+                    <span title="投硬币枚数" id="video_coin" class="coin">
+                        <i id="coin" class="van-icon-videodetails_throw" style=""></i>
                         [[${video.videoCoinCount}]]
                        </span>
                     <span title="收藏人数" class="collect"><canvas width="34" height="34" class="ring-progress"
@@ -1328,6 +1331,105 @@
                     <span title="分享" class="share"><i class="van-icon-videodetails_share"></i>[[${video.videoTransmitCount}]]
                        </span>
                 </div>
+                <!--为视频互动绑定事件-->
+                <script th:inline="javascript">
+                    function videoPraise() {
+                        var nowUser = /*[[${session.nowUser}]]*/'nowUser';
+                        var vid =/*[[${video.videoId}]]*/'1';
+                        var isPraise = false;
+                        if (nowUser != null && nowUser.userId > 0) {
+                            var uid =/*[[${session.nowUser.userId}]]*/'3';
+                            $.ajaxSettings.async = false; //关闭异步，否则无法正确为isPraise赋值
+                            $.get("/video/videoIsPraise", {"videoId": vid, "userId": uid}, function (flag) {
+                                isPraise = flag;
+                            });
+                            $.ajaxSettings.async = true;
+                            if (isPraise == 'true') //已点赞,问题：typeof得到isPraise的数据类型为string,无法转为bool
+                            {
+                                $("#video_praise_count").css("color", "#00a1d6");
+                                $("#video_praise").click(function () {
+                                    var uid =/*[[${session.nowUser.userId}]]*/'3';
+                                    $.post("/video/cancelVideoPraise", {"videoId": vid, "userId": uid}, function () {
+                                        var cnt = parseInt($("#video_praise").text()) - 1;
+                                        if (cnt < 0) {
+                                            cnt = 0;
+                                        }
+                                        $("#video_praise").html("<i id=\"video_praise_count\" class=\"van-icon-videodetails_like\" style=\"\"></i>" + cnt);
+                                        $("#video_praise_count").css("color", "#757575");
+
+                                    });
+                                });
+                            } else//未点赞
+                            {
+                                $("#video_praise_count").css("color", "#757575");
+                                $("#video_praise").click(function () {
+                                    var uid =/*[[${session.nowUser.userId}]]*/'3';
+                                    $.post("/video/sendVideoPraise", {"videoId": vid, "userId": uid}, function () {
+                                        $("#video_praise").html("<i id=\"video_praise_count\" class=\"van-icon-videodetails_like\" style=\"\"></i>" + (parseInt($("#video_praise").text()) + 1));
+                                        $("#video_praise_count").css("color", "#00a1d6");
+                                    });
+                                });
+                            }
+
+                        } else {
+                            $("#video_praise").click(function () {
+                                if (nowUser == null || nowUser.userId <= 0) {
+                                    alert("请先登录!");
+                                    return;
+                                }
+                                var uid =/*[[${session.nowUser.userId}]]*/'3';
+                                $.post("/video/sendVideoPraise", {"videoId": vid, "userId": uid}, function () {
+                                    $("#video_praise").html("<i id=\"video_praise_count\" class=\"van-icon-videodetails_like\" style=\"\"></i>" + (parseInt($("#video_praise").text()) + 1));
+                                    $("#video_praise_count").css("color", "#00a1d6");
+                                });
+                            });
+                        }
+                    }
+
+                    function videoCoin() {
+                        var nowUser = /*[[${session.nowUser}]]*/'nowUser';
+                        var vid =/*[[${video.videoId}]]*/'1';
+                        var isCoin = false;
+                        if (nowUser != null && nowUser.userId > 0) {
+                            var uid =/*[[${session.nowUser.userId}]]*/'3';
+                            $.ajaxSettings.async = false; //关闭异步，否则无法正确为isCoin赋值
+                            $.get("/video/videoIsCoin", {"videoId": vid, "userId": uid}, function (flag) {
+                                isCoin = flag;
+                            });
+                            $.ajaxSettings.async = true;
+                            if (isCoin == 'true') //已投币
+                            {
+                                $("#coin").css("color", "#00a1d6");
+                                $("#video_coin").click(function () {
+                                    alert("投币不能取回哦~");
+                                });
+                            } else//未投币
+                            {
+                                $("#coin").css("color", "#757575");
+                                $("#video_coin").click(function () {
+                                    var uid =/*[[${session.nowUser.userId}]]*/'3';
+                                    $.post("/video/sendVideoCoin", {"videoId": vid, "userId": uid}, function () {
+                                        $("#video_coin").html("<i id=\"coin\" class=\"van-icon-videodetails_throw\" style=\"\"></i>" + (parseInt($("#video_coin").text()) + 1));
+                                        $("#coin").css("color", "#00a1d6");
+                                    });
+                                });
+                            }
+
+                        } else {
+                            $("#video_coin").click(function () {
+                                if (nowUser == null || nowUser.userId <= 0) {
+                                    alert("请先登录!");
+                                    return;
+                                }
+                                var uid =/*[[${session.nowUser.userId}]]*/'3';
+                                $.post("/video/sendVideoCoin", {"videoId": vid, "userId": uid}, function () {
+                                    $("#video_coin").html("<i id=\"coin\" class=\"van-icon-videodetails_throw\" style=\"\"></i>" + (parseInt($("#video_coin").text()) + 1));
+                                    $("#coin").css("color", "#00a1d6");
+                                });
+                            });
+                        }
+                    }
+                </script>
 
                 <div class="more"><i class="van-icon-general_moreactions"></i><!----></div>
 
@@ -1638,7 +1740,8 @@
                             </p>
                             <div id="messDivId">
 
-                                <div class="story" th:fragment="comment_new" th:each="singleComment,singleCommentStat:${videoComments_new}">
+                                <div class="story" th:fragment="comment_new"
+                                     th:each="singleComment,singleCommentStat:${videoComments_new}">
                                     <div class="opbtn"></div>
                                     <p class="story_t">[[${commentUsers_new[singleCommentStat.index].userPetName}]]<span
                                             style="margin-left: 85%;">
@@ -1647,7 +1750,8 @@
                                                                                                   id="liuyan">我要留言</button></span>
 
                                     </p>
-                                    <p class="story_time">[[${#dates.format(singleComment.commentDate,'yyyy-MM-dd HH:mm:ss')}]]</p>
+                                    <p class="story_time">[[${#dates.format(singleComment.commentDate,'yyyy-MM-dd
+                                        HH:mm:ss')}]]</p>
                                     <!--<span style="margin-left: 90%;"><button type="button" value="查看留言">查看留言</button></span>-->
                                     <p class="story_m">[[${singleComment.commentContent}]]</p>
                                 </div>

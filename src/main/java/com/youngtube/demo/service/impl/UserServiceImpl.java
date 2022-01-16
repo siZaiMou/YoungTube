@@ -82,4 +82,10 @@ public class UserServiceImpl implements UserService
         }
         return commentUsers;
     }
+
+    @Override
+    public void changeUserCoin(int userId, int coinCount)
+    {
+        userMapper.updateUserCoinByUserId(userId,coinCount);
+    }
 }

@@ -19,4 +19,6 @@ public interface UserService
     User findOneByUserId(int videoUpId);
 
     Map<Integer,User> findCommentUsers(List<VideoComment> videos_hot);
+
+    void changeUserCoin(int userId, int coinCount);
 }

@@ -14,4 +14,6 @@ public interface UserMapper
     User findByUserPetName(@Param("userPetName")String userPetName, @Param("userPassword") String userPassword);
 
     User findOneByUserId(@Param("userId") int videoUpId);
+
+    void updateUserCoinByUserId(@Param("userId")int userId, @Param("coinCount")int coinCount);
 }

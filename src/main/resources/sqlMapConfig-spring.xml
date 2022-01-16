@@ -27,6 +27,7 @@
         <mapper resource="com/youngtube/demo/mapper/VideoMapper.xml"></mapper>
         <mapper resource="com/youngtube/demo/mapper/DanmuMapper.xml"></mapper>
         <mapper resource="com/youngtube/demo/mapper/CommentMapper.xml"></mapper>
+        <mapper resource="com/youngtube/demo/mapper/InteractionMapper.xml"></mapper>
     </mappers>
 
 </configuration>

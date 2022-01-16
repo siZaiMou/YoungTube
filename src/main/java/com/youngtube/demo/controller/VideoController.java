@@ -2,6 +2,7 @@ package com.youngtube.demo.controller;
 
 import com.youngtube.demo.entity.User;
 import com.youngtube.demo.entity.Video;
+import com.youngtube.demo.service.InteractionService;
 import com.youngtube.demo.service.UserService;
 import com.youngtube.demo.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +26,9 @@ public class VideoController
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    InteractionService interactionService;
 
     //在主页为用户推荐6个视频，可刷新，不分区
     @RequestMapping("/loadOnRecommand")
@@ -63,10 +69,10 @@ public class VideoController
     {
         Video video = videoService.findOneByVideoId(videoId);
         User up = userService.findOneByUserId(video.getVideoUpId());
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
+        int praiseCount = interactionService.getVideoPraiseCount(videoId);
+        int coinCount = interactionService.getVideoCoinCount(videoId);
+        video.setVideoPraiseCount(praiseCount);
+        video.setVideoCoinCount(coinCount);
         model.addAttribute("video",video);
         model.addAttribute("up",up);
         return "videoPlay";
@@ -82,5 +88,42 @@ public class VideoController
         System.out.println(videos);
         model.addAttribute("userNames",userNames);
         return "videoPlay::video_relate";
+    }
+
+    @RequestMapping("/sendVideoPraise")
+    @ResponseBody
+    public void sendVideoPraise(int videoId,int userId)
+    {
+        interactionService.insertVideoPraise(videoId,userId);
+    }
+
+    @RequestMapping("/cancelVideoPraise")
+    @ResponseBody
+    public void cancelVideoPraise(int videoId,int userId)
+    {
+        System.out.println("test111");
+        interactionService.deleteVideoPraise(videoId,userId);
+    }
+
+    @RequestMapping("/videoIsPraise")
+    @ResponseBody
+    public boolean videoIsPraise(int videoId,int userId)
+    {
+        return interactionService.videoIsPraiseByUserId(videoId,userId);
+    }
+
+    @RequestMapping("/sendVideoCoin")
+    @ResponseBody
+    public void sendVideoCoin(int videoId,int userId,@RequestParam(value="coinCount",required = false,defaultValue = "1") int coinCount)
+    {
+        userService.changeUserCoin(userId,coinCount);
+        interactionService.insertVideoCoin(videoId,userId,coinCount);
+    }
+
+    @RequestMapping("/videoIsCoin")
+    @ResponseBody
+    public boolean videoIsCoin(int videoId,int userId)
+    {
+        return interactionService.videoIsCoinByUserId(videoId,userId);
     }
 }

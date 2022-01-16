@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 14/01/2022 17:57:47
+ Date: 16/01/2022 12:32:33
 */
 
 SET NAMES utf8mb4;
@@ -95,6 +95,7 @@ INSERT INTO `danmu` VALUES (14, 2, 3, '你好', 0, '16777215', 8.00525, '2022-01
 INSERT INTO `danmu` VALUES (15, 1, 3, 'eehellow', 0, '16777215', 24.1496, '2022-01-13 09:55:08', 0, 0);
 INSERT INTO `danmu` VALUES (16, 3, 3, 'baga', 0, '16777215', 4.49409, '2022-01-14 06:27:01', 0, 0);
 INSERT INTO `danmu` VALUES (17, 3, 3, '欧西给', 0, '16777215', 11.6002, '2022-01-14 06:27:08', 0, 0);
+INSERT INTO `danmu` VALUES (18, 4, 3, '为阿文', 0, '16777215', 2.34143, '2022-01-16 03:30:37', 0, 0);
 
 -- ----------------------------
 -- Table structure for dynamic
@@ -308,8 +309,8 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (3, 'avavaava', '这个人很神秘，什么都没有写', 'e10adc3949ba59abbe56e057f20f883e', '/common/pictures/user/userhead/defaulthead.png', NULL, NULL, NULL, '山东省临沂市', '122.6.184.73', '16865213017', NULL, 0, 100, 0, '2022-01-11 04:52:01', 0);
-INSERT INTO `user` VALUES (5, '资深up主', '这个人很神秘，什么都没有写', 'e10adc3949ba59abbe56e057f20f883e', '/common/pictures/user/userhead/defaulthead.png', NULL, NULL, NULL, '山东省临沂市', '122.6.184.73', '19812323123', NULL, 0, 100, 0, '2022-01-12 00:39:31', 0);
+INSERT INTO `user` VALUES (3, 'avavaava', '这个人很神秘，什么都没有写', 'e10adc3949ba59abbe56e057f20f883e', '/common/pictures/user/userhead/defaulthead.png', NULL, NULL, NULL, '山东省临沂市', '122.6.184.73', '16865213017', NULL, 0, 100, 0, '2022-01-11 04:52:01', 44);
+INSERT INTO `user` VALUES (5, '资深up主', '这个人很神秘，什么都没有写', 'e10adc3949ba59abbe56e057f20f883e', '/common/pictures/user/userhead/defaulthead.png', NULL, NULL, NULL, '山东省临沂市', '122.6.184.73', '19812323123', NULL, 0, 100, 0, '2022-01-12 00:39:31', 50);
 
 -- ----------------------------
 -- Table structure for video
@@ -374,13 +375,18 @@ CREATE TABLE `videoclick`  (
   `userId` int NOT NULL,
   `videoId` int NOT NULL,
   `clickDate` datetime NULL DEFAULT NULL,
-  `clickType` int NULL DEFAULT NULL,
+  `clickType` int NULL DEFAULT 0,
   PRIMARY KEY (`userId`, `videoId`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of videoclick
 -- ----------------------------
+INSERT INTO `videoclick` VALUES (3, 2, '2022-01-16 02:46:09', 0);
+INSERT INTO `videoclick` VALUES (3, 7, '2022-01-16 03:25:16', 0);
+INSERT INTO `videoclick` VALUES (3, 8, '2022-01-16 03:19:18', 0);
+INSERT INTO `videoclick` VALUES (5, 1, '2022-01-16 02:49:51', 0);
+INSERT INTO `videoclick` VALUES (5, 6, '2022-01-16 03:06:24', 0);
 
 -- ----------------------------
 -- Table structure for videocoin
@@ -397,6 +403,9 @@ CREATE TABLE `videocoin`  (
 -- ----------------------------
 -- Records of videocoin
 -- ----------------------------
+INSERT INTO `videocoin` VALUES (3, 1, 1, '2022-01-16 12:17:19');
+INSERT INTO `videocoin` VALUES (3, 4, 1, '2022-01-16 04:28:55');
+INSERT INTO `videocoin` VALUES (3, 7, 1, '2022-01-16 04:28:09');
 
 -- ----------------------------
 -- Table structure for videocomment
@@ -414,7 +423,7 @@ CREATE TABLE `videocomment`  (
   `commentAuditStatus` int NULL DEFAULT 0,
   `videoCommentIsTop` int NULL DEFAULT 0,
   PRIMARY KEY (`commentId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of videocomment
@@ -423,6 +432,13 @@ INSERT INTO `videocomment` VALUES (1, 3, 1, '私密马赛test111', 0, 0, '2022-0
 INSERT INTO `videocomment` VALUES (2, 3, 1, 'hello hello 听得到吗', 0, 0, '2022-01-14 07:47:41', 0, 0, 0);
 INSERT INTO `videocomment` VALUES (3, 3, 1, '捏麻麻地', 0, 0, '2022-01-14 08:57:22', 0, 0, 0);
 INSERT INTO `videocomment` VALUES (4, 3, 1, '你好你好', 0, 0, '2022-01-14 08:59:58', 0, 0, 0);
+INSERT INTO `videocomment` VALUES (5, 3, 4, '好好好好好好', 0, 0, '2022-01-16 03:31:05', 0, 0, 0);
+INSERT INTO `videocomment` VALUES (6, 3, 4, '绝绝子', 0, 0, '2022-01-16 03:31:22', 0, 0, 0);
+INSERT INTO `videocomment` VALUES (7, 3, 4, '可爱捏', 0, 0, '2022-01-16 03:31:26', 0, 0, 0);
+INSERT INTO `videocomment` VALUES (8, 3, 4, '1', 0, 0, '2022-01-16 03:31:29', 0, 0, 0);
+INSERT INTO `videocomment` VALUES (9, 3, 4, '2', 0, 0, '2022-01-16 03:31:31', 0, 0, 0);
+INSERT INTO `videocomment` VALUES (10, 3, 4, '3', 0, 0, '2022-01-16 03:31:32', 0, 0, 0);
+INSERT INTO `videocomment` VALUES (11, 3, 4, '饿啊饿', 0, 0, '2022-01-16 03:31:40', 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for videofavorite
