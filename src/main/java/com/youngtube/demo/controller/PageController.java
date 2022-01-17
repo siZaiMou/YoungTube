@@ -84,7 +84,7 @@ public class PageController
 
     //搜索、分区跳转至视频列表,mode=0为按热度，mode=1为按时间(暂),"n.u.l.l."暂标识无搜索内容的情况，与搜索内容为""区别开
     @RequestMapping("/toVideoList")
-    public String toVideoList(@RequestParam(value="categoryId",required = false,defaultValue = "0")String str_categoryId,@RequestParam(value="searchText",required = false,defaultValue = "n.u.l.l.")String searchText,@RequestParam(value="searchMode",required = false,defaultValue = "0")int searchMode)
+    public String toVideoList(@RequestParam(value="categoryId",required = false,defaultValue = "0")String str_categoryId,@RequestParam(value="searchText",required = false,defaultValue = "n.u.l.l.")String searchText,@RequestParam(value="searchMode",required = false,defaultValue = "0")int searchMode,@RequestParam(name="currentPage",required = false,defaultValue = "1")int currentPage)
     {
         int categoryId=0;
         try
@@ -95,7 +95,7 @@ public class PageController
         {
             categoryId=0;
         }
-        String str = "forward:/video/loadVideoList?searchTex="+searchText+"&categoryId="+categoryId+"&searchMode="+searchMode;
+        String str = "forward:/video/loadVideoList?searchTex="+searchText+"&categoryId="+categoryId+"&searchMode="+searchMode+"&currentPage="+currentPage;
         return str;
     }
 }

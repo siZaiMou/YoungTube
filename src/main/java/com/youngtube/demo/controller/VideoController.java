@@ -133,12 +133,17 @@ public class VideoController
         return interactionService.videoIsCoinByUserId(videoId,userId);
     }
 
+    //返回分区、查询得到的视频列表(同步)
     @RequestMapping("/loadVideoList")
-    public String toVideoList(int categoryId,String searchTex,int searchMode,Model model) //使用searchText作为参数名时，出现重复拼接问题
+    public String toVideoList(int categoryId,String searchTex,int searchMode,int currentPage,Model model) //使用searchText作为参数名时，出现重复拼接问题
     {
-        List<Video>videoList = videoService.searchVideos(categoryId,searchTex,searchMode);
+        List<Video>videoList = videoService.searchVideos(categoryId,searchTex,searchMode,currentPage);
         Map<Integer,User>ups = userService.findVideosUps(videoList);
-        PageInfo pageInfo = new PageInfo(videoList);
+        PageInfo<Video> pageInfo = new PageInfo(videoList);
+//        for(int i=0;i<=pageInfo.getList().size();i++)
+//        {
+//            System.out.println("pagelist"+i+pageInfo.getList().get(i));
+//        }
         model.addAttribute("videos_page",pageInfo);
         model.addAttribute("video_ups",ups);
         return "videoList";

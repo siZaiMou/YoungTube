@@ -74,10 +74,15 @@ public class VideoServiceImpl implements VideoService
     }
 
     @Override
-    public List<Video> searchVideos(int categoryId, String searchTex, int searchMode)
+    public List<Video> searchVideos(int categoryId, String searchTex, int searchMode,int currentPage)
     {
-        PageHelper.startPage(1,8);
+        PageHelper.clearPage();
+        PageHelper.startPage(currentPage,6);
         List<Video>videos = videoMapper.findVideosBySearch(categoryId,searchTex,searchMode);
+//        for(int i=0;i<videos.size();i++) //问题：数据重复两次,且list中包含其他数据
+//        {
+//            System.out.println("helos"+i+" "+videos.get(i));
+//        }
         return videos;
     }
 }

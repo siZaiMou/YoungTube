@@ -19,9 +19,48 @@
     <link rel="stylesheet" th:href="@{/notcommon/list/search.css}">
 
     <script th:src="@{/common/js/jquery-3.3.1.js}"></script>
-    <script>
+    <script th:inline="javascript">
         window.onload=function () {
             search2();
+            $(".img").click(function ()
+            {
+                alert("hello");
+            })
+        }
+    </script>
+    <script>
+        function search2()//搜索相关
+        {
+            $('#search_text2').click(function() //搜索输入框点击
+            {
+                $("#search_text2").text('');
+            });
+            $('#search_text2').blur(function() //搜索输入框失去焦点
+            {
+                var txt=$("#search_text2").text();
+                if(txt=='')
+                {
+                    $("#search_text2").text('输入搜索内容');
+                }
+
+            });
+            $("#search_text2").on('keydown',function(event){ //搜索输入框回车
+                //获取keyCode
+                var keyCode = event.keyCode;
+                if(keyCode===13){
+                    $("#search_button2").click();
+                    $("#search_text2").text('');
+                }
+            });
+            $('#search_button2').click(function () //搜索按钮点击
+            {
+                var txt=$("#search_text2").text();
+                if(txt=='输入搜索内容')
+                {
+                    $("#search_text2").text('');
+                }
+                location.href="/pages/toVideoList?searchText="+$("#search_text2").text();
+            });
         }
     </script>
 </head>
@@ -41,130 +80,16 @@
                         <span class="jg">作者</span>
                     </div>
                     <ul>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
+                        <li th:each="singleVideo,singleVideoStat:${videos_page.list}" th:if="${singleVideoStat.index>0&&singleVideoStat.index<=videos_page.list.size() div 2 - 1}">
+                            <div class="img"><a th:href="|/pages/toVideoPlay/${singleVideo.videoId}|"><img alt="" th:src="${singleVideo.videoFrontSrc}" height="169px" width="299px"></a></div>
                             <div class="text1">
-                                <p>【减100元 含除夕/春节出发】广州增城三英温泉度假酒店/自由行套票</p>
+                                <p><a th:href="|/pages/toVideoPlay/${singleVideo.videoId}|">[[${singleVideo.videoName}]]</a></p>
                                 <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
+                                <p>[[${singleVideo.videoIntroduction}]]</p>
                             </div>
                             <div class="price">
                                 <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>299</span>
-                                    <span>起</span>
-                                </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
-                            <div class="text1">
-                                <p>浪花朵朵旅行普吉岛丛林飞跃空中飞人探险游中文服务泰国旅游</p>
-                                <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
-                            </div>
-                            <div class="price">
-                                <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>899</span>
-                                    <span>起</span>
-                                </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
-                            <div class="text1">
-                                <p>黑妞皇家旅行普吉岛攀牙湾大船星光之旅皮划艇日落休闲特色体验</p>
-                                <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
-                            </div>
-                            <div class="price">
-                                <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>999</span>
-                                    <span>起</span>
-                                </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
-                            <div class="text1">
-                                <p>浪花朵朵旅行普吉岛皇帝岛珊瑚岛香蕉船拖拽伞水上项目</p>
-                                <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
-                            </div>
-                            <div class="price">
-                                <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>99</span>
-                                    <span>起</span>
-                                </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
-                            <div class="text1">
-                                <p>环游记 泰国清迈Lila massage女子监狱spa 丽菈泰式按摩马杀鸡</p>
-                                <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
-                            </div>
-                            <div class="price">
-                                <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>199</span>
-                                    <span>起</span>
-                                </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
-                            <div class="text1">
-                                <p>【减100元 含除夕/春节出发】广州增城三英温泉度假酒店/自由行套票</p>
-                                <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
-                            </div>
-                            <div class="price">
-                                <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>899</span>
-                                    <span>起</span>
-                                </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
-                            <div class="text1">
-                                <p>【减100元 含除夕/春节出发】广州增城三英温泉度假酒店/自由行套票</p>
-                                <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
-                            </div>
-                            <div class="price">
-                                <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>1199</span>
-                                    <span>起</span>
-                                </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img"><img src="images/04-search_03.jpg" alt=""></div>
-                            <div class="text1">
-                                <p>泰国芭提雅三合一日游芭提雅蒂芬妮人妖秀成人门票bigeye含接送</p>
-                                <br/>
-                                <p>1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
-                            </div>
-                            <div class="price">
-                                <p class="price_num">
-                                    <span>&yen;</span>
-                                    <span>1589</span>
-                                    <span>起</span>
+                                    <span>[[${video_ups[singleVideoStat.index-1].userPetName}]]</span>
                                 </p>
                                 <p><a href="route_detail.html">查看详情</a></p>
                             </div>
@@ -172,22 +97,13 @@
                     </ul>
                     <div class="page_num_inf">
                         <i></i> 共
-                        <span>12</span>页<span>132</span>条
+                        <span>[[${videos_page.pages}]]</span>页<span>[[${videos_page.total}]]</span>条
                     </div>
                     <div class="pageNum">
                         <ul>
                             <li><a href="">首页</a></li>
                             <li class="threeword"><a href="#">上一页</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">6</a></li>
-                            <li><a href="#">7</a></li>
-                            <li><a href="#">8</a></li>
-                            <li><a href="#">9</a></li>
-                            <li><a href="#">10</a></li>
+                            <li th:each="pageIndex:${#numbers.sequence(1,videos_page.pages)}" th:if="${videos_page.pages>0}"><a href="#">[[${pageIndex}]]</a></li>
                             <li class="threeword"><a href="javascript:;">下一页</a></li>
                             <li class="threeword"><a href="javascript:;">末页</a></li>
                         </ul>
