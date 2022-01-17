@@ -113,5 +113,26 @@ public class UserServiceImpl implements UserService
         userMapper.deleteOneUserFollow(followUserId,followedUserId);
     }
 
+    //查询视频返回结果的up主信息
+    @Override
+    public Map<Integer, User> findVideosUps(List<Video> videoList)
+    {
+        Map<Integer,User> ups = new HashMap<>();
+        int len = videoList.size();
+        for(int i=1;i<len;i++) //pagehelper会改变List<Video>的结构
+        {
+            if(((Object)videoList.get(i)) instanceof Video)
+            {
+                Video vd = videoList.get(i);
+                ups.put(i-1,userMapper.findOneByUserId(vd.getVideoUpId()));
+            }
+            else
+            {
+                break;
+            }
+        }
+        return ups;
+    }
+
 
 }

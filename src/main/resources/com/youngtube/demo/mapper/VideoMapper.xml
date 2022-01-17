@@ -24,4 +24,21 @@
         select videoId,videoName,videoFrontSrc,videoViewCount,videoAuditStatus,videoUpId,videoTeenagerMode,videoDuring from video limit 20
     </select>
 
+    <select id="findVideosBySearch" resultType="video">
+        select * from video where 1=1
+        <if test="categoryId!=0">
+            and videoCategory=#{categoryId}
+        </if>
+        <if test="searchTex!='n.u.l.l.'">
+            and videoName like '%${searchTex}%' or videoIntroduction like '%${searchTex}%'
+        </if>
+        <if test="searchMode==1">
+            order by videoIssuingTime desc,length(videoName) asc
+        </if>
+        <if test="searchMode==0">
+            order by videoViewCount desc,length(videoName) asc
+        </if>
+
+    </select>
+
 </mapper>

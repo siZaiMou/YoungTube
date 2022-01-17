@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
@@ -79,5 +80,22 @@ public class PageController
     {
         model.addAttribute("categorys2",videoService.findAllCategory());
         return "index::right_bar_ul";
+    }
+
+    //搜索、分区跳转至视频列表,mode=0为按热度，mode=1为按时间(暂),"n.u.l.l."暂标识无搜索内容的情况，与搜索内容为""区别开
+    @RequestMapping("/toVideoList")
+    public String toVideoList(@RequestParam(value="categoryId",required = false,defaultValue = "0")String str_categoryId,@RequestParam(value="searchText",required = false,defaultValue = "n.u.l.l.")String searchText,@RequestParam(value="searchMode",required = false,defaultValue = "0")int searchMode)
+    {
+        int categoryId=0;
+        try
+        {
+            categoryId = Integer.parseInt(str_categoryId);
+        }
+        catch (Exception e)
+        {
+            categoryId=0;
+        }
+        String str = "forward:/video/loadVideoList?searchTex="+searchText+"&categoryId="+categoryId+"&searchMode="+searchMode;
+        return str;
     }
 }

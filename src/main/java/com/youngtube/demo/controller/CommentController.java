@@ -49,7 +49,6 @@ public class CommentController
     public String getVideoCommentWithNew(@PathVariable("videoId")int videoId, Model model)
     {
         List<VideoComment> videoComments_new = commentService.findVideoCommentWithNew(videoId);
-        System.out.println("\n\n"+videoComments_new+"\n\n");
         Map<Integer,User> commentUsers_new = userService.findCommentUsers(videoComments_new);
         model.addAttribute("videoComments_new",videoComments_new);
         model.addAttribute("commentUsers_new",commentUsers_new);

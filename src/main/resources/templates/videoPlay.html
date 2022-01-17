@@ -2,8 +2,9 @@
 <html lang="ch" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script th:src="@{/notcommon/Homepage/js/jquery.min.js}"></script>
+<!--    <script th:src="@{/notcommon/Homepage/js/jquery.min.js}"></script>-->
 
+    <script th:src="@{/common/js/jquery-3.3.1.js}"></script>
     <link rel="stylesheet" th:href="@{/notcommon/Homepage/videoPlay/font/iconfont.css}">
     <script th:src="@{/notcommon/Homepage/js/bluebird.min.js}"></script>
     <script type="text/javascript">
@@ -1223,9 +1224,44 @@
 </head>
 
 <body>
+<script>
+    function search2()//搜索相关
+    {
+        $('#search_text2').click(function() //搜索输入框点击
+        {
+            $("#search_text2").text('');
+        });
+        $('#search_text2').blur(function() //搜索输入框失去焦点
+        {
+            var txt=$("#search_text2").text();
+            if(txt=='')
+            {
+                $("#search_text2").text('输入搜索内容');
+            }
+
+        });
+        $("#search_text2").on('keydown',function(event){ //搜索输入框回车
+            //获取keyCode
+            var keyCode = event.keyCode;
+            if(keyCode===13){
+                $("#search_button2").click();
+                $("#search_text2").text('');
+            }
+        });
+        $('#search_button2').click(function () //搜索按钮点击
+        {
+            var txt=$("#search_text2").text();
+            if(txt=='输入搜索内容')
+            {
+                $("#search_text2").text('');
+            }
+            location.href="/pages/toVideoList?searchText="+$("#search_text2").text();
+        });
+    }
+</script>
+
 <!--    引入顶部导航条-->
 <div th:replace="/header.html::#header1"></div>
-
 
 <script src="http://cdn.jsdelivr.net/bluebird/3.5.0/bluebird.min.js"></script>
 
@@ -1258,6 +1294,7 @@
         videoPraise();
         videoCoin();
         upFollow();
+        search2();
     }
 
 </script>

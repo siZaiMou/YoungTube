@@ -10,6 +10,7 @@
     <script th:src="@{/common/js/jquery-3.3.1.js}"></script>
     <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
     <script th:src="@{/notcommon/bilibiliIndex/js/script.js}"></script>
+
 </head>
 <body>
 <header id="header">
@@ -27,9 +28,9 @@
                         <li class="item"><a href="Shopping.sf">商品购买</a>
                         <li class="item"><a href="videoFileTop">我要投稿</a>
                         <li class="item"><a href="forum.sf">进入论坛</a></li>
-                        <li class="item" style="width: 300px;" contenteditable="true"><a
-                                style="color: #0AB5DA">输入搜索内容</a></li>
-                        <li class="item"><a href="forum.sf"><img src="/common/pictures/system/searchlogo.png"
+                        <li class="item" style="width: 300px;">
+                            <a contenteditable="true" id="search_text1" style="color: #0AB5DA">输入搜索内容</a></li>
+                        <li class="item"><a id="search_button1"><img src="/common/pictures/system/searchlogo.png"
                                                                  style="margin-top: 7px; height: 30px;width: 30px;border-radius:50%;overflow: hidden"></a>
                         </li>
                     </ul>
@@ -106,9 +107,9 @@
                         <li class="item"><a href="Shopping.sf">商品购买</a>
                         <li class="item"><a href="videoFileTop">我要投稿</a>
                         <li class="item"><a href="forum.sf">进入论坛</a></li>
-                        <li class="item" style="width: 300px;" contenteditable="true"><a
-                                style="color: #0AB5DA">输入搜索内容</a></li>
-                        <li class="item"><a href="forum.sf"><img src="/common/pictures/system/searchlogo.png"
+                        <li class="item" style="width: 300px;">
+                            <a id="search_text2" contenteditable="true" style="color: #0AB5DA">输入搜索内容</a></li>
+                        <li class="item"><a id="search_button2"><img src="/common/pictures/system/searchlogo.png"
                                                                  style="margin-top: 7px; height: 30px;width: 30px;border-radius:50%;overflow: hidden"></a>
                         </li>
                     </ul>

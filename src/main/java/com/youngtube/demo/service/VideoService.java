@@ -19,4 +19,6 @@ public interface VideoService
     Video findOneByVideoId(int videoId);
 
     List<Video> findVideoToRelate(int videoId);
+
+    List<Video> searchVideos(int categoryId, String searchTex, int searchMode);
 }

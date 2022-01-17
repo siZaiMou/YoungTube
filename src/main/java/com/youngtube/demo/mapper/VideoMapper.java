@@ -25,4 +25,6 @@ public interface VideoMapper
     Video findOneById(@Param("videoId")int videoId);
 
     List<Video> find20WithVideoId();
+
+    List<Video> findVideosBySearch(@Param("categoryId")int categoryId, @Param("searchTex")String searchTex, @Param("searchMode")int searchMode);
 }

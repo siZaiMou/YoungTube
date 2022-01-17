@@ -15,11 +15,11 @@
         <typeAlias type="com.youngtube.demo.entity.VideoComment" alias="videoComment"></typeAlias>
     </typeAliases>
 
-<!--    <plugins>-->
-<!--        <plugin interceptor="com.github.pagehelper.PageInterceptor">-->
-<!--            <property name="dialect" value="com.github.pagehelper.dialect.helper.MySqlDialect"/>-->
-<!--        </plugin>-->
-<!--    </plugins>-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="dialect" value="com.github.pagehelper.dialect.helper.MySqlDialect"/>
+        </plugin>
+    </plugins>
 
     <mappers>
         <mapper resource="com/youngtube/demo/mapper/UserMapper.xml"></mapper>

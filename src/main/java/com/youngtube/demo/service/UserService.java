@@ -29,4 +29,6 @@ public interface UserService
     void saveFollow(int followUserId, int followedUserId,int followMode);
 
     void cancelFollow(int followUserId, int followedUserId);
+
+    Map<Integer, User> findVideosUps(List<Video> videoList);
 }

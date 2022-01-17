@@ -7,9 +7,9 @@
     <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/reset.css}">
     <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/common.css}">
     <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/index.css}">
-    <script th:src="@{/notcommon/Homepage/js/jquery.min.js}"></script>
+<!--    <script th:src="@{/notcommon/Homepage/js/jquery.min.js}"></script>-->
     <script th:src="@{/common/js/jquery-3.3.1.js}"></script>
-    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<!--    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>-->
     <script th:src="@{/notcommon/bilibiliIndex/js/script.js}"></script>
     <script th:inline="javascript">
         window.onload = function () {
@@ -27,6 +27,9 @@
             $('#video_rank_category1').load("/video/loadOnRankWithCategory/1");
 
             $('#right_barr').load("/pages/getCategory2");
+
+            search1();
+
         }
     </script>
     <script>
@@ -57,6 +60,42 @@
 <body>
 
 <!--    引入顶部导航条-->
+<script>
+    function search1()//搜索相关
+    {
+        $('#search_text1').click(function() //搜索输入框点击
+        {
+            $("#search_text1").text('');
+        });
+        $('#search_text1').blur(function() //搜索输入框失去焦点
+        {
+            var txt=$("#search_text1").text();
+            if(txt=='')
+            {
+                $("#search_text1").text('输入搜索内容');
+            }
+
+        });
+        $("#search_text1").on('keydown',function(event){ //搜索输入框回车
+            //获取keyCode
+            var keyCode = event.keyCode;
+            if(keyCode===13){
+                $("#search_button1").click();
+                $("#search_text1").text('');
+            }
+        });
+        $('#search_button1').click(function () //搜索按钮点击
+        {
+            var txt=$("#search_text1").text();
+            if(txt=='输入搜索内容')
+            {
+                $("#search_text1").text('');
+            }
+            location.href="/pages/toVideoList?searchText="+ $("#search_text1").text();
+        });
+    }
+
+</script>
     <div th:replace="/header.html::#header"></div>
 
 <!--分区和推荐给用户的视频-->

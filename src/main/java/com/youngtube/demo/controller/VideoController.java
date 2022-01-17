@@ -1,5 +1,6 @@
 package com.youngtube.demo.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.youngtube.demo.entity.User;
 import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.service.InteractionService;
@@ -87,11 +88,11 @@ public class VideoController
         List<Video> videos = videoService.findVideoToRelate(videoId);
         Map<Integer,String> userNames = userService.findUserNames(videos);
         model.addAttribute("videos_relate",videos);
-        System.out.println(videos);
         model.addAttribute("userNames",userNames);
         return "videoPlay::video_relate";
     }
 
+    //视频点赞
     @RequestMapping("/sendVideoPraise")
     @ResponseBody
     public void sendVideoPraise(int videoId,int userId)
@@ -99,6 +100,7 @@ public class VideoController
         interactionService.insertVideoPraise(videoId,userId);
     }
 
+    //取消点赞
     @RequestMapping("/cancelVideoPraise")
     @ResponseBody
     public void cancelVideoPraise(int videoId,int userId)
@@ -106,6 +108,7 @@ public class VideoController
         interactionService.deleteVideoPraise(videoId,userId);
     }
 
+    //判断当前用户是否给视频点赞
     @RequestMapping("/videoIsPraise")
     @ResponseBody
     public boolean videoIsPraise(int videoId,int userId)
@@ -113,6 +116,7 @@ public class VideoController
         return interactionService.videoIsPraiseByUserId(videoId,userId);
     }
 
+    //视频投币
     @RequestMapping("/sendVideoCoin")
     @ResponseBody
     public void sendVideoCoin(int videoId,int userId,@RequestParam(value="coinCount",required = false,defaultValue = "1") int coinCount)
@@ -121,10 +125,22 @@ public class VideoController
         interactionService.insertVideoCoin(videoId,userId,coinCount);
     }
 
+    //判断视频是否投币
     @RequestMapping("/videoIsCoin")
     @ResponseBody
     public boolean videoIsCoin(int videoId,int userId)
     {
         return interactionService.videoIsCoinByUserId(videoId,userId);
+    }
+
+    @RequestMapping("/loadVideoList")
+    public String toVideoList(int categoryId,String searchTex,int searchMode,Model model) //使用searchText作为参数名时，出现重复拼接问题
+    {
+        List<Video>videoList = videoService.searchVideos(categoryId,searchTex,searchMode);
+        Map<Integer,User>ups = userService.findVideosUps(videoList);
+        PageInfo pageInfo = new PageInfo(videoList);
+        model.addAttribute("videos_page",pageInfo);
+        model.addAttribute("video_ups",ups);
+        return "videoList";
     }
 }

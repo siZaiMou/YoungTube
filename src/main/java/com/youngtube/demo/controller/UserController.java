@@ -70,7 +70,6 @@ public class UserController
     @ResponseBody
     public void sendFollow(int followUserId,int followedUserId,@RequestParam(value="followMode",required = false,defaultValue = "0")int followMode)
     {
-        System.out.println("hello");
         userService.saveFollow(followUserId,followedUserId,followMode);
     }
 

@@ -1,5 +1,6 @@
 package com.youngtube.demo.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.entity.VideoCategory;
 import com.youngtube.demo.mapper.CategoryMapper;
@@ -69,6 +70,14 @@ public class VideoServiceImpl implements VideoService
         {
             (videos.get(i)).setVideoDanmuCount(danmuMapper.findDanmuCountByVideoId((videos.get(i)).getVideoId()));
         }
+        return videos;
+    }
+
+    @Override
+    public List<Video> searchVideos(int categoryId, String searchTex, int searchMode)
+    {
+        PageHelper.startPage(1,8);
+        List<Video>videos = videoMapper.findVideosBySearch(categoryId,searchTex,searchMode);
         return videos;
     }
 }
