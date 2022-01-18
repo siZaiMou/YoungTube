@@ -22,13 +22,11 @@
     <script th:inline="javascript">
         window.onload=function () {
             search2();
-            $(".img").click(function ()
-            {
-                alert("hello");
-            })
+            loadTopWords();
         }
+
     </script>
-    <script>
+    <script th:inline="javascript">
         function search2()//搜索相关
         {
             $('#search_text2').click(function() //搜索输入框点击
@@ -55,12 +53,44 @@
             $('#search_button2').click(function () //搜索按钮点击
             {
                 var txt=$("#search_text2").text();
-                if(txt=='输入搜索内容')
+                txt=txt.trim();
+                if(txt.length>0)
                 {
-                    $("#search_text2").text('');
+                    if(txt=='输入搜索内容')
+                    {
+                        $("#search_text2").text('');
+                    }
+                    location.href="/pages/toVideoList?searchText="+ txt;
                 }
-                location.href="/pages/toVideoList?searchText="+$("#search_text2").text();
+                else
+                {
+                    location.href="/pages/toIndex";
+                }
             });
+        }
+        //根据传递过来的参数name获取对应的值(地址栏)
+        function getParameter(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
+            var r = location.search.substr(1).match(reg);
+            if (r!=null) return (r[2]); return null;
+        }
+        function loadTopWords()
+        {
+            var txt=getParameter("searchText");
+
+            if(txt!=null&&txt.length>0)
+            {
+                $("#headwords").html("<p>"+decodeURI(txt)+"><span>搜索结果</span></p>");
+            }
+            else
+            {
+                if(getParameter("categoryId")!=null&&parseInt(getParameter("categoryId"))>0)
+                {
+                     var categorys=/*[[${video_categorys}]]*/'动画';
+                     var categoryName=categorys[parseInt(getParameter("categoryId"))-1].categoryName;
+                    $("#headwords").html("<p>"+categoryName+"区><span>视频列表</span></p>");
+                }
+            }
         }
     </script>
 </head>
@@ -69,7 +99,7 @@
 <div th:replace="/header.html::#header1"></div>
     <div class="page_one">
         <div class="contant">
-            <div class="crumbs">
+            <div id="headwords" class="crumbs">
                 <p>搜索关键字><span>搜索结果</span></p>
 
             </div>

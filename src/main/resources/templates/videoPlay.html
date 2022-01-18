@@ -1250,12 +1250,21 @@
         });
         $('#search_button2').click(function () //搜索按钮点击
         {
+
             var txt=$("#search_text2").text();
-            if(txt=='输入搜索内容')
+            txt=txt.trim();
+            if(txt.length>0)
             {
-                $("#search_text2").text('');
+                if(txt=='输入搜索内容')
+                {
+                    $("#search_text2").text('');
+                }
+                location.href="/pages/toVideoList?searchText="+ $("#search_text2").text();
             }
-            location.href="/pages/toVideoList?searchText="+$("#search_text2").text();
+            else
+            {
+                location.href="/pages/toIndex";
+            }
         });
     }
 </script>
@@ -1382,7 +1391,7 @@
                                 isPraise = flag;
                             });
                             $.ajaxSettings.async = true;
-                            if (isPraise == 'true') //已点赞,问题：typeof得到isPraise的数据类型为string,无法转为bool
+                            if (isPraise == 'true'||isPraise) //已点赞,问题：typeof得到isPraise的数据类型为string,无法转为bool
                             {
                                 $("#video_praise_count").css("color", "#00a1d6");
                                 $("#video_praise").click(function () {
@@ -1437,7 +1446,7 @@
                                 isCoin = flag;
                             });
                             $.ajaxSettings.async = true;
-                            if (isCoin == 'true') //已投币
+                            if (isCoin == 'true'||isCoin) //已投币
                             {
                                 $("#coin").css("color", "#00a1d6");
                                 $("#video_coin").click(function () {
@@ -1882,7 +1891,7 @@
                         var nowFans=/*[[${up.userFans}]]*/'2';
                         var nowFansCount=parseInt(nowFans);
 
-                        if (isFollow == 'true') {
+                        if (isFollow == 'true'||isFollow) {
                             $("#follow").html("<i class=\"van-icon-general_addto_s\"></i>\n" +
                                 "        已关注 <span>[[${up.userFans}]]</span>");
                             $("#follow").click(function () {

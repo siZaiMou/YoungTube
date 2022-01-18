@@ -87,11 +87,19 @@
         $('#search_button1').click(function () //搜索按钮点击
         {
             var txt=$("#search_text1").text();
-            if(txt=='输入搜索内容')
+            txt=txt.trim();
+            if(txt.length>0)
             {
-                $("#search_text1").text('');
+                if(txt=='输入搜索内容')
+                {
+                    $("#search_text1").text('');
+                }
+                location.href="/pages/toVideoList?searchText="+ $("#search_text1").text();
             }
-            location.href="/pages/toVideoList?searchText="+ $("#search_text1").text();
+            else
+            {
+                location.href="/pages/toIndex";
+            }
         });
     }
 
@@ -106,7 +114,7 @@
             </li>
             <span id="top_barr">
                 <li class="item" th:fragment="top_bar_ul" th:each="category:${categorys1}">
-                     <a class="link">
+                     <a class="link" th:href="|/pages/toVideoList?categoryId=${category.categoryId}|">
                          <div class="num">
                              <i>999+</i>
                          </div>
@@ -175,8 +183,8 @@
                     </div>
                 </a></li>
             </ul>
-            <a href="#" class="btn btn-prev">昨日</a> <a href="#"
-                                                       class="btn btn-next">一周</a>
+            <a href="#" class="btn btn-prev">更早</a> <a href="#"
+                                                       class="btn btn-next">刷新</a>
         </div>
     </div>
 </div>

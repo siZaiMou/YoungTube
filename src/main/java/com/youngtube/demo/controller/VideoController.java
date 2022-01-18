@@ -3,6 +3,7 @@ package com.youngtube.demo.controller;
 import com.github.pagehelper.PageInfo;
 import com.youngtube.demo.entity.User;
 import com.youngtube.demo.entity.Video;
+import com.youngtube.demo.entity.VideoCategory;
 import com.youngtube.demo.service.InteractionService;
 import com.youngtube.demo.service.UserService;
 import com.youngtube.demo.service.VideoService;
@@ -139,6 +140,7 @@ public class VideoController
     {
         List<Video>videoList = videoService.searchVideos(categoryId,searchTex,searchMode,currentPage);
         Map<Integer,User>ups = userService.findVideosUps(videoList);
+        List<VideoCategory> videoCategoryList = videoService.findAllCategory();
         PageInfo<Video> pageInfo = new PageInfo(videoList);
 //        for(int i=0;i<=pageInfo.getList().size();i++)
 //        {
@@ -146,6 +148,7 @@ public class VideoController
 //        }
         model.addAttribute("videos_page",pageInfo);
         model.addAttribute("video_ups",ups);
+        model.addAttribute("video_categorys",videoCategoryList);
         return "videoList";
     }
 }

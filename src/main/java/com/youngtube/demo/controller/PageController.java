@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
@@ -69,13 +66,13 @@ public class PageController
     }
 
     @RequestMapping("/getCategory1")
-    public String loadCategory1(Model model)
+    public String loadCategory1(Model model) //首页上方
     {
         model.addAttribute("categorys1",videoService.findAllCategory());
         return "index::top_bar_ul";
     }
 
-    @RequestMapping("/getCategory2")
+    @RequestMapping("/getCategory2") //首页右侧
     public String loadCategory2(Model model)
     {
         model.addAttribute("categorys2",videoService.findAllCategory());
@@ -95,6 +92,7 @@ public class PageController
         {
             categoryId=0;
         }
+        System.out.println("categoryId"+categoryId);
         String str = "forward:/video/loadVideoList?searchTex="+searchText+"&categoryId="+categoryId+"&searchMode="+searchMode+"&currentPage="+currentPage;
         return str;
     }
