@@ -3,12 +3,10 @@ package com.youngtube.demo.controller;
 import com.youngtube.demo.entity.User;
 import com.youngtube.demo.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -95,5 +93,11 @@ public class PageController
         System.out.println("categoryId"+categoryId);
         String str = "forward:/video/loadVideoList?searchTex="+searchText+"&categoryId="+categoryId+"&searchMode="+searchMode+"&currentPage="+currentPage;
         return str;
+    }
+
+    @RequestMapping("/toUserSpace")
+    public String toPersonSpace()
+    {
+        return "userSpace";
     }
 }

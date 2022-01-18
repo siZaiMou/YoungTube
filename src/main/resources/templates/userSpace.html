@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人主页</title>
+    <link rel="stylesheet" th:href="@{/notcommon/personspace/css/yk-base.css}">
+    <link rel="stylesheet" th:href="@{/notcommon/personspace/css/personal_index.css}">
+    <link rel="stylesheet" th:href="@{/notcommon/personspace/css/bootstrap.min.css}">
+
+    <link rel="stylesheet" th:href="@{/notcommon/personspace/css/reset1.css}">
+    <link rel="stylesheet" th:href="@{/notcommon/bilibiliIndex/css/common.css}">
+    <link rel="stylesheet" th:href="@{/notcommon/personspace/css/index11.css}">
+
+    <script type="text/javascript" th:src="@{/notcommon/personspace/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/notcommon/personspace/js/vue.min.js}"></script>
+    <script th:src="@{/common/js/jquery-3.3.1.js}"></script>
+
+    <style>
+        #bigbody {
+            background-image: url("/notcommon/personspace/img/海洋背景.png");
+        }
+
+        #layout_head {
+            background-image: url("/notcommon/personspace/img/头像背景.png");
+            background-repeat: no-repeat;
+        }
+
+        .weixin {
+            background-image: url("/notcommon/personspace/img/各类图标.png");
+            background-repeat: no-repeat;
+            background-position: 0px -112px;
+        }
+
+        .qzone {
+            background-image: url("/notcommon/personspace/img/各类图标.png");
+            background-repeat: no-repeat;
+            background-position: -32px -112px;
+        }
+
+        .weibo {
+            background-image: url("/notcommon/personspace/img/各类图标.png");
+            background-repeat: no-repeat;
+            background-position: -64px -112px;
+        }
+
+        #con_video_main_null {
+            background-image: url("/notcommon/personspace/img/nullvideo.png");
+            background-repeat: no-repeat;
+            background-position: center top;
+
+        }
+
+        #con_dynamic_null {
+            background-image: url("/notcommon/personspace/img/nulldynamic.png");
+            background-repeat: no-repeat;
+            background-position: 400px 100px;
+        }
+
+        #con_collect_null {
+            background-image: url("/notcommon/personspace/img/nullcollect.png");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .share_hand_code {
+            background-image: url("/notcommon/personspace/img/各类图标.png");
+            background-repeat: no-repeat;
+            background-position: -96px -112px;
+        }
+    </style>
+    <!--    顶部搜索栏-->
+    <script>
+        $(function () {
+            $("#search input").click(function () {
+                $("#search input").val("");
+            })
+            $("#icon_sub").hover(function () {
+                document.getElementById("img1").src = "/notcommon/personspace/img/信号1_hover.svg";
+            })
+            $("#icon_sub").mouseleave(function () {
+                document.getElementById("img1").src = "/notcommon/personspace/img/信号1.svg";
+            })
+            $("#icon_record").hover(function () {
+                document.getElementById("img2").src = "/notcommon/personspace/img/时钟_hover.svg";
+            })
+            $("#icon_record").mouseleave(function () {
+                document.getElementById("img2").src = "/notcommon/personspace/img/时钟.svg";
+            })
+            $("#icon_upload").hover(function () {
+                document.getElementById("img3").src = "/notcommon/personspace/img/向上-排序_hover.svg";
+            })
+            $("#icon_upload").mouseleave(function () {
+                document.getElementById("img3").src = "/notcommon/personspace/img/向上-排序.svg";
+            })
+            $("#icon_app").hover(function () {
+                document.getElementById("img4").src = "/notcommon/personspace/img/电脑%20pc%20显示器_hover.svg";
+            })
+            $("#icon_app").mouseleave(function () {
+                document.getElementById("img4").src = "/notcommon/personspace/img/电脑%20pc%20显示器.svg";
+            })
+        })
+    </script>
+
+    <!--    <script>-->
+    <!--        $(function () {-->
+    <!--            $("#share_hand").onmouseover(function () {-->
+    <!--                var ele=document.getElementById("share_panel");-->
+    <!--                ele.style.display = "none";-->
+    <!--            })-->
+    <!--        })-->
+    <!--    </script>-->
+    <script>
+
+        function video() {
+            $("#con_video").css("display", "block");
+            $("#con_dynamic").css("display", "none");
+            $("#con_collect").css("display", "none");
+        }
+
+        function dynamic() {
+            $("#con_video").css("display", "none");
+            $("#con_dynamic").css("display", "block");
+            $("#con_collect").css("display", "none");
+        }
+
+        function collect() {
+            $("#con_video").css("display", "none");
+            $("#con_dynamic").css("display", "none");
+            $("#con_collect").css("display", "block");
+        }
+
+        var uid = sessionStorage.getItem("userId");
+
+        function gettime(t){
+            var _time=new Date(t);
+            var   year=_time.getFullYear();//2017
+            var   month=_time.getMonth()+1;//7
+            var   date=_time.getDate();//10
+            var   hour=_time.getHours();//10
+            var   minute=_time.getMinutes();//56
+            var   second=_time.getSeconds();//15
+            return   year+"年"+month+"月"+date+"日   ";//这里自己按自己需要的格式拼接
+        }
+        // function check() {
+        //     var tag1;
+        //     var tag2;
+        //     var tag3;
+        //     var tagfans;
+        //
+        //
+        //     $.ajax({
+        //         url: "/searchusername",
+        //         type: "post",
+        //         dataType: "text",
+        //         data: {
+        //             'userId': uid
+        //         },
+        //         success: function (data) {
+        //             console.log(data);
+        //             $("#user_name a").html(data);
+        //         }
+        //     })
+        //
+        //     $.ajax({
+        //         url: "/searchuserintro",
+        //         type: "post",
+        //         dataType: "text",
+        //         data: {
+        //             'userId': uid
+        //         },
+        //         success: function (data){
+        //                 $("#user_intro .user_intro").html(data);
+        //         }
+        //     })
+        //
+        //     $.ajax({
+        //         url: "/searchfacepic",
+        //         type: "post",
+        //         dataType: "text",
+        //         data: {
+        //             'userId': uid
+        //         },
+        //         success: function (data){
+        //             console.log(111111111111)
+        //             console.log(data);
+        //             if (data==""){
+        //                 $("#head_pic img").attr("src", "image/用户头像未登录80-80.png");
+        //             }else {
+        //                 $("#head_pic img").attr("src", data.facePic);
+        //             }
+        //             if (data==""){
+        //                 $("#icon_avatar img").attr("src", "image/用户头像未登录80-80.png");
+        //             }else {
+        //                 $("#icon_avatar img").attr("src", data.facePic);
+        //             }
+        //         }
+        //     })
+        //
+        //     $.ajax({
+        //         url: "/searchuserurl",
+        //         type: "post",
+        //         dataType: "text",
+        //         data: {
+        //             'userId': uid
+        //         },
+        //         success: function (data){
+        //             $("#share_link a").html(data);
+        //         }
+        //     })
+        //
+        //     $.ajax({
+        //         url: "/searchvideo",
+        //         type: "post",
+        //         dataType: "text",
+        //         data: {
+        //             'userId': uid
+        //         },
+        //         success: function (data) {
+        //             tag1 = data;
+        //             $("#con_video_hd_title h4 span").html(data);
+        //             if (tag1 == 0) {
+        //                 $("#con_video_main_null").css("display", "block");
+        //                 $("#con_video_main_nonull").css("display", "none");
+        //             } else {
+        //                 $("#con_video_main_null").css("display", "none");
+        //                 $("#con_video_main_nonull").css("display", "block");
+        //             }
+        //         }
+        //     })
+        //
+        //     $.ajax({
+        //         url: "/showAllvideo",
+        //         type: "post",
+        //         dataType: "json",
+        //         data: {
+        //             'userId': uid
+        //         },
+        //         success: function (data) {
+        //             console.log(data);
+        //             var vi = [];
+        //             for (i = 0; i < data.length; i++) {
+        //                 vi = data[i];
+        //                 vi.videoCreateTime=gettime(vi.videoCreateTime);
+        //                 var $ls = $("<div class=\"per_video\">\n" +
+        //                     "                                <div class=\"per_video_pic\">\n" +
+        //                     "                                <a href=\"movie.html?videoId="+vi.videoId+"\"><img src=\""+vi.videoPicMov.videoPic+"\" style=\"width: 100%; height: 100%; float: left\"></a>\n" +
+        //                     "                                </div>\n" +
+        //                     "                                <div class=\"per_video_title\"><span>"+vi.videoDescript+"</span></div>\n" +
+        //                     "                                <div class=\"per_video_time\"><span>"+vi.videoCreateTime+"</span></div>\n" +
+        //                     "                            </div>"
+        //                 )
+        //                 $("#con_video_main_nonull").append($ls);
+        //                 // image/videoPic.png
+        //             }
+        //         }
+        //     })
+        //
+        //     $.ajax({
+        //         url: "/searchdynamic",
+        //         type: "post",
+        //         dataType: "text",
+        //         data: {
+        //             'userId': uid
+        //         },
+        //         success: function (data) {
+        //             tag2 = data;
+        //             if (tag2 == 0) {
+        //                 $("#con_dynamic_null").css("display", "block");
+        //                 $("#con_dynamic_nonull").css("display", "none");
+        //             } else {
+        //                 $("#con_dynamic_null").css("display", "none");
+        //                 $("#con_dynamic_nonull").css("display", "block");
+        //             }
+        //         }
+        //     })
+        //
+        //     $.ajax({
+        //         url: "/searchcollect",
+        //         type: "post",
+        //         dataType: "text",
+        //         data: {
+        //             'userId': uid
+        //         },
+        //         success: function (data) {
+        //             tag3 = data;
+        //             if (tag3 == 0) {
+        //                 $("#con_collect_null").css("display", "block");
+        //                 $("#con_collect_nonull").css("display", "none");
+        //             } else {
+        //                 $("#con_collect_null").css("display", "none");
+        //                 $("#con_collect_nonull").css("display", "block");
+        //             }
+        //         }
+        //     })
+        //
+        //     $.ajax({
+        //         url: "/showAllcollect",
+        //         type: "post",
+        //         dataType: "json",
+        //         data: {
+        //             'userId': uid
+        //         },
+        //         success: function (data){
+        //             console.log(data);
+        //             var co = [];
+        //             for(i=0;i<data.length;i++){
+        //                 co = data[i];
+        //                 co.videoCreateTime=gettime(co.videoCreateTime);
+        //                 var $lc = $("<div class=\"per_collect\">\n" +
+        //                     "                            <div class=\"per_collect_video_pic\">\n" +
+        //                     "                                <a href=\"movie.html?videoId="+co.videoId+"\"><img src=\""+co.videoPicMov.videoPic+"\" style=\"width: 100%; height: 100%; float: left\"></a>\n" +
+        //                     "                            </div>\n" +
+        //                     "                            <div class=\"per_collect_video_title\"><span>"+co.videoDescript+"</span></div>\n" +
+        //                     "                            <div class=\"per_collect_video_time\"><span>"+co.videoCreateTime+"</span></div>\n" +
+        //                     "                        </div>")
+        //                 $("#con_collect_nonull").append($lc);
+        //             }$("")
+        //         }
+        //     })
+        //
+        //
+        //     $.ajax({
+        //         url: "/searchfans",
+        //         type: "post",
+        //         dataType: "text",
+        //         data: {
+        //             // 'userName':$("#user_name a").html()
+        //             'userId': uid
+        //         },
+        //         success: function (data) {
+        //             console.log($("#user_name a").html())
+        //             tagfans = data;
+        //             console.log(data);
+        //             $(".fans_num:eq(0) em").html(data);
+        //             console.log(data);
+        //         }
+        //     })
+        //     $.ajax({
+        //         url: "/searchidol",
+        //         type: "post",
+        //         dataType: "text",
+        //         data: {
+        //             // 'userName':$("#user_name a").html()
+        //             'userId': uid
+        //         },
+        //         success: function (data) {
+        //             console.log($("#user_name a").html())
+        //             tagfans = data;
+        //             console.log(data);
+        //             $(".fans_num:eq(1) em").html(data);
+        //             console.log(data);
+        //         }
+        //     })
+        //
+        // }
+
+
+    </script>
+
+</head>
+<body id="bigbody" onload="check()">
+<div id="body">
+    <div th:replace="/header.html::#header1"></div>
+    <div id="s_body">
+        <div id="cont">
+            <div id="layout_head">
+                <div id="head_pic">
+                    <img src="/notcommon/personspace/img/头像.png" width="130" height="130">
+                </div>
+                <div id="head_share">
+                </div>
+                <div id="user_info">
+                    <div id="user_name">
+                        <a class="user_name" href="#">ring89672</a>
+                    </div>
+                    <div id="user_intro">
+                        <span class="user_intro">暂无简介</span>
+                    </div>
+                    <div id="user_fans">
+                        <ul>
+                            <li class="fans_num">
+                                <em style="font-size: larger">0</em>
+                                <br>
+                                粉丝数
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="user_focus">
+                        <ul>
+                            <li class="fans_num">
+                                <em style="font-size: larger">0</em>
+                                <br>
+                                关注数
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="layout_nav">
+                <ul id="nav_menu">
+                    <a class="nav_menu" href="javascript:void(0);" onclick="video();">投稿</a>
+                    <a class="nav_menu" href="javascript:void(0);" onclick="dynamic()">动态</a>
+                    <a class="nav_menu" href="javascript:void(0);" onclick="collect()">收藏</a>
+                </ul>
+                <form id="per_search">
+                    <input class="search" type="text" placeholder="搜索视频" style="height: 20px;border: 0px">
+                    <button type="submit" class="search_button">
+                        <span class="glyphicon glyphicon-search"
+                              style="color: rgb(0, 0, 0); font-size: 21px;background-color: white"></span>
+                    </button>
+                </form>
+            </div>
+            <div id="layout_content">
+                <div id="con_video">
+                    <div id="con_video_hd">
+                        <div id="con_video_hd_title">
+                            <h4>视频(<span>0</span>)</h4>
+                        </div>
+                        <div id="con_video_hd_up">
+                            <!--                            <li style="float: left; ">上传视频：</li>-->
+                            <!--                            <form>-->
+                            <!--                                <input type="file" style="width: 73px; height: 26px; float: right">-->
+                            <!--                            </form>-->
+                            <a href="video_upload.html"
+                               style="text-decoration: none;">上传视频></a>
+                        </div>
+                    </div>
+                    <div id="con_video_main">
+                        <div id="con_video_main_null">
+                            您还没有上传过视频！
+                        </div>
+                        <div id="con_video_main_nonull">
+
+                            <div class="per_video">
+                                <div class="per_video_pic">
+                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
+                                </div>
+                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
+                                <div class="per_video_time"><span>78979489</span></div>
+                            </div>
+                            <div class="per_video">
+                                <div class="per_video_pic">
+                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
+                                </div>
+                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
+                                <div class="per_video_time"><span>78979489</span></div>
+                            </div>
+                            <div class="per_video">
+                                <div class="per_video_pic">
+                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
+                                </div>
+                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
+                                <div class="per_video_time"><span>78979489</span></div>
+                            </div>
+                            <div class="per_video">
+                                <div class="per_video_pic">
+                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
+                                </div>
+                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
+                                <div class="per_video_time"><span>78979489</span></div>
+                            </div>
+                            <div class="per_video">
+                                <div class="per_video_pic">
+                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
+                                </div>
+                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
+                                <div class="per_video_time"><span>78979489</span></div>
+                            </div>
+                            <div class="per_video">
+                                <div class="per_video_pic">
+                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
+                                </div>
+                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
+                                <div class="per_video_time"><span>78979489</span></div>
+                            </div>
+                            <div class="per_video">
+                                <div class="per_video_pic">
+                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
+                                </div>
+                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
+                                <div class="per_video_time"><span>78979489</span></div>
+                            </div>
+                            <div class="per_video">
+                                <div class="per_video_pic">
+                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
+                                </div>
+                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
+                                <div class="per_video_time"><span>78979489</span></div>
+                            </div>
+
+                            </div>
+
+
+                        </div>
+                                                <div id="con_video_main_upvideo"></div>
+                    </div>
+
+                <div id="con_dynamic">
+                    <div id="con_dynamic_null">
+                        您还未发表过动态！
+                    </div>
+                    <div id="con_dynamic_nonull">
+
+                        <div id="per_dynamic_cards">
+                            <div id="per_dynamic_card">
+                                <div id="per_dynamic_card_head">
+                                    <div id="per_dynamic_card_head_pic">
+                                        <img src="/notcommon/personspace/img/头像.png" width="75" height="75" style="float: left">
+                                    </div>
+                                    <div id="per_dynamic_card_head_username">
+                                        <span>ring89672</span>
+                                    </div>
+                                    <div id="per_dynamic_card_head_time">
+                                        <span>2019-09-19</span>
+                                    </div>
+                                </div>
+                                <div id="per_dynamic_card_con">
+                                    <span>哈哈哈，今天真开心！！！</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="con_collect">
+                    <div id="con_collect_null">
+                        您的收藏为空！
+                    </div>
+                    <div id="con_collect_nonull">
+
+                        <div class="per_collect">
+                            <div class="per_collect_video_pic">
+                                <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
+                            </div>
+                            <div class="per_collect_video_title"><span>宁宁宁宁宁宁宁宁宁</span></div>
+                            <div class="per_collect_video_time"><span>收藏时间:</span></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    <div id="s_footer">footer-->
+
+<!--    </div>-->
+</div>
+</body>
+</html>

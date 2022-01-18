@@ -1,0 +1,447 @@
+#body{
+    width: 1209px;
+    height: 1125px;
+    text-align: center;
+    margin: 0 auto;
+}
+#s_body{
+    width: 1209px;
+    height: 935px;
+    /*background-color: darkgray;*/
+    float: left;
+    margin-top: 120px;
+}
+#cont{
+    width: 1080px;
+    height: 935px;
+    /*background-color: cadetblue;*/
+    text-align: center;
+    margin: 0 auto;
+}
+#layout_head{
+    width: 1080px;
+    height: 250px;
+    background-color: white;
+}
+#head_pic{
+    width: 130px;
+    height: 130px;
+    background-color: #f4f4f4;
+    float: left;
+    border-radius: 50%;
+    border: 3px solid #eee;
+    overflow: hidden;
+    margin-top: 100px;
+}
+#user_info{
+    width: 900px;
+    height: 78px;
+    /*background-color: white;*/
+    float: left;
+    margin-top: 6px;
+}
+#user_name{
+    width: 480px;
+    height: 33px;
+    /*background-color: #888888;*/
+    float: left;
+}
+#user_name .user_name{
+    text-decoration: none;
+    color: #5bc0de;
+    font-size: 25px;
+    float: left;
+}
+#user_intro{
+    width: 460px;
+    height: 20px;
+    /*background-color: #888888;*/
+    float: left;
+    margin-top: 10px;
+}
+#user_intro .user_intro{
+    float: left;
+}
+#user_fans{
+    width: 45px;
+    height: 45px;
+    /*background-color: #cccccc;*/
+    float: right;
+    margin-top: -20px;
+}
+.fans_num{
+    text-align: center;
+}
+#user_focus{
+    width: 45px;
+    height: 45px;
+    /*background-color: #cccccc;*/
+    float: right;
+    margin-top: -20px;
+    margin-right: 10px;
+}
+#head_share{
+    width: 600px;
+    height: 154px;
+    /*background-color: darkgray;*/
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+#share_link{
+    width: 290px;
+    height: 24px;
+    background-color: white;
+    float: left;
+    margin-top: 0px;
+    margin-left: 245px;
+    border-radius: 5px;
+}
+#share_hand{
+    width: 550px;
+    height: 145px;
+    /*background-color: white;*/
+    float: right;
+    margin-top: 4px;
+    /*border-radius: 5px;*/
+}
+#share_part:hover #share_panel{
+    display: block;
+}
+.share_hand1{
+    float: left;
+    text-align: center;
+    margin-left: 491px;
+}
+.share_hand_code{
+    width: 13px;
+    height: 13px;
+    background-color: white;
+    float: right;
+    margin-right: 18px;
+    margin-top: 2px;
+}
+#share_panel{
+    width: 187px;
+    height: 140px;
+    background-color: white;
+    float: left;
+    margin-top: -143px;
+    margin-left: 304px;
+    display: none;
+    border-radius: 5px;
+}
+#share_code{
+    width: 110px;
+    height: 125px;
+    float: right;
+    margin-right: 15px;
+    font-size: large;
+    margin-top: 5px;
+}
+#share_list{
+    width: 30px;
+    height: 130px;
+    float: right;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+.weixin{
+    float: left;
+    width: 30px;
+    height: 30px;
+
+}
+.qzone{
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin-top: 20px;
+}
+.weibo{
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin-top: 20px;
+}
+#layout_nav{
+    width: 1080px;
+    height: 60px;
+    background-color: white;
+    border:1px solid #ededed;
+}
+#nav_menu{
+    width: 300px;
+    height: 58px;
+    background-color: white;
+    font-size: 30px;
+    padding-top: 10px;
+    float: left;
+}
+#nav_menu .nav_menu{
+    padding: 15px;
+    text-decoration: none;
+}
+#per_search{
+    width: 205px;
+    height: 24px;
+    background-color: white;
+    float: right;
+    margin-top: 15px;
+    margin-right: 20px;
+    border:1px solid darkgray;
+}
+#per_search .search{
+    width: 176px;
+    height: 24px;
+    float: left;
+    outline: none;
+}
+#per_search .search_button{
+    float: right;
+}
+#layout_content{
+    width: 1080px;
+    height: 615px;
+    background-color: white;
+    float: left;
+    margin-top: 5px;
+    border:1px solid #ededed;
+}
+#con_video{
+    width: 1080px;
+    height: 600px;
+    background-color: white;
+    text-align: center;
+    margin: 0 auto;
+}
+#con_video_hd{
+    width: 1050px;
+    height: 50px;
+    /*background-color: #cccccc;*/
+    text-align: center;
+    margin: 0 auto;
+}
+#con_video_hd_title{
+    width: 80px;
+    height: 40px;
+    /*background-color: #888888;*/
+    float: left;
+}
+#con_video_hd_up{
+    width: 145px;
+    height: 26px;
+    /*background-color: #888888;*/
+    float: right;
+    margin-top:12px;
+}
+#con_video_hd_up a{
+    color: black;
+}
+#con_video_hd_up a:hover{
+    color: #a94442;
+}
+#con_video_main{
+    width: 1050px;
+    height: 500px;
+    /*background-color: #888888;*/
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+#con_video_main_null{
+    width: 1000px;
+    height: 450px;
+    background-color: white;
+    text-align: center;
+    margin: 0 auto;
+    line-height: 500px;
+    padding-left: 20px;
+    color: #888888;
+    display: none;
+}
+#con_video_main_nonull{
+    width: 1000px;
+    height: 450px;
+    background-color: white;
+    text-align: center;
+    margin: 0 auto;
+    line-height: 500px;
+    padding-left: 20px;
+}
+/*#con_video_main_upvideo{*/
+/*    width: 1000px;*/
+/*    height: 450px;*/
+/*    background-color: white;*/
+/*    text-align: center;*/
+/*    margin: 0 auto;*/
+/*    line-height: 500px;*/
+/*    padding-left: 20px;*/
+/*}*/
+.per_video{
+    width: 205px;
+    height: 185px;
+    float: left;
+    margin-top: 10px;
+    box-shadow: #666666;
+}
+.per_video_pic{
+    width: 200px;
+    height: 140px;
+    float: left;
+}
+.per_video_title{
+    line-height:20px;
+    width: 200px;
+    height: 20px;
+    float: left;
+}
+.per_video_time{
+    font-size: small;
+    line-height:20px;
+    width: 200px;
+    height: 20px;
+    float: left;
+    font-size: 12px;
+    color: #BBBBBB;
+}
+#con_dynamic{
+    width: 1080px;
+    height: 600px;
+    background-color: white;
+    text-align: center;
+    margin: 0 auto;
+    display: none;
+}
+#con_dynamic_null{
+    width: 1000px;
+    height: 450px;
+    background-color: white;
+    text-align: center;
+    margin: 0 auto;
+    line-height: 500px;
+    padding-left: 20px;
+    color: #888888;
+    display: none;
+}
+#con_dynamic_nonull{
+    width: 1000px;
+    height: 450px;
+    /*background-color: #5bc0de;*/
+    text-align: center;
+    margin: 0 auto;
+    line-height: 500px;
+    padding-left: 20px;
+}
+#per_dynamic_cards{
+    width: 650px;
+    height: 1000px;
+    background-color: #afd9ee;
+    float: left;
+    margin-left: 150px;
+}
+#per_dynamic_card{
+    width: 632px;
+    height: 369px;
+    background-color: white;
+    float: left;
+    border: solid 1px black;
+}
+#per_dynamic_card_head{
+    width: 630px;
+    height: 80px;
+    /*background-color: #5cb85c;*/
+    float: left;
+}
+#per_dynamic_card_head_pic{
+    width: 75px;
+    height: 75px;
+    background-color: white;
+    float: left;
+}
+#per_dynamic_card_head_username{
+    line-height: 20px;
+    width: 90px;
+    height: 30px;
+    float: right;
+    background-color: white;
+    margin-right: 460px;
+}
+#per_dynamic_card_head_time{
+    line-height: 20px;
+    width: 120px;
+    height: 30px;
+    float: right;
+    background-color: white;
+    margin-top: 10px;
+    margin-right: 430px;
+}
+#per_dynamic_card_con{
+    line-height: 120px;
+    width: 630px;
+    height: 270px;
+    float: left;
+    margin-top: 5px;
+    border: solid 1px gray;
+}
+#con_collect{
+    width: 1080px;
+    height: 600px;
+    background-color: white;
+    text-align: center;
+    margin: 0 auto;
+    display: none;
+}
+#con_collect_null{
+    width: 1000px;
+    height: 450px;
+    background-color: white;
+    text-align: center;
+    margin: 0 auto;
+    line-height: 800px;
+    padding-left: 20px;
+    color: #888888;
+    display: none;
+}
+#con_collect_nonull{
+    width: 1000px;
+    height: 450px;
+    background-color: white;
+    text-align: center;
+    margin: 0 auto;
+    line-height: 800px;
+    padding-left: 20px;
+}
+.per_collect{
+    width: 205px;
+    height: 185px;
+    float: left;
+    margin-top: 10px;
+}
+.per_collect_video_pic{
+    width: 200px;
+    height: 145px;
+    float: left;
+}
+.per_collect_video_title{
+    line-height:20px;
+    width: 200px;
+    height: 20px;
+    float: left;
+}
+.per_collect_video_time{
+    line-height:20px;
+    font-size: small;
+    width: 200px;
+    height: 20px;
+    float: left;
+    font-size: 12px;
+    color: #BBBBBB;
+}
+#s_footer{
+    width: 1140px;
+    height: 50px;
+    background-color: #5cb85c;
+    float: left;
+    margin-left: 35px;
+}
