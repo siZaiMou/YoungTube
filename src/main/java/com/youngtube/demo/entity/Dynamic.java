@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class Dynamic
 {
-    private int dynamicId;
+    private int dynamicId=0;
     private int userId;
     private String dynamicContent;
     private int dynamicIsTop=0;//1为置顶

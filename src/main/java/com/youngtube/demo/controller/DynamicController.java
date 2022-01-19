@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -30,5 +31,12 @@ public class DynamicController
         model.addAttribute("space_user",user); //在userSpace.html中，space_dynamics碎片(th:fragment)无法获得外部model
         model.addAttribute("space_dynamics",dynamics);
         return "userSpace::space_dynamics";
+    }
+
+    @RequestMapping("/sendDynamic")
+    @ResponseBody
+    public void sendDynamic(Dynamic dynamic)
+    {
+        dynamicService.saveDynamic(dynamic);
     }
 }

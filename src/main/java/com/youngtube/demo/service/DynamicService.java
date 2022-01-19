@@ -7,4 +7,6 @@ import java.util.List;
 public interface DynamicService
 {
     List<Dynamic> findDynamicsByUserId(int userId);
+
+    void saveDynamic(Dynamic dynamic);
 }

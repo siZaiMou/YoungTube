@@ -7,6 +7,12 @@
         select *
         from `dynamic`
         where userId = #{userId}
+        order by dynamicDate desc
+    </select>
+
+    <select id="insertOneDynamic" parameterType="dynamic">
+        insert into `dynamic`
+        values (#{dynamicId}, #{userId}, #{dynamicContent}, #{dynamicIsTop}, #{dynamicDate})
     </select>
 
 </mapper>

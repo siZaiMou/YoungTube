@@ -131,13 +131,36 @@
                     </div>
                     <div class="pageNum">
                         <ul>
-                            <li><a href="">首页</a></li>
-                            <li class="threeword"><a href="#">上一页</a></li>
-                            <li th:each="pageIndex:${#numbers.sequence(1,videos_page.pages)}" th:if="${videos_page.pages>0}"><a href="#">[[${pageIndex}]]</a></li>
-                            <li class="threeword"><a href="javascript:;">下一页</a></li>
-                            <li class="threeword"><a href="javascript:;">末页</a></li>
+                            <li><a href="" onclick="loadPageVideoList(1)">首页</a></li>
+                            <li class="threeword"><a href="#" th:onclick="|loadPageVideoList(${videos_page.pageNum}-1)|">上一页</a></li>
+                            <li th:each="pageIndex:${#numbers.sequence(1,videos_page.pages)}" th:if="${videos_page.pages>0}"><a th:onclick="|loadPageVideoList(${pageIndex})|" href="#">[[${pageIndex}]]</a></li>
+                            <li class="threeword"><a href="javascript:;" th:onclick="|loadPageVideoList(${videos_page.pageNum} + 1)|">下一页</a></li>
+                            <li class="threeword"><a href="javascript:;" th:onclick="|loadPageVideoList(${videos_page.pages})|">末页</a></li>
                         </ul>
                     </div>
+                    <script th:inline="javascript">
+                        function loadPageVideoList(pageNum) //换页
+                        {
+                            var nowPage=/*[[${videos_page.pageNum}]]*/'1';
+                            nowPage=parseInt(nowPage);
+                            if(pageNum==nowPage)
+                            {
+                                return;
+                            }
+                            if(parseInt(pageNum)<=0)
+                            {
+                                pageNum=1;
+                            }
+                            var txt=decodeURI(getParameter("searchText"));
+                            if(txt!=null&&txt.length>0)
+                            {
+                                txt=txt.trim();
+                            }
+                            var categoryId=getParameter("categoryId");
+
+                            location.href="/pages/toVideoList?category="+categoryId+"&searchText="+txt+"&currentPage="+pageNum;
+                        }
+                    </script>
                 </div>
                 <div class="right">
                     <div class="top">

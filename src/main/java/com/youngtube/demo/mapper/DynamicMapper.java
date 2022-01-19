@@ -13,4 +13,6 @@ import java.util.List;
 public interface DynamicMapper
 {
     List<Dynamic> findDynamicsByUserId(@Param("userId")int userId);
+
+    void insertOneDynamic(Dynamic dynamic);
 }

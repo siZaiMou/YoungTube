@@ -2,7 +2,7 @@
 <html lang="ch" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!--    <script th:src="@{/notcommon/Homepage/js/jquery.min.js}"></script>-->
+    <!--    <script th:src="@{/notcommon/Homepage/js/jquery.min.js}"></script>-->
 
     <script th:src="@{/common/js/jquery-3.3.1.js}"></script>
     <link rel="stylesheet" th:href="@{/notcommon/Homepage/videoPlay/font/iconfont.css}">
@@ -1227,23 +1227,22 @@
 <script>
     function search2()//搜索相关
     {
-        $('#search_text2').click(function() //搜索输入框点击
+        $('#search_text2').click(function () //搜索输入框点击
         {
             $("#search_text2").text('');
         });
-        $('#search_text2').blur(function() //搜索输入框失去焦点
+        $('#search_text2').blur(function () //搜索输入框失去焦点
         {
-            var txt=$("#search_text2").text();
-            if(txt=='')
-            {
+            var txt = $("#search_text2").text();
+            if (txt == '') {
                 $("#search_text2").text('输入搜索内容');
             }
 
         });
-        $("#search_text2").on('keydown',function(event){ //搜索输入框回车
+        $("#search_text2").on('keydown', function (event) { //搜索输入框回车
             //获取keyCode
             var keyCode = event.keyCode;
-            if(keyCode===13){
+            if (keyCode === 13) {
                 $("#search_button2").click();
                 $("#search_text2").text('');
             }
@@ -1251,19 +1250,15 @@
         $('#search_button2').click(function () //搜索按钮点击
         {
 
-            var txt=$("#search_text2").text();
-            txt=txt.trim();
-            if(txt.length>0)
-            {
-                if(txt=='输入搜索内容')
-                {
+            var txt = $("#search_text2").text();
+            txt = txt.trim();
+            if (txt.length > 0) {
+                if (txt == '输入搜索内容') {
                     $("#search_text2").text('');
                 }
-                location.href="/pages/toVideoList?searchText="+ $("#search_text2").text();
-            }
-            else
-            {
-                location.href="/pages/toIndex";
+                location.href = "/pages/toVideoList?searchText=" + $("#search_text2").text();
+            } else {
+                location.href = "/pages/toIndex";
             }
         });
     }
@@ -1391,7 +1386,7 @@
                                 isPraise = flag;
                             });
                             $.ajaxSettings.async = true;
-                            if (isPraise == 'true'||isPraise) //已点赞,问题：typeof得到isPraise的数据类型为string,无法转为bool
+                            if (isPraise == 'true' || isPraise) //已点赞,问题：typeof得到isPraise的数据类型为string,无法转为bool
                             {
                                 $("#video_praise_count").css("color", "#00a1d6");
                                 $("#video_praise").click(function () {
@@ -1446,7 +1441,7 @@
                                 isCoin = flag;
                             });
                             $.ajaxSettings.async = true;
-                            if (isCoin == 'true'||isCoin) //已投币
+                            if (isCoin == 'true' || isCoin) //已投币
                             {
                                 $("#coin").css("color", "#00a1d6");
                                 $("#video_coin").click(function () {
@@ -1661,10 +1656,11 @@
                             </button>
                         </div>
                         <div class="wp" style="background-color: #E8E8E8" id="commentArea">
-                            <ul id="slider" class="slider">
+                            <ul id="slider" style="height:600px;overflow-y:scroll;" class="slider">
                                 <li th:fragment="comment_hot"
                                     th:each="singleComment,singleCommentStat:${videoComments_hot}">
-                                    <a class="fl" href=""><img
+                                    <a class="fl"
+                                       th:href="|/pages/toUserSpace/${commentUsers_hot[singleCommentStat.index].userId}|"><img
                                             th:src="|${commentUsers_hot[singleCommentStat.index].userHeadSrc}|" alt=""
                                             width="70px" ;height="70px"/></a>
                                     <p>[[${singleComment.commentContent}]]</p>
@@ -1794,9 +1790,8 @@
                                     <div class="opbtn"></div>
                                     <p class="story_t">[[${commentUsers_new[singleCommentStat.index].userPetName}]]<span
                                             style="margin-left: 85%;">
-							<button type="button" value="查看留言" id="huifu">查看回复</button>   <button type="button"
-                                                                                                  value="查看留言"
-                                                                                                  id="liuyan">我要留言</button></span>
+							<button type="button" value="查看留言" id="huifu">查看回复</button>
+                                        <button type="button" value="查看留言" id="liuyan">我要留言</button></span>
 
                                     </p>
                                     <p class="story_time">[[${#dates.format(singleComment.commentDate,'yyyy-MM-dd
@@ -1859,13 +1854,15 @@
 
                 <div class="u-info">
                     <div class="name" style="line-height:40px;height:40px;"><!----><a
-                            th:href="|/pages/toUserSpace/${up.userId}|" target="_blank" report-id="name" class="username">[[${up.userPetName}]]</a><a
+                            th:href="|/pages/toUserSpace/${up.userId}|" target="_blank" report-id="name"
+                            class="username">[[${up.userPetName}]]</a><a
                             href="//message.bilibili.com/#whisper/mid207539637" target="_blank" class="message"><i
                             class="van-icon-videodetails_messag"></i>发消息</a>
                     </div><!---->
                 </div>
                 <div class="btn-panel"><!---->
-                    <div class="default-btn follow-btn b-gz not-follow"><span id="follow"><i class="van-icon-general_addto_s"></i>
+                    <div class="default-btn follow-btn b-gz not-follow"><span id="follow"><i
+                            class="van-icon-general_addto_s"></i>
         关注 <span>[[${up.userFans}]]</span></span><!----><!---->
                     </div>
                 </div>
@@ -1888,10 +1885,10 @@
                             isFollow = flag;
                         });
                         $.ajaxSettings.async = true;
-                        var nowFans=/*[[${up.userFans}]]*/'2';
-                        var nowFansCount=parseInt(nowFans);
+                        var nowFans =/*[[${up.userFans}]]*/'2';
+                        var nowFansCount = parseInt(nowFans);
 
-                        if (isFollow == 'true'||isFollow) {
+                        if (isFollow == 'true' || isFollow) {
                             $("#follow").html("<i class=\"van-icon-general_addto_s\"></i>\n" +
                                 "        已关注 <span>[[${up.userFans}]]</span>");
                             $("#follow").click(function () {
@@ -1900,7 +1897,7 @@
                                     "followedUserId": followedUserId
                                 }, function (data) {
                                     $("#follow").html("<i class=\"van-icon-general_addto_s\"></i>\n" +
-                                        "        关注 <span>"+(nowFansCount-1)+"</span>");
+                                        "        关注 <span>" + (nowFansCount - 1) + "</span>");
                                     $("#follow").unbind("click");
                                 });
                             });
@@ -1913,7 +1910,7 @@
                                     "followedUserId": followedUserId
                                 }, function (data) {
                                     $("#follow").html("<i class=\"van-icon-general_addto_s\"></i>\n" +
-                                        "        已关注 <span>"+(nowFansCount+1)+"</span>");
+                                        "        已关注 <span>" + (nowFansCount + 1) + "</span>");
                                     $("#follow").unbind("click");
                                 });
                             });

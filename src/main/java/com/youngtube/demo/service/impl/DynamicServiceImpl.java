@@ -19,4 +19,10 @@ public class DynamicServiceImpl implements DynamicService
     {
         return dynamicMapper.findDynamicsByUserId(userId);
     }
+
+    @Override
+    public void saveDynamic(Dynamic dynamic)
+    {
+        dynamicMapper.insertOneDynamic(dynamic);
+    }
 }

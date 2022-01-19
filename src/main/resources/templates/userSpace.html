@@ -111,7 +111,8 @@
     <!--    </script>-->
     <script th:inline="javascript">
 
-        var spaceUserId=/*[[${space_user.userId}]]*/'3';
+        var spaceUserId =/*[[${space_user.userId}]]*/'3';
+
         function video() {
             $("#con_video").css("display", "block");
             $("#con_dynamic").css("display", "none");
@@ -119,7 +120,6 @@
         }
 
         function dynamic() {
-            //$("#con_dynamic_nonull").load("/dynamic/loadDynamicsByUserId/"+spaceUserId);
             $("#con_video").css("display", "none");
             $("#con_dynamic").css("display", "block");
             $("#con_collect").css("display", "none");
@@ -144,9 +144,9 @@
         }
 
         function check() {
-            var tag1=/*[[${space_user.upVideoNum}]]*/'0';
-            var spaceUserId=/*[[${space_user.userId}]]*/'3';
-            tag1=parseInt(tag1);
+            var tag1 =/*[[${space_user.upVideoNum}]]*/'0';
+            var spaceUserId =/*[[${space_user.userId}]]*/'3';
+            tag1 = parseInt(tag1);
             var tag2;
             var tag3;
             var tagfans;
@@ -158,8 +158,8 @@
                 $("#con_video_main_null").css("display", "none");
                 $("#con_video_main_nonull").css("display", "block");
             }
-            $("#con_video_main_nonull").load("/video/loadVideosByUserId/"+spaceUserId);
-            $("#per_dynamic_cards").load("/dynamic/loadDynamicsByUserId/"+spaceUserId);
+            $("#con_video_main_nonull").load("/video/loadVideosByUserId/" + spaceUserId);
+            $("#per_dynamic_cards").load("/dynamic/loadDynamicsByUserId/" + spaceUserId);
 
 
             $.ajax({
@@ -276,7 +276,7 @@
                             <!--                            <form>-->
                             <!--                                <input type="file" style="width: 73px; height: 26px; float: right">-->
                             <!--                            </form>-->
-                            <a href="video_upload.html"
+                            <a th:if="|${session.nowUser.userId == space_user.userId}|" href="video_upload.html"
                                style="text-decoration: none;">上传视频></a>
                         </div>
                     </div>
@@ -293,7 +293,9 @@
                                     </a>
                                 </div>
                                 <div class="per_video_title"><span>[[${singleVideo.videoName}]]</span>></div>
-                                <div class="per_video_time"><span th:text="${#dates.format(singleVideo.videoIssuingTime,'yyyy-MM-dd HH:mm:ss')}">2001:01:01 11:11:11</span></div>
+                                <div class="per_video_time"><span
+                                        th:text="${#dates.format(singleVideo.videoIssuingTime,'yyyy-MM-dd HH:mm:ss')}">2001:01:01 11:11:11</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -305,10 +307,11 @@
                         您还未发表过动态！
                     </div>
                     <div id="con_dynamic_nonull">
-                        <a href="video_upload.html"
-                           style="margin-top: 10px;float:right;line-height: 20px;">发布动态></a>
+                        <a th:if="|${session.nowUser.userId == space_user.userId}|" style="margin-top: 10px;float:right;line-height: 20px;"
+                           onclick="popDiv();">发布动态</a>
                         <div id="per_dynamic_cards">
-                            <div id="per_dynamic_card" th:fragment="space_dynamics" th:each="singleDynamic:${space_dynamics}">
+                            <div id="per_dynamic_card" th:fragment="space_dynamics"
+                                 th:each="singleDynamic:${space_dynamics}">
                                 <div id="per_dynamic_card_head">
                                     <div id="per_dynamic_card_head_pic">
                                         <img th:src="${space_user.userHeadSrc}" width="75" height="75"
@@ -325,40 +328,73 @@
                                     <span style="float:left;margin-left: 20px">[[${singleDynamic.dynamicContent}]]</span>
                                 </div>
                                 <div class="per_dynamic_card_interaction">
-                                   <a style="float:left;">点赞(1)</a>
+                                    <a style="float:left;">点赞(1)</a>
                                     <a>评论</a>
                                     <a style="float:right;">转发</a>
                                 </div>
-
-
-
                             </div>
                         </div>
+                        <div id="popDiv">
+                            <div class="close">
+                                <a href="javascript:void(0)" onclick="closePop()">关闭</a>
+                            </div>
+                            <p>请输入动态内容
+                                <textarea id="dynamicContent" style="size: auto;line-height: 160px"></textarea>
+                                <button onclick="sendDynamic();" style=" text-align: right; margin-top: 25px;background-color: #F8F8F8;line-height: 20px" value="发布">
+                                    发布
+                                </button>
+                            </p>
+                        </div>
+                        <script type="text/javascript" th:inline="javascript">
+                            function popDiv() {
+                                // 获取div元素
+                                var popBox = document.getElementById("popDiv");
+                                var popLayer = document.getElementById("popLayer");
+
+                                // 控制两个div的显示与隐藏
+                                popBox.style.display = "block";
+                                popLayer.style.display = "block";
+                            }
+                            function closePop() {
+                                // 获取弹出窗口元素
+                                let popDiv = document.getElementById("popDiv");
+
+                                popDiv.style.display = "none";
+                            }
+                            function sendDynamic()
+                            {
+                                var spaceUserId =/*[[${space_user.userId}]]*/'3';
+                                var dynamicContent = $("#dynamicContent").val();
+                                $.post("/dynamic/sendDynamic",{"userId":spaceUserId,"dynamicContent":dynamicContent});
+                                alert("发布成功");
+                                closePop();
+                                $("#con_dynamic_nonull").load("/dynamic/loadDynamicsByUserId/"+spaceUserId);
+                            }
+                        </script>
                     </div>
                 </div>
-                <div id="con_collect">
-                    <div id="con_collect_null">
-                        您的收藏为空！
-                    </div>
-                    <div id="con_collect_nonull">
+            <div id="con_collect">
+                <div id="con_collect_null">
+                    您的收藏为空！
+                </div>
+                <div id="con_collect_nonull">
 
-                        <div class="per_collect">
-                            <div class="per_collect_video_pic">
-                                <img src="/notcommon/personspace/img/videoPic.png"
-                                     style="width: 100%; height: 100%; float: left">
-                            </div>
-                            <div class="per_collect_video_title"><span>宁宁宁宁宁宁宁宁宁</span></div>
-                            <div class="per_collect_video_time"><span>收藏时间:</span></div>
+                    <div class="per_collect">
+                        <div class="per_collect_video_pic">
+                            <img src="/notcommon/personspace/img/videoPic.png"
+                                 style="width: 100%; height: 100%; float: left">
                         </div>
-
+                        <div class="per_collect_video_title"><span>宁宁宁宁宁宁宁宁宁</span></div>
+                        <div class="per_collect_video_time"><span>收藏时间:</span></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--    <div id="s_footer">footer-->
+</div>
+<!--    <div id="s_footer">footer-->
 
-    <!--    </div>-->
+<!--    </div>-->
 </div>
 </body>
 </html>

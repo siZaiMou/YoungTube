@@ -443,7 +443,7 @@
     line-height: 20px;
     width: 200px;
     height: 20px;
-    margin-left:160px;
+    margin-left: 160px;
 }
 
 #con_collect {
@@ -481,7 +481,7 @@
     width: 205px;
     height: 185px;
     float: left;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .per_collect_video_pic {
@@ -513,4 +513,35 @@
     background-color: #5cb85c;
     float: left;
     margin-left: 35px;
+}
+
+
+#popDiv{
+    display: none;
+    background-color: pink;
+    z-index: 11;
+    width: 600px;
+    height: 600px;
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    margin:auto;
+}
+/* 关闭按钮样式 */
+#popDiv .close a {
+    text-decoration: none;
+    color: #2D2C3B;
+}
+/* 弹出界面的关闭按钮 */
+#popDiv .close{
+    text-align: right;
+    margin-right: 5px;
+    background-color: #F8F8F8;
+}
+#popDiv p{
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
 }
