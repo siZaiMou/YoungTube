@@ -54,4 +54,10 @@
           and followedUserId = #{followedUserId}
     </delete>
 
+    <select id="findUserFollowCount" resultType="java.lang.Integer">
+        select count(followedUserId)
+        from follow
+        where followUserId = #{userId}
+    </select>
+
 </mapper>

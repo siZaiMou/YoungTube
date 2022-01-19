@@ -2,10 +2,12 @@ package com.youngtube.demo.controller;
 
 import com.youngtube.demo.entity.User;
 import com.youngtube.demo.service.UserService;
+import com.youngtube.demo.service.VideoService;
 import io.netty.handler.codec.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +23,9 @@ public class UserController
 {
     @Autowired
     UserService userService;
+
+    @Autowired
+    VideoService videoService;
 
     @RequestMapping("/regist")
     public String userRegist(User user)
@@ -78,5 +83,16 @@ public class UserController
     public void cancelFollow(int followUserId,int followedUserId)
     {
         userService.cancelFollow(followUserId,followedUserId);
+    }
+
+    @RequestMapping("/loadUserSpace/{userId}")
+    public String loadUserSpace(@PathVariable("userId")int userId,Model model)
+    {
+        User user = userService.findOneByUserId(userId);
+        user.setUserFans(userService.findUserFansCount(userId));
+        user.setUserFollows(userService.findUserFollowCount(userId));
+        user.setUpVideoNum(videoService.findUserVideoCount(userId));
+        model.addAttribute("space_user",user);
+        return "userSpace";
     }
 }

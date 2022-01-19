@@ -73,6 +73,7 @@ public class VideoServiceImpl implements VideoService
         return videos;
     }
 
+    //视频搜索
     @Override
     public List<Video> searchVideos(int categoryId, String searchTex, int searchMode,int currentPage)
     {
@@ -84,5 +85,19 @@ public class VideoServiceImpl implements VideoService
 //            System.out.println("helos"+i+" "+videos.get(i));
 //        }
         return videos;
+    }
+
+    //查询用户的投稿视频数
+    @Override
+    public Integer findUserVideoCount(int userId)
+    {
+        return videoMapper.findVideoCountByUserId(userId);
+    }
+
+    //查询用户的所有投稿视频
+    @Override
+    public List<Video> findVideoByUpId(int userId)
+    {
+        return videoMapper.findVideoByUserId(userId);
     }
 }

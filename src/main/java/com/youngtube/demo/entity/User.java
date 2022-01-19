@@ -26,4 +26,7 @@ public class User
     private Date registTime=new Date();
     private int userCoin = 20;
     private int userFans=0;//粉丝数
+    private int userFollows=0;//关注的人数
+    private int userPraise=0;//获赞量
+    private int upVideoNum=0;//视频投稿量
 }

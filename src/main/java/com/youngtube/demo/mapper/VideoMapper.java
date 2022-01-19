@@ -22,9 +22,13 @@ public interface VideoMapper
     //查询7条分区热榜视频
     List<Video> find7ByCategoryAndRank(int videoCategory);
 
-    Video findOneById(@Param("videoId")int videoId);
+    Video findOneById(@Param("videoId") int videoId);
 
     List<Video> find20WithVideoId();
 
-    List<Video> findVideosBySearch(@Param("categoryId")int categoryId, @Param("searchTex")String searchTex, @Param("searchMode")int searchMode);
+    List<Video> findVideosBySearch(@Param("categoryId") int categoryId, @Param("searchTex") String searchTex, @Param("searchMode") int searchMode);
+
+    Integer findVideoCountByUserId(@Param("userId") int userId);
+
+    List<Video> findVideoByUserId(@Param("userId")int userId);
 }

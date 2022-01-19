@@ -14,6 +14,13 @@
 </head>
 <body>
 <header id="header">
+    <script th:inline="javascript">
+        function toUserSpace()
+        {
+            var userId=/*[[${session.nowUser.userId}]]*/'3';
+            location.href="/pages/toUserSpace/"+userId;
+        }
+    </script>
     <div id="page_top">
         <div class="bg-wrap">
             <div class="bg"></div>
@@ -43,7 +50,7 @@
                     </div>
 
                     <div th:if="${session.nowUser.userId}>0" class="login-box">
-                        <img th:src="${session.nowUser.userHeadSrc}"
+                        <img th:src="${session.nowUser.userHeadSrc}" onclick="toUserSpace()"
                              style="margin-top: 7px; height: 30px;width: 30px;border-radius:50%;overflow: hidden">
 
                         <p class="login-box" onmouseout="asjdh()" onmouseover="project()"><a
@@ -94,6 +101,13 @@
 </header>
 
 <header id="header1">
+    <script th:inline="javascript">
+        function toUserSpace()
+        {
+            var userId=/*[[${session.nowUser.userId}]]*/'3';
+            location.href="/pages/toUserSpace/"+userId;
+        }
+    </script>
     <div id="page_top">
         <div class="bg-wrap">
             <div class="bg"></div>
@@ -123,7 +137,7 @@
                     </div>
 
                     <div th:if="${session.nowUser.userId}>0" class="login-box">
-                        <img th:src="${session.nowUser.userHeadSrc}"
+                        <img th:src="${session.nowUser.userHeadSrc}" onclick="toUserSpace()"
                              style="margin-top: 7px; height: 30px;width: 30px;border-radius:50%;overflow: hidden">
 
                         <p class="login-box" onmouseout="asjdh()" onmouseover="project()"><a

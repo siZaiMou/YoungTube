@@ -13,6 +13,7 @@
         <typeAlias type="com.youngtube.demo.entity.Video" alias="video"></typeAlias>
         <typeAlias type="com.youngtube.demo.entity.Danmu" alias="danmu"></typeAlias>
         <typeAlias type="com.youngtube.demo.entity.VideoComment" alias="videoComment"></typeAlias>
+        <typeAlias type="com.youngtube.demo.entity.Dynamic" alias="dynamic"></typeAlias>
     </typeAliases>
 
     <plugins>
@@ -28,6 +29,7 @@
         <mapper resource="com/youngtube/demo/mapper/DanmuMapper.xml"></mapper>
         <mapper resource="com/youngtube/demo/mapper/CommentMapper.xml"></mapper>
         <mapper resource="com/youngtube/demo/mapper/InteractionMapper.xml"></mapper>
+        <mapper resource="com/youngtube/demo/mapper/DynamicMapper.xml"></mapper>
     </mappers>
 
 </configuration>

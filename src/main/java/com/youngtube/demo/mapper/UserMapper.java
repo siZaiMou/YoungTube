@@ -26,4 +26,6 @@ public interface UserMapper
     void insertOneUserFollow(@Param("followUserId")int followUserId, @Param("followedUserId")int followedUserId, @Param("followDate")Date followDate,@Param("followMode")int mode);
 
     void deleteOneUserFollow(@Param("followUserId")int followUserId,@Param("followedUserId")int followedUserId);
+
+    Integer findUserFollowCount(@Param("userId")int userId);
 }

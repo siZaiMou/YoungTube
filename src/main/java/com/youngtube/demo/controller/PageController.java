@@ -95,9 +95,9 @@ public class PageController
         return str;
     }
 
-    @RequestMapping("/toUserSpace")
-    public String toPersonSpace()
+    @RequestMapping("/toUserSpace/{userId}")
+    public String toPersonSpace(@PathVariable("userId")int userId)
     {
-        return "userSpace";
+        return "forward:/user/loadUserSpace/"+userId;
     }
 }

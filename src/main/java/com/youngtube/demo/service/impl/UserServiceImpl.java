@@ -134,5 +134,12 @@ public class UserServiceImpl implements UserService
         return ups;
     }
 
+    //查询用户关注的up数
+    @Override
+    public Integer findUserFollowCount(int userId)
+    {
+        return userMapper.findUserFollowCount(userId);
+    }
+
 
 }

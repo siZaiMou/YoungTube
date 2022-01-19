@@ -136,7 +136,7 @@ public class VideoController
 
     //返回分区、查询得到的视频列表(同步)
     @RequestMapping("/loadVideoList")
-    public String toVideoList(int categoryId,String searchTex,int searchMode,int currentPage,Model model) //使用searchText作为参数名时，出现重复拼接问题
+    public String loadVideoList(int categoryId,String searchTex,int searchMode,int currentPage,Model model) //使用searchText作为参数名时，出现重复拼接问题
     {
         List<Video>videoList = videoService.searchVideos(categoryId,searchTex,searchMode,currentPage);
         Map<Integer,User>ups = userService.findVideosUps(videoList);
@@ -150,5 +150,14 @@ public class VideoController
         model.addAttribute("video_ups",ups);
         model.addAttribute("video_categorys",videoCategoryList);
         return "videoList";
+    }
+
+    //查询用户投稿的视频
+    @RequestMapping("/loadVideosByUserId/{userId}")
+    public String loadVideosByUserId(@PathVariable("userId")int userId,Model model)
+    {
+        List<Video>up_videos=videoService.findVideoByUpId(userId);
+        model.addAttribute("up_videos",up_videos);
+        return "userSpace::up_videos";
     }
 }

@@ -109,8 +109,9 @@
     <!--            })-->
     <!--        })-->
     <!--    </script>-->
-    <script>
+    <script th:inline="javascript">
 
+        var spaceUserId=/*[[${space_user.userId}]]*/'3';
         function video() {
             $("#con_video").css("display", "block");
             $("#con_dynamic").css("display", "none");
@@ -118,6 +119,7 @@
         }
 
         function dynamic() {
+            //$("#con_dynamic_nonull").load("/dynamic/loadDynamicsByUserId/"+spaceUserId);
             $("#con_video").css("display", "none");
             $("#con_dynamic").css("display", "block");
             $("#con_collect").css("display", "none");
@@ -129,230 +131,83 @@
             $("#con_collect").css("display", "block");
         }
 
-        var uid = sessionStorage.getItem("userId");
 
-        function gettime(t){
-            var _time=new Date(t);
-            var   year=_time.getFullYear();//2017
-            var   month=_time.getMonth()+1;//7
-            var   date=_time.getDate();//10
-            var   hour=_time.getHours();//10
-            var   minute=_time.getMinutes();//56
-            var   second=_time.getSeconds();//15
-            return   year+"年"+month+"月"+date+"日   ";//这里自己按自己需要的格式拼接
+        function gettime(t) {
+            var _time = new Date(t);
+            var year = _time.getFullYear();//2017
+            var month = _time.getMonth() + 1;//7
+            var date = _time.getDate();//10
+            var hour = _time.getHours();//10
+            var minute = _time.getMinutes();//56
+            var second = _time.getSeconds();//15
+            return year + "年" + month + "月" + date + "日   ";//这里自己按自己需要的格式拼接
         }
-        // function check() {
-        //     var tag1;
-        //     var tag2;
-        //     var tag3;
-        //     var tagfans;
-        //
-        //
-        //     $.ajax({
-        //         url: "/searchusername",
-        //         type: "post",
-        //         dataType: "text",
-        //         data: {
-        //             'userId': uid
-        //         },
-        //         success: function (data) {
-        //             console.log(data);
-        //             $("#user_name a").html(data);
-        //         }
-        //     })
-        //
-        //     $.ajax({
-        //         url: "/searchuserintro",
-        //         type: "post",
-        //         dataType: "text",
-        //         data: {
-        //             'userId': uid
-        //         },
-        //         success: function (data){
-        //                 $("#user_intro .user_intro").html(data);
-        //         }
-        //     })
-        //
-        //     $.ajax({
-        //         url: "/searchfacepic",
-        //         type: "post",
-        //         dataType: "text",
-        //         data: {
-        //             'userId': uid
-        //         },
-        //         success: function (data){
-        //             console.log(111111111111)
-        //             console.log(data);
-        //             if (data==""){
-        //                 $("#head_pic img").attr("src", "image/用户头像未登录80-80.png");
-        //             }else {
-        //                 $("#head_pic img").attr("src", data.facePic);
-        //             }
-        //             if (data==""){
-        //                 $("#icon_avatar img").attr("src", "image/用户头像未登录80-80.png");
-        //             }else {
-        //                 $("#icon_avatar img").attr("src", data.facePic);
-        //             }
-        //         }
-        //     })
-        //
-        //     $.ajax({
-        //         url: "/searchuserurl",
-        //         type: "post",
-        //         dataType: "text",
-        //         data: {
-        //             'userId': uid
-        //         },
-        //         success: function (data){
-        //             $("#share_link a").html(data);
-        //         }
-        //     })
-        //
-        //     $.ajax({
-        //         url: "/searchvideo",
-        //         type: "post",
-        //         dataType: "text",
-        //         data: {
-        //             'userId': uid
-        //         },
-        //         success: function (data) {
-        //             tag1 = data;
-        //             $("#con_video_hd_title h4 span").html(data);
-        //             if (tag1 == 0) {
-        //                 $("#con_video_main_null").css("display", "block");
-        //                 $("#con_video_main_nonull").css("display", "none");
-        //             } else {
-        //                 $("#con_video_main_null").css("display", "none");
-        //                 $("#con_video_main_nonull").css("display", "block");
-        //             }
-        //         }
-        //     })
-        //
-        //     $.ajax({
-        //         url: "/showAllvideo",
-        //         type: "post",
-        //         dataType: "json",
-        //         data: {
-        //             'userId': uid
-        //         },
-        //         success: function (data) {
-        //             console.log(data);
-        //             var vi = [];
-        //             for (i = 0; i < data.length; i++) {
-        //                 vi = data[i];
-        //                 vi.videoCreateTime=gettime(vi.videoCreateTime);
-        //                 var $ls = $("<div class=\"per_video\">\n" +
-        //                     "                                <div class=\"per_video_pic\">\n" +
-        //                     "                                <a href=\"movie.html?videoId="+vi.videoId+"\"><img src=\""+vi.videoPicMov.videoPic+"\" style=\"width: 100%; height: 100%; float: left\"></a>\n" +
-        //                     "                                </div>\n" +
-        //                     "                                <div class=\"per_video_title\"><span>"+vi.videoDescript+"</span></div>\n" +
-        //                     "                                <div class=\"per_video_time\"><span>"+vi.videoCreateTime+"</span></div>\n" +
-        //                     "                            </div>"
-        //                 )
-        //                 $("#con_video_main_nonull").append($ls);
-        //                 // image/videoPic.png
-        //             }
-        //         }
-        //     })
-        //
-        //     $.ajax({
-        //         url: "/searchdynamic",
-        //         type: "post",
-        //         dataType: "text",
-        //         data: {
-        //             'userId': uid
-        //         },
-        //         success: function (data) {
-        //             tag2 = data;
-        //             if (tag2 == 0) {
-        //                 $("#con_dynamic_null").css("display", "block");
-        //                 $("#con_dynamic_nonull").css("display", "none");
-        //             } else {
-        //                 $("#con_dynamic_null").css("display", "none");
-        //                 $("#con_dynamic_nonull").css("display", "block");
-        //             }
-        //         }
-        //     })
-        //
-        //     $.ajax({
-        //         url: "/searchcollect",
-        //         type: "post",
-        //         dataType: "text",
-        //         data: {
-        //             'userId': uid
-        //         },
-        //         success: function (data) {
-        //             tag3 = data;
-        //             if (tag3 == 0) {
-        //                 $("#con_collect_null").css("display", "block");
-        //                 $("#con_collect_nonull").css("display", "none");
-        //             } else {
-        //                 $("#con_collect_null").css("display", "none");
-        //                 $("#con_collect_nonull").css("display", "block");
-        //             }
-        //         }
-        //     })
-        //
-        //     $.ajax({
-        //         url: "/showAllcollect",
-        //         type: "post",
-        //         dataType: "json",
-        //         data: {
-        //             'userId': uid
-        //         },
-        //         success: function (data){
-        //             console.log(data);
-        //             var co = [];
-        //             for(i=0;i<data.length;i++){
-        //                 co = data[i];
-        //                 co.videoCreateTime=gettime(co.videoCreateTime);
-        //                 var $lc = $("<div class=\"per_collect\">\n" +
-        //                     "                            <div class=\"per_collect_video_pic\">\n" +
-        //                     "                                <a href=\"movie.html?videoId="+co.videoId+"\"><img src=\""+co.videoPicMov.videoPic+"\" style=\"width: 100%; height: 100%; float: left\"></a>\n" +
-        //                     "                            </div>\n" +
-        //                     "                            <div class=\"per_collect_video_title\"><span>"+co.videoDescript+"</span></div>\n" +
-        //                     "                            <div class=\"per_collect_video_time\"><span>"+co.videoCreateTime+"</span></div>\n" +
-        //                     "                        </div>")
-        //                 $("#con_collect_nonull").append($lc);
-        //             }$("")
-        //         }
-        //     })
-        //
-        //
-        //     $.ajax({
-        //         url: "/searchfans",
-        //         type: "post",
-        //         dataType: "text",
-        //         data: {
-        //             // 'userName':$("#user_name a").html()
-        //             'userId': uid
-        //         },
-        //         success: function (data) {
-        //             console.log($("#user_name a").html())
-        //             tagfans = data;
-        //             console.log(data);
-        //             $(".fans_num:eq(0) em").html(data);
-        //             console.log(data);
-        //         }
-        //     })
-        //     $.ajax({
-        //         url: "/searchidol",
-        //         type: "post",
-        //         dataType: "text",
-        //         data: {
-        //             // 'userName':$("#user_name a").html()
-        //             'userId': uid
-        //         },
-        //         success: function (data) {
-        //             console.log($("#user_name a").html())
-        //             tagfans = data;
-        //             console.log(data);
-        //             $(".fans_num:eq(1) em").html(data);
-        //             console.log(data);
-        //         }
-        //     })
-        //
-        // }
+
+        function check() {
+            var tag1=/*[[${space_user.upVideoNum}]]*/'0';
+            var spaceUserId=/*[[${space_user.userId}]]*/'3';
+            tag1=parseInt(tag1);
+            var tag2;
+            var tag3;
+            var tagfans;
+
+            if (tag1 == 0) {
+                $("#con_video_main_null").css("display", "block");
+                $("#con_video_main_nonull").css("display", "none");
+            } else {
+                $("#con_video_main_null").css("display", "none");
+                $("#con_video_main_nonull").css("display", "block");
+            }
+            $("#con_video_main_nonull").load("/video/loadVideosByUserId/"+spaceUserId);
+            $("#per_dynamic_cards").load("/dynamic/loadDynamicsByUserId/"+spaceUserId);
+
+
+            $.ajax({
+                url: "/searchcollect",
+                type: "post",
+                dataType: "text",
+                data: {
+                    'userId': uid
+                },
+                success: function (data) {
+                    tag3 = data;
+                    if (tag3 == 0) {
+                        $("#con_collect_null").css("display", "block");
+                        $("#con_collect_nonull").css("display", "none");
+                    } else {
+                        $("#con_collect_null").css("display", "none");
+                        $("#con_collect_nonull").css("display", "block");
+                    }
+                }
+            })
+
+            $.ajax({
+                url: "/showAllcollect",
+                type: "post",
+                dataType: "json",
+                data: {
+                    'userId': uid
+                },
+                success: function (data) {
+                    console.log(data);
+                    var co = [];
+                    for (i = 0; i < data.length; i++) {
+                        co = data[i];
+                        co.videoCreateTime = gettime(co.videoCreateTime);
+                        var $lc = $("<div class=\"per_collect\">\n" +
+                            "                            <div class=\"per_collect_video_pic\">\n" +
+                            "                                <a href=\"movie.html?videoId=" + co.videoId + "\"><img src=\"" + co.videoPicMov.videoPic + "\" style=\"width: 100%; height: 100%; float: left\"></a>\n" +
+                            "                            </div>\n" +
+                            "                            <div class=\"per_collect_video_title\"><span>" + co.videoDescript + "</span></div>\n" +
+                            "                            <div class=\"per_collect_video_time\"><span>" + co.videoCreateTime + "</span></div>\n" +
+                            "                        </div>")
+                        $("#con_collect_nonull").append($lc);
+                    }
+                    $("")
+                }
+            })
+
+        }
 
 
     </script>
@@ -365,21 +220,21 @@
         <div id="cont">
             <div id="layout_head">
                 <div id="head_pic">
-                    <img src="/notcommon/personspace/img/头像.png" width="130" height="130">
+                    <img th:src="${space_user.userHeadSrc}" width="130" height="130">
                 </div>
                 <div id="head_share">
                 </div>
                 <div id="user_info">
                     <div id="user_name">
-                        <a class="user_name" href="#">ring89672</a>
+                        <a class="user_name" href="#">[[${space_user.userPetName}]]</a>
                     </div>
                     <div id="user_intro">
-                        <span class="user_intro">暂无简介</span>
+                        <span class="user_intro">[[${space_user.userSignature}]]</span>
                     </div>
                     <div id="user_fans">
                         <ul>
                             <li class="fans_num">
-                                <em style="font-size: larger">0</em>
+                                <em style="font-size: larger">[[${space_user.userFans}]]</em>
                                 <br>
                                 粉丝数
                             </li>
@@ -388,7 +243,7 @@
                     <div id="user_focus">
                         <ul>
                             <li class="fans_num">
-                                <em style="font-size: larger">0</em>
+                                <em style="font-size: larger">[[${space_user.userFollows}]]</em>
                                 <br>
                                 关注数
                             </li>
@@ -414,7 +269,7 @@
                 <div id="con_video">
                     <div id="con_video_hd">
                         <div id="con_video_hd_title">
-                            <h4>视频(<span>0</span>)</h4>
+                            <h4>视频(<span>[[${space_user.upVideoNum}]]</span>)</h4>
                         </div>
                         <div id="con_video_hd_up">
                             <!--                            <li style="float: left; ">上传视频：</li>-->
@@ -426,97 +281,57 @@
                         </div>
                     </div>
                     <div id="con_video_main">
-                        <div id="con_video_main_null">
+                        <div id="con_video_main_null" th:if="${space_user.upVideoNum}==0">
                             您还没有上传过视频！
                         </div>
-                        <div id="con_video_main_nonull">
-
-                            <div class="per_video">
+                        <div id="con_video_main_nonull" th:if="${space_user.upVideoNum}>0">
+                            <div class="per_video" th:fragment="up_videos" th:each="singleVideo:${up_videos}">
                                 <div class="per_video_pic">
-                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
+                                    <a th:href="|/pages/toVideoPlay/${singleVideo.videoId}|">
+                                        <img th:src="${singleVideo.videoFrontSrc}"
+                                             style="width: 100%; height: 100%; float: left">
+                                    </a>
                                 </div>
-                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
-                                <div class="per_video_time"><span>78979489</span></div>
+                                <div class="per_video_title"><span>[[${singleVideo.videoName}]]</span>></div>
+                                <div class="per_video_time"><span th:text="${#dates.format(singleVideo.videoIssuingTime,'yyyy-MM-dd HH:mm:ss')}">2001:01:01 11:11:11</span></div>
                             </div>
-                            <div class="per_video">
-                                <div class="per_video_pic">
-                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
-                                </div>
-                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
-                                <div class="per_video_time"><span>78979489</span></div>
-                            </div>
-                            <div class="per_video">
-                                <div class="per_video_pic">
-                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
-                                </div>
-                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
-                                <div class="per_video_time"><span>78979489</span></div>
-                            </div>
-                            <div class="per_video">
-                                <div class="per_video_pic">
-                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
-                                </div>
-                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
-                                <div class="per_video_time"><span>78979489</span></div>
-                            </div>
-                            <div class="per_video">
-                                <div class="per_video_pic">
-                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
-                                </div>
-                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
-                                <div class="per_video_time"><span>78979489</span></div>
-                            </div>
-                            <div class="per_video">
-                                <div class="per_video_pic">
-                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
-                                </div>
-                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
-                                <div class="per_video_time"><span>78979489</span></div>
-                            </div>
-                            <div class="per_video">
-                                <div class="per_video_pic">
-                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
-                                </div>
-                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
-                                <div class="per_video_time"><span>78979489</span></div>
-                            </div>
-                            <div class="per_video">
-                                <div class="per_video_pic">
-                                    <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
-                                </div>
-                                <div class="per_video_title"><span>宁宁宁宁宁宁宁宁宁宁</span>></div>
-                                <div class="per_video_time"><span>78979489</span></div>
-                            </div>
-
-                            </div>
-
-
                         </div>
-                                                <div id="con_video_main_upvideo"></div>
                     </div>
+                    <div id="con_video_main_upvideo"></div>
+                </div>
 
                 <div id="con_dynamic">
                     <div id="con_dynamic_null">
                         您还未发表过动态！
                     </div>
                     <div id="con_dynamic_nonull">
-
+                        <a href="video_upload.html"
+                           style="margin-top: 10px;float:right;line-height: 20px;">发布动态></a>
                         <div id="per_dynamic_cards">
-                            <div id="per_dynamic_card">
+                            <div id="per_dynamic_card" th:fragment="space_dynamics" th:each="singleDynamic:${space_dynamics}">
                                 <div id="per_dynamic_card_head">
                                     <div id="per_dynamic_card_head_pic">
-                                        <img src="/notcommon/personspace/img/头像.png" width="75" height="75" style="float: left">
+                                        <img th:src="${space_user.userHeadSrc}" width="75" height="75"
+                                             style="float: left">
                                     </div>
                                     <div id="per_dynamic_card_head_username">
-                                        <span>ring89672</span>
+                                        <span>[[${space_user.userPetName}]]</span>
                                     </div>
                                     <div id="per_dynamic_card_head_time">
-                                        <span>2019-09-19</span>
+                                        <span th:text="${#dates.format(singleDynamic.dynamicDate,'yyyy-MM-dd HH:mm:ss')}">2019-09-19</span>
                                     </div>
                                 </div>
                                 <div id="per_dynamic_card_con">
-                                    <span>哈哈哈，今天真开心！！！</span>
+                                    <span style="float:left;margin-left: 20px">[[${singleDynamic.dynamicContent}]]</span>
                                 </div>
+                                <div class="per_dynamic_card_interaction">
+                                   <a style="float:left;">点赞(1)</a>
+                                    <a>评论</a>
+                                    <a style="float:right;">转发</a>
+                                </div>
+
+
+
                             </div>
                         </div>
                     </div>
@@ -529,7 +344,8 @@
 
                         <div class="per_collect">
                             <div class="per_collect_video_pic">
-                                <img src="/notcommon/personspace/img/videoPic.png" style="width: 100%; height: 100%; float: left">
+                                <img src="/notcommon/personspace/img/videoPic.png"
+                                     style="width: 100%; height: 100%; float: left">
                             </div>
                             <div class="per_collect_video_title"><span>宁宁宁宁宁宁宁宁宁</span></div>
                             <div class="per_collect_video_time"><span>收藏时间:</span></div>
@@ -540,9 +356,9 @@
             </div>
         </div>
     </div>
-<!--    <div id="s_footer">footer-->
+    <!--    <div id="s_footer">footer-->
 
-<!--    </div>-->
+    <!--    </div>-->
 </div>
 </body>
 </html>

@@ -1849,7 +1849,7 @@
 
 
                 <div class="u-face has-pendant"><a
-                        href="https://space.bilibili.com/207539637?spm_id_from=333.788.b_765f7570696e666f.1"
+                        th:href="|/pages/toUserSpace/${up.userId}|"
                         target="_blank" report-id="head" class="fa"><img
                         th:src="${up.userHeadSrc}" width="48"
                         height="48" class="up-face"><img
@@ -1859,7 +1859,7 @@
 
                 <div class="u-info">
                     <div class="name" style="line-height:40px;height:40px;"><!----><a
-                            href="//space.bilibili.com/207539637" target="_blank" report-id="name" class="username">[[${up.userPetName}]]</a><a
+                            th:href="|/pages/toUserSpace/${up.userId}|" target="_blank" report-id="name" class="username">[[${up.userPetName}]]</a><a
                             href="//message.bilibili.com/#whisper/mid207539637" target="_blank" class="message"><i
                             class="van-icon-videodetails_messag"></i>发消息</a>
                     </div><!---->
