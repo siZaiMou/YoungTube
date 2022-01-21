@@ -20,7 +20,7 @@
     <select id="findOneByUserId" resultType="user">
         select *
         from user
-        where userId = #{userId}
+        where userId = #{userId} limit 1
     </select>
 
     <update id="updateUserCoinByUserId">

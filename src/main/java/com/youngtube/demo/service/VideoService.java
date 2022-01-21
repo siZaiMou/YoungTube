@@ -25,4 +25,6 @@ public interface VideoService
     Integer findUserVideoCount(int userId);
 
     List<Video> findVideoByUpId(int userId);
+
+    List<Video> findTimeHotVideos();
 }

@@ -1595,31 +1595,31 @@ header {
   border-radius: 4px;
 }
 /* 余下的icon */
-#music .icon-music {
+.icon-music {
   background-position: -140px -252px;
 }
-#dance .icon-dance {
+.icon-dance {
   background-position: -141px -447px;
 }
-#game .icon-game {
+.icon-game {
   background-position: -141px -189px;
 }
-#technology .icon-technology {
+.icon-technology {
   background-position: -141px -511px;
 }
-#life .icon-life {
+.icon-life {
   background-position: -137px -956px;
 }
-#guichu .icon-guichu {
+.icon-guichu {
   background-position: -141px -318px;
 }
-#fasion .icon-fasion {
+.icon-fasion {
   background-position: -141px -704px;
 }
-#gg .icon-gg {
+.icon-gg {
   background-position: -140px -1214px;
 }
-#yule .icon-yule {
+.icon-yule {
   background-position: -141px -1018px;
 }
 #movie .icon-movie {

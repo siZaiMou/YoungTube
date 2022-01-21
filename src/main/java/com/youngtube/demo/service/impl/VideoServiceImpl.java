@@ -80,10 +80,6 @@ public class VideoServiceImpl implements VideoService
         PageHelper.clearPage();
         PageHelper.startPage(currentPage,6);
         List<Video>videos = videoMapper.findVideosBySearch(categoryId,searchTex,searchMode);
-//        for(int i=0;i<videos.size();i++) //问题：数据重复两次,且list中包含其他数据
-//        {
-//            System.out.println("helos"+i+" "+videos.get(i));
-//        }
         return videos;
     }
 
@@ -99,5 +95,13 @@ public class VideoServiceImpl implements VideoService
     public List<Video> findVideoByUpId(int userId)
     {
         return videoMapper.findVideoByUserId(userId);
+    }
+
+    //通过算法得到五条实施热榜视频
+    @Override
+    public List<Video> findTimeHotVideos()
+    {
+        //算法在service层
+        return videoMapper.find5WithTimeHot();
     }
 }

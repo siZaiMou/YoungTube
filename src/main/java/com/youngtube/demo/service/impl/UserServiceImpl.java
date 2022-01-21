@@ -43,18 +43,18 @@ public class UserServiceImpl implements UserService
         {
             e.printStackTrace();
         }
-        return userMapper.findByUserPetName(user.getUserPetName(),user.getUserPassword());
+        return userMapper.findByUserPetName(user.getUserPetName(), user.getUserPassword());
     }
 
     //查询视频up主的用户名
     @Override
     public Map<Integer, String> findUserNames(List<Video> videos)
     {
-        Map<Integer,String>userName = new HashMap<>();
+        Map<Integer, String> userName = new HashMap<>();
         int len = videos.size();
-        for(int i=0;i<len;i++)
+        for (int i = 0; i < len; i++)
         {
-            userName.put(i,(userMapper.findOneByUserId((videos.get(i)).getVideoUpId())).getUserPetName());
+            userName.put(i, (userMapper.findOneByUserId((videos.get(i)).getVideoUpId())).getUserPetName());
         }
 
         return userName;
@@ -70,12 +70,12 @@ public class UserServiceImpl implements UserService
     @Override
     public Map<Integer, User> findCommentUsers(List<VideoComment> videoComments_hot)
     {
-        Map<Integer,User> commentUsers = new HashMap<>();
+        Map<Integer, User> commentUsers = new HashMap<>();
         int len = videoComments_hot.size();
-        for(int i=0;i<len;i++)
+        for (int i = 0; i < len; i++)
         {
             VideoComment comment = videoComments_hot.get(i);
-            commentUsers.put(i,userMapper.findOneByUserId(comment.getUserId()));
+            commentUsers.put(i, userMapper.findOneByUserId(comment.getUserId()));
         }
         return commentUsers;
     }
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService
     @Override
     public void changeUserCoin(int userId, int coinCount)
     {
-        userMapper.updateUserCoinByUserId(userId,coinCount);
+        userMapper.updateUserCoinByUserId(userId, coinCount);
     }
 
     //查询用户的粉丝数
@@ -98,33 +98,33 @@ public class UserServiceImpl implements UserService
     @Override
     public boolean findUserIsFollow(int followUserId, int followedUserId)
     {
-        return userMapper.findOneUserFollow(followUserId,followedUserId)>0?true:false;
+        return userMapper.findOneUserFollow(followUserId, followedUserId) > 0 ? true : false;
     }
 
     @Override
-    public void saveFollow(int followUserId, int followedUserId,int followMode)
+    public void saveFollow(int followUserId, int followedUserId, int followMode)
     {
-        userMapper.insertOneUserFollow(followUserId,followedUserId,new Date(),followMode);
+        userMapper.insertOneUserFollow(followUserId, followedUserId, new Date(), followMode);
     }
 
     @Override
     public void cancelFollow(int followUserId, int followedUserId)
     {
-        userMapper.deleteOneUserFollow(followUserId,followedUserId);
+        userMapper.deleteOneUserFollow(followUserId, followedUserId);
     }
 
     //查询视频返回结果的up主信息
     @Override
-    public Map<Integer, User> findVideosUps(List<Video> videoList)
+    public Map<Integer, String> findVideosUpNames(List<Video> videoList)
     {
-        Map<Integer,User> ups = new HashMap<>();
+        Map<Integer,String> ups = new HashMap<>();
         int len = videoList.size();
-        for(int i=1;i<len;i++) //pagehelper会改变List<Video>的结构
+        for(int i=1;i<len;i++) //两次重复
         {
             if(((Object)videoList.get(i)) instanceof Video)
             {
                 Video vd = videoList.get(i);
-                ups.put(i-1,userMapper.findOneByUserId(vd.getVideoUpId()));
+                ups.put(i-1,(userMapper.findOneByUserId(vd.getVideoUpId())).getUserPetName());
             }
             else
             {

@@ -73,4 +73,10 @@
         from video
         where videoUpId = #{userId}
     </select>
+
+    <select id="find5WithTimeHot" resultType="video">
+        select videoId, videoName, videoFrontSrc, videoUpId, videoAuditStatus
+        from video limit 5
+    </select>
+
 </mapper>

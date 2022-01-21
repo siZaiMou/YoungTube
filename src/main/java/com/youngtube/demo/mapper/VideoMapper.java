@@ -31,4 +31,6 @@ public interface VideoMapper
     Integer findVideoCountByUserId(@Param("userId") int userId);
 
     List<Video> findVideoByUserId(@Param("userId")int userId);
+
+    List<Video> find5WithTimeHot();
 }

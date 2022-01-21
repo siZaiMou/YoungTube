@@ -65,6 +65,18 @@ public class VideoController
         return "index::video_rank_category"+videoCategory;
     }
 
+    //加载视频列表中的实时热榜
+    @RequestMapping("/loadTimeHot")
+    public String loadTimeHot(Model model)
+    {
+        List<Video> videos = videoService.findTimeHotVideos();
+        Map<Integer,String> userNames = userService.findUserNames(videos);
+        model.addAttribute("vidos_timeHot",videos);
+        model.addAttribute("ups_timeHot",userNames);
+        System.out.println(videos);
+        return "videoList::videos_timeHot";
+    }
+
     //根据视频id获得视频和up主信息，返回视频播放界面
     @RequestMapping("/loadOneWithUp/{videoId}")
     public String loadOneWithUp(@PathVariable("videoId")int videoId,Model model)
@@ -139,15 +151,13 @@ public class VideoController
     public String loadVideoList(int categoryId,String searchTex,int searchMode,int currentPage,Model model) //使用searchText作为参数名时，出现重复拼接问题
     {
         List<Video>videoList = videoService.searchVideos(categoryId,searchTex,searchMode,currentPage);
-        Map<Integer,User>ups = userService.findVideosUps(videoList);
+        Map<Integer,String>upNames = userService.findVideosUpNames(videoList);
+//        System.out.println(upNames);
         List<VideoCategory> videoCategoryList = videoService.findAllCategory();
         PageInfo<Video> pageInfo = new PageInfo(videoList);
-//        for(int i=0;i<=pageInfo.getList().size();i++)
-//        {
-//            System.out.println("pagelist"+i+pageInfo.getList().get(i));
-//        }
+//        System.out.println(pageInfo);
         model.addAttribute("videos_page",pageInfo);
-        model.addAttribute("video_ups",ups);
+        model.addAttribute("video_up_names",upNames);
         model.addAttribute("video_categorys",videoCategoryList);
         return "videoList";
     }

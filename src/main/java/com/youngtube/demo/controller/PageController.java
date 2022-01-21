@@ -90,9 +90,7 @@ public class PageController
         {
             categoryId=0;
         }
-        System.out.println("categoryId"+categoryId);
         String str = "forward:/video/loadVideoList?searchTex="+searchText+"&categoryId="+categoryId+"&searchMode="+searchMode+"&currentPage="+currentPage;
-        System.out.println(str);
         return str;
     }
 

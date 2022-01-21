@@ -30,7 +30,7 @@ public interface UserService
 
     void cancelFollow(int followUserId, int followedUserId);
 
-    Map<Integer, User> findVideosUps(List<Video> videoList);
+    Map<Integer, String> findVideosUpNames(List<Video> videoList);
 
     Integer findUserFollowCount(int userId);
 }

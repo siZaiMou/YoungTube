@@ -21,6 +21,7 @@
     <script th:src="@{/common/js/jquery-3.3.1.js}"></script>
     <script th:inline="javascript">
         window.onload=function () {
+            $("#videos_timeHot").load("/video/loadTimeHot");
             search2();
             loadTopWords();
         }
@@ -119,9 +120,9 @@
                             </div>
                             <div class="price">
                                 <p class="price_num">
-                                    <span>[[${video_ups[singleVideoStat.index-1].userPetName}]]</span>
+                                    <span>[[${video_up_names[singleVideoStat.index-1]}]]</span>
                                 </p>
-                                <p><a href="route_detail.html">查看详情</a></p>
+                                <p><a th:href="|/pages/toUserSpace/${singleVideo.videoUpId}|">进入空间</a></p>
                             </div>
                         </li>
                     </ul>
@@ -131,8 +132,9 @@
                     </div>
                     <div class="pageNum">
                         <ul>
-                            <li><a href="" onclick="loadPageVideoList(1)">首页</a></li>
-                            <li class="threeword"><a href="#" th:onclick="|loadPageVideoList(${videos_page.pageNum}-1)|">上一页</a></li>
+                            <li><a href="javascript:;" onclick="loadPageVideoList(1)">首页</a></li>
+                            <li class="threeword"><a href="javascript:;" th:onclick="|loadPageVideoList(${videos_page.pageNum}-1)|">上一页</a></li>
+<!--                            <li th:each="pageIndex:${#numbers.sequence(1,videos_page.pages)}" th:if="${videos_page.pages>0&&videos_page.pageNum==pageIndex}"><a style="background-color: red" th:onclick="|loadPageVideoList(${pageIndex})|" href="#">[[${pageIndex}]]</a></li>-->
                             <li th:each="pageIndex:${#numbers.sequence(1,videos_page.pages)}" th:if="${videos_page.pages>0}"><a th:onclick="|loadPageVideoList(${pageIndex})|" href="#">[[${pageIndex}]]</a></li>
                             <li class="threeword"><a href="javascript:;" th:onclick="|loadPageVideoList(${videos_page.pageNum} + 1)|">下一页</a></li>
                             <li class="threeword"><a href="javascript:;" th:onclick="|loadPageVideoList(${videos_page.pages})|">末页</a></li>
@@ -142,7 +144,9 @@
                         function loadPageVideoList(pageNum) //换页
                         {
                             var nowPage=/*[[${videos_page.pageNum}]]*/'1';
+                            var totalPage=/*[[${videos_page.pages}]]*/'1';
                             nowPage=parseInt(nowPage);
+                            totalPage=parseInt(totalPage);
                             if(pageNum==nowPage)
                             {
                                 return;
@@ -151,13 +155,16 @@
                             {
                                 pageNum=1;
                             }
+                            if(pageNum>totalPage)
+                            {
+                                pageNum=totalPage;
+                            }
                             var txt=decodeURI(getParameter("searchText"));
                             if(txt!=null&&txt.length>0)
                             {
                                 txt=txt.trim();
                             }
                             var categoryId=getParameter("categoryId");
-
                             location.href="/pages/toVideoList?category="+categoryId+"&searchText="+txt+"&currentPage="+pageNum;
                         }
                     </script>
@@ -165,51 +172,25 @@
                 <div class="right">
                     <div class="top">
                         <div class="hot">HOT</div>
-                        <span>实时热榜</span>
+                        <a onclick="load();">实时热榜</a>
                     </div>
-                    <ul>
-                        <li>
-                            <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
+                    <ul id="videos_timeHot">
+                        <li th:fragment="videos_timeHot" th:each="singVideo,sinVideoStat:${videos_timeHot}">
+                            <div class="left"><img th:src="${singVideo.videoFrontSrc}" alt=""></div>
                             <div class="right">
-                                <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                                <p>网付价<span>&yen;<span>899</span>起</span>
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
-                            <div class="right">
-                                <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                                <p>网付价<span>&yen;<span>899</span>起</span>
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
-                            <div class="right">
-                                <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                                <p>网付价<span>&yen;<span>899</span>起</span>
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
-                            <div class="right">
-                                <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                                <p>网付价<span>&yen;<span>899</span>起</span>
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
-                            <div class="right">
-                                <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                                <p>网付价<span>&yen;<span>899</span>起</span>
+                                <p>[[${singleVideo.videoName}]]</p>
+                                <p>up<span>:<span>[[${ups_timeHot[sinVideoStat.index]}]]</span></span>
                                 </p>
                             </div>
                         </li>
                     </ul>
                 </div>
+                <script>
+                    function load()
+                    {
+                        $("#videos_timeHot").load("/video/loadTimeHot");
+                    }
+                </script>
             </div>
         </div>
     </div>
