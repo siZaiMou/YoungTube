@@ -9,4 +9,6 @@ public interface DynamicService
     List<Dynamic> findDynamicsByUserId(int userId);
 
     void saveDynamic(Dynamic dynamic);
+
+    List<Dynamic> findDynamicsWithFollow(int userId);
 }

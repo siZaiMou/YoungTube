@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 @Mapper
 @Repository
@@ -28,4 +29,6 @@ public interface UserMapper
     void deleteOneUserFollow(@Param("followUserId")int followUserId,@Param("followedUserId")int followedUserId);
 
     Integer findUserFollowCount(@Param("userId")int userId);
+
+    List<Integer> findFollowedUserIds(@Param("userId") int userId);
 }

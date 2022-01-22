@@ -1,5 +1,6 @@
 package com.youngtube.demo.service;
 
+import com.youngtube.demo.entity.Dynamic;
 import com.youngtube.demo.entity.User;
 import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.entity.VideoComment;
@@ -33,4 +34,6 @@ public interface UserService
     Map<Integer, String> findVideosUpNames(List<Video> videoList);
 
     Integer findUserFollowCount(int userId);
+
+    Map<Integer, User> findDynamicUsers(List<Dynamic> dynamicList);
 }

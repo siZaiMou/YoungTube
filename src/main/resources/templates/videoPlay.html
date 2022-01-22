@@ -1660,13 +1660,13 @@
                                 <li th:fragment="comment_hot"
                                     th:each="singleComment,singleCommentStat:${videoComments_hot}">
                                     <a class="fl"
-                                       th:href="|/pages/toUserSpace/${commentUsers_hot[singleCommentStat.index].userId}|"><img
-                                            th:src="|${commentUsers_hot[singleCommentStat.index].userHeadSrc}|" alt=""
+                                       th:href="|/pages/toUserSpace/${commentUsers_hot[singleComment.userId].userId}|"><img
+                                            th:src="|${commentUsers_hot[singleComment.userId].userHeadSrc}|" alt=""
                                             width="70px" ;height="70px"/></a>
                                     <p>[[${singleComment.commentContent}]]</p>
                                     <br>
                                     <p style="color: red;">
-                                        留言者:[[${commentUsers_hot[singleCommentStat.index].userPetName}]]<a href=""
+                                        留言者:[[${commentUsers_hot[singleComment.userId].userPetName}]]<a href=""
                                                                                                            style="color: darkgoldenrod;text-decoration:none;">&nbsp;</a><span
                                             style="color: blue;">&nbsp;&nbsp;&nbsp;留言时间:[[${#dates.format(singleComment.commentDate,'yyyy-MM-dd HH:mm:ss')}]]</span>
                                     </p>
@@ -1788,7 +1788,7 @@
                                 <div class="story" th:fragment="comment_new"
                                      th:each="singleComment,singleCommentStat:${videoComments_new}">
                                     <div class="opbtn"></div>
-                                    <p class="story_t">[[${commentUsers_new[singleCommentStat.index].userPetName}]]<span
+                                    <p class="story_t">[[${commentUsers_new[singleComment.userId].userPetName}]]<span
                                             style="margin-left: 85%;">
 							<button type="button" value="查看留言" id="huifu">查看回复</button>
                                         <button type="button" value="查看留言" id="liuyan">我要留言</button></span>
@@ -1981,7 +1981,7 @@
                             <div class="info"><a th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"
                                                  title="实习老师粉笔画让网友跪服 神还原《你的名字》" class="title">[[${singleVideo.videoName}]]</a>
                                 <div class="count up"><a href="//space.bilibili.com/583792/" target="_blank"
-                                                         th:text="|${userNames[singleVideoStat.index]}|">H·D</a>
+                                                         th:text="|${userNames[singleVideo.videoUpId]}|">H·D</a>
                                 </div>
                                 <div class="count">
                                     [[${singleVideo.videoViewCount}]]播放 · [[${singleVideo.videoDanmuCount}]]弹幕

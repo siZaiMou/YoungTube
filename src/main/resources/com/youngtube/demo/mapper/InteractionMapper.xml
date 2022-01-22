@@ -49,4 +49,9 @@
         where videoId = #{videoId}
     </select>
 
+    <select id="findDynamicPraiseCount" resultType="java.lang.Integer">
+        select count(userId)
+        from dynamicPraise
+        where dynamicId = #{dynamicId}
+    </select>
 </mapper>

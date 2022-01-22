@@ -15,4 +15,12 @@
         values (#{dynamicId}, #{userId}, #{dynamicContent}, #{dynamicIsTop}, #{dynamicDate})
     </select>
 
+    <select id="findFollowedDynamics" parameterType="java.lang.Integer" resultType="dynamic">
+        select * from `dynamic` where userId in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by dynamicDate desc
+    </select>
+
 </mapper>

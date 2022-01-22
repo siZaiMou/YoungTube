@@ -60,4 +60,10 @@
         where followUserId = #{userId}
     </select>
 
+    <select id="findFollowedUserIds" resultType="java.lang.Integer">
+        select followedUserId
+        from follow
+        where followUserId = #{userId}
+    </select>
+
 </mapper>

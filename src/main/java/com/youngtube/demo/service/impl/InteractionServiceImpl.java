@@ -1,11 +1,13 @@
 package com.youngtube.demo.service.impl;
 
+import com.youngtube.demo.entity.Dynamic;
 import com.youngtube.demo.mapper.InteractionMapper;
 import com.youngtube.demo.service.InteractionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 //视频、动态的点赞、投币、转发等互动动作的service层
 @Service
@@ -66,5 +68,15 @@ public class InteractionServiceImpl implements InteractionService
         int cnt=0;
         cnt =  interactionMapper.findVideoCoinCount(videoId);
         return cnt;
+    }
+
+    //为动态列表封装点赞量等互动数据
+    @Override
+    public void makeInteractionCount(List<Dynamic> dynamicList)
+    {
+        for(Dynamic dynamic:dynamicList)
+        {
+            dynamic.setDynamicPraiseCount(interactionMapper.findDynamicPraiseCount(dynamic.getDynamicId()));
+        }
     }
 }

@@ -120,7 +120,7 @@
                             </div>
                             <div class="price">
                                 <p class="price_num">
-                                    <span>[[${video_up_names[singleVideoStat.index-1]}]]</span>
+                                    <span>[[${video_up_names[singleVideo.videoUpId]}]]</span>
                                 </p>
                                 <p><a th:href="|/pages/toUserSpace/${singleVideo.videoUpId}|">进入空间</a></p>
                             </div>
@@ -179,7 +179,7 @@
                             <div class="left"><img th:src="${singVideo.videoFrontSrc}" alt=""></div>
                             <div class="right">
                                 <p>[[${singleVideo.videoName}]]</p>
-                                <p>up<span>:<span>[[${ups_timeHot[sinVideoStat.index]}]]</span></span>
+                                <p>up<span>:<span>[[${ups_timeHot[sinVideo.videoUpId]}]]</span></span>
                                 </p>
                             </div>
                         </li>

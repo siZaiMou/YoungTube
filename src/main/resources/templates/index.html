@@ -178,7 +178,7 @@
                     <div class="info">
                         <p class="title" th:text="${singleVideo.videoName}">名称</p>
                         <p class="author"
-                           th:text="|up主:${userNames_recommend[singleVideoStatus.index]}|">up主：admin</p>
+                           th:text="|up主:${userNames_recommend[singleVideo.videoUpId]}|">up主：admin</p>
                         <p class="play" th:text="|播放量:${singleVideo.videoViewCount}|">播放量</p>
                     </div>
                 </a></li>
@@ -221,7 +221,7 @@
                             <a th:text="${singleVideo.videoName}"
                                th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"></a>
                             <div class="btm">
-                                <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
+                                <div class="user" th:utext="|<i></i>${userNames[singleVideo.videoUpId]}|">
                                 </div>
                                 <div class="online" th:utext="|<i></i>${singleVideo.videoViewCount}|">
                                 </div>
@@ -292,7 +292,7 @@
                             <a th:text="${singleVideo.videoName}"
                                th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"></a>
                             <div class="btm">
-                                <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
+                                <div class="user" th:utext="|<i></i>${userNames[singleVideo.videoUpId]}|">
                                 </div>
                                 <div class="online" th:utext="|<i></i>${singleVideo.videoViewCount}|">
                                 </div>
@@ -363,7 +363,7 @@
                             <a th:text="${singleVideo.videoName}"
                                th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"></a>
                             <div class="btm">
-                                <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
+                                <div class="user" th:utext="|<i></i>${userNames[singleVideo.videoUpId]}|">
                                 </div>
                                 <div class="online" th:utext="|<i></i>${singleVideo.videoViewCount}|">
                                 </div>
@@ -431,7 +431,7 @@
                             <a th:text="${singleVideo.videoName}"
                                th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"></a>
                             <div class="btm">
-                                <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
+                                <div class="user" th:utext="|<i></i>${userNames[singleVideo.videoUpId]}|">
                                 </div>
                                 <div class="online" th:utext="|<i></i>${singleVideo.videoViewCount}|">
                                 </div>
@@ -499,7 +499,7 @@
                             <a th:text="${singleVideo.videoName}"
                                th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"></a>
                             <div class="btm">
-                                <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
+                                <div class="user" th:utext="|<i></i>${userNames[singleVideo.videoUpId]}|">
                                 </div>
                                 <div class="online" th:utext="|<i></i>${singleVideo.videoViewCount}|">
                                 </div>
@@ -564,10 +564,10 @@
                                                              class="time"></span>
                         </a>
                         <div class="img-info">
-                            <a th:text="${singleVideo.videoName}"
+                            <a th:text="|${singleVideo.videoName}|"
                                th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"></a>
                             <div class="btm">
-                                <div class="user" th:utext="|<i></i>${userNames[singleVideoStat.index]}|">
+                                <div class="user" th:utext="|<i></i>${userNames[singleVideo.videoUpId]}|">
                                 </div>
                                 <div class="online" th:utext="|<i></i>${singleVideo.videoViewCount}|">
                                 </div>

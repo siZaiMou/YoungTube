@@ -1,5 +1,6 @@
 package com.youngtube.demo.service.impl;
 
+import com.youngtube.demo.entity.Dynamic;
 import com.youngtube.demo.entity.User;
 import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.entity.VideoComment;
@@ -51,12 +52,10 @@ public class UserServiceImpl implements UserService
     public Map<Integer, String> findUserNames(List<Video> videos)
     {
         Map<Integer, String> userName = new HashMap<>();
-        int len = videos.size();
-        for (int i = 0; i < len; i++)
+        for(Video video:videos)
         {
-            userName.put(i, (userMapper.findOneByUserId((videos.get(i)).getVideoUpId())).getUserPetName());
+            userName.put(video.getVideoUpId(), (userMapper.findOneByUserId((video.getVideoUpId())).getUserPetName()));
         }
-
         return userName;
     }
 
@@ -71,11 +70,9 @@ public class UserServiceImpl implements UserService
     public Map<Integer, User> findCommentUsers(List<VideoComment> videoComments_hot)
     {
         Map<Integer, User> commentUsers = new HashMap<>();
-        int len = videoComments_hot.size();
-        for (int i = 0; i < len; i++)
+        for(VideoComment comment:videoComments_hot)
         {
-            VideoComment comment = videoComments_hot.get(i);
-            commentUsers.put(i, userMapper.findOneByUserId(comment.getUserId()));
+            commentUsers.put(comment.getUserId(), userMapper.findOneByUserId(comment.getUserId()));
         }
         return commentUsers;
     }
@@ -124,7 +121,7 @@ public class UserServiceImpl implements UserService
             if(((Object)videoList.get(i)) instanceof Video)
             {
                 Video vd = videoList.get(i);
-                ups.put(i-1,(userMapper.findOneByUserId(vd.getVideoUpId())).getUserPetName());
+                ups.put(vd.getVideoUpId(),(userMapper.findOneByUserId(vd.getVideoUpId())).getUserPetName());
             }
             else
             {
@@ -139,6 +136,18 @@ public class UserServiceImpl implements UserService
     public Integer findUserFollowCount(int userId)
     {
         return userMapper.findUserFollowCount(userId);
+    }
+
+    //查询每条动态的用户信息
+    @Override
+    public Map<Integer, User> findDynamicUsers(List<Dynamic> dynamicList)
+    {
+        Map<Integer,User>dynamicUsers = new HashMap<>();
+        for (Dynamic dynamic:dynamicList)
+        {
+            dynamicUsers.put(dynamic.getUserId(),userMapper.findOneByUserId(dynamic.getUserId()));
+        }
+        return dynamicUsers;
     }
 
 

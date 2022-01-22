@@ -26,4 +26,6 @@ public interface InteractionMapper
     Integer findVideoCoinByVideoIdAndUserId(@Param("videoId")int videoId, @Param("userId")int userId);
 
     Integer findVideoCoinCount(@Param("videoId")int videoId);
+
+    Integer findDynamicPraiseCount(@Param("dynamicId") int dynamicId);
 }

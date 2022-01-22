@@ -99,4 +99,11 @@ public class PageController
     {
         return "forward:/user/loadUserSpace/"+userId;
     }
+
+    @RequestMapping("/toDynamicList/{userId}")
+    public String toDynamicList(@PathVariable("userId")int userId)
+    {
+        return "forward:/dynamic/loadDynamicList/"+userId;
+    }
+
 }
