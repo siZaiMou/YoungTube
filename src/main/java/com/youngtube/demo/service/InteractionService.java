@@ -2,6 +2,7 @@ package com.youngtube.demo.service;
 
 import com.youngtube.demo.entity.Dynamic;
 
+import java.util.Date;
 import java.util.List;
 
 public interface InteractionService
@@ -20,5 +21,9 @@ public interface InteractionService
 
     Integer getVideoCoinCount(int videoId);
 
-    void makeInteractionCount(List<Dynamic> dynamicList);
+    void makeInteractionCount(List<Dynamic> dynamicList,int userId);
+
+    void insertDynamicPraise(int userId, int dynamicId, Date praiseDate);
+
+    void deleteDynamicPraise(int userId, int dynamicId);
 }

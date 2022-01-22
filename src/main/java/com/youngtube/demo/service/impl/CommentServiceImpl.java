@@ -1,5 +1,7 @@
 package com.youngtube.demo.service.impl;
 
+import com.youngtube.demo.entity.Dynamic;
+import com.youngtube.demo.entity.DynamicComment;
 import com.youngtube.demo.entity.VideoComment;
 import com.youngtube.demo.mapper.CommentMapper;
 import com.youngtube.demo.service.CommentService;
@@ -13,6 +15,7 @@ public class CommentServiceImpl implements CommentService
 {
     @Autowired
     CommentMapper commentMapper;
+
 
     //写评论，性能待优化(RabbitMQ)
     @Override
@@ -35,5 +38,22 @@ public class CommentServiceImpl implements CommentService
     {
         List<VideoComment> videoComments_new = commentMapper.findVideoCommentByVideoIdWithNew(videoId);
         return videoComments_new;
+    }
+
+    //得到动态的评论列表
+    @Override
+    public void packageDynamicComment(List<Dynamic> dynamicList, int userId)
+    {
+        for(Dynamic dynamic:dynamicList)
+        {
+            List<DynamicComment> comments = commentMapper.findDynamicCommentByDynamicId(dynamic.getDynamicId());
+            dynamic.setDynamicCommentList(comments);
+        }
+    }
+
+    @Override
+    public void saveDynamicComment(DynamicComment dynamicComment)
+    {
+        commentMapper.insertOneDynamicComment(dynamicComment);
     }
 }

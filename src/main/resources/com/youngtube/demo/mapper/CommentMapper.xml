@@ -11,11 +11,30 @@
     </insert>
 
     <select id="findVideoCommentByVideoIdWithHot" resultType="videoComment">
-        select * from videoComment where videoId=#{videoId} order by commentPraise desc,commentDislike asc
+        select *
+        from videoComment
+        where videoId = #{videoId}
+        order by commentPraise desc, commentDislike asc
     </select>
 
     <select id="findVideoCommentByVideoIdWithNew" resultType="videoComment">
-        select * from videoComment where videoId=#{videoId} order by commentDate desc
+        select *
+        from videoComment
+        where videoId = #{videoId}
+        order by commentDate desc
     </select>
+
+    <select id="findDynamicCommentByDynamicId" resultType="dynamicComment">
+        select *
+        from dynamicComment
+        where dynamicId = #{dynamicId}
+        order by commentDate desc
+    </select>
+
+    <insert id="insertOneDynamicComment" parameterType="dynamicComment">
+        insert into dynamicComment
+        values (#{commentId}, #{userId}, #{dynamicId}, #{commentContent}, #{commentPraise}, #{commentDislike},
+                #{commentDate}, #{fatherCommentId}, #{commentAuditStatus}, #{dynamicCommentIsTop})
+    </insert>
 
 </mapper>

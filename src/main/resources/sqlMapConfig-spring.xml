@@ -14,6 +14,7 @@
         <typeAlias type="com.youngtube.demo.entity.Danmu" alias="danmu"></typeAlias>
         <typeAlias type="com.youngtube.demo.entity.VideoComment" alias="videoComment"></typeAlias>
         <typeAlias type="com.youngtube.demo.entity.Dynamic" alias="dynamic"></typeAlias>
+        <typeAlias type="com.youngtube.demo.entity.DynamicComment" alias="dynamicComment"></typeAlias>
     </typeAliases>
 
     <plugins>

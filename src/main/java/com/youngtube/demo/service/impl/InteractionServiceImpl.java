@@ -72,11 +72,26 @@ public class InteractionServiceImpl implements InteractionService
 
     //为动态列表封装点赞量等互动数据
     @Override
-    public void makeInteractionCount(List<Dynamic> dynamicList)
+    public void makeInteractionCount(List<Dynamic> dynamicList,int userId)
     {
         for(Dynamic dynamic:dynamicList)
         {
-            dynamic.setDynamicPraiseCount(interactionMapper.findDynamicPraiseCount(dynamic.getDynamicId()));
+            dynamic.setDynamicPraiseCount(interactionMapper.findDynamicPraiseCount(dynamic.getDynamicId())); //封装这条动态的点赞量
+            boolean isPraise=interactionMapper.findDynamicPraiseByDynamicIdAndUserId(dynamic.getDynamicId(),userId)>0?true:false;
+            dynamic.setDynamicIsPraise(isPraise); //封装当前登录用户是否给这条动态点过赞
         }
+    }
+
+    //动态点赞
+    @Override
+    public void insertDynamicPraise(int userId, int dynamicId, Date praiseDate)
+    {
+        interactionMapper.insertOneDynamicPraise(userId,dynamicId,praiseDate);
+    }
+
+    @Override
+    public void deleteDynamicPraise(int userId, int dynamicId)
+    {
+        interactionMapper.deleteOneDynamicPraise(userId,dynamicId);
     }
 }

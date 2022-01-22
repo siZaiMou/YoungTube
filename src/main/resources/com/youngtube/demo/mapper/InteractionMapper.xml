@@ -54,4 +54,24 @@
         from dynamicPraise
         where dynamicId = #{dynamicId}
     </select>
+
+    <select id="findDynamicPraiseByDynamicIdAndUserId" resultType="java.lang.Integer">
+        select count(userId)
+        from dynamicPraise
+        where dynamicId = #{dynamicId}
+          and userId = #{userId}
+    </select>
+
+    <insert id="insertOneDynamicPraise">
+        insert into dynamicPraise
+        values (#{dynamicId}, #{userId}, #{praiseDate})
+    </insert>
+
+    <delete id="deleteOneDynamicPraise">
+        delete
+        from dynamicPraise
+        where dynamicId = #{dynamicId}
+          and userId = #{userId}
+    </delete>
+
 </mapper>

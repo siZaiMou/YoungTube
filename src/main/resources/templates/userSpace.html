@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>个人主页</title>
+    <title th:if="|${session.nowUser.userId != space_user.userId}|">个人主页</title>
+    <title th:if="|${session.nowUser.userId == space_user.userId}|">我的主页</title>
     <link rel="stylesheet" th:href="@{/notcommon/personspace/css/yk-base.css}">
     <link rel="stylesheet" th:href="@{/notcommon/personspace/css/personal_index.css}">
     <link rel="stylesheet" th:href="@{/notcommon/personspace/css/bootstrap.min.css}">
@@ -348,7 +349,7 @@
                     </div>
                     <div id="con_dynamic_nonull">
                         <a th:if="|${session.nowUser.userId == space_user.userId}|" style="margin-top: 10px;float:right;line-height: 20px;"
-                           onclick="popDiv();">发布动态</a>
+                           th:href="@{/pages/toSendDynamic}">发布动态</a>
                         <div id="per_dynamic_cards">
                             <div id="per_dynamic_card" th:fragment="space_dynamics"
                                  th:each="singleDynamic:${space_dynamics}">

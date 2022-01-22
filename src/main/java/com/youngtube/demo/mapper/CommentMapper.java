@@ -1,6 +1,7 @@
 package com.youngtube.demo.mapper;
 
 import com.youngtube.demo.entity.Danmu;
+import com.youngtube.demo.entity.DynamicComment;
 import com.youngtube.demo.entity.VideoComment;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,4 +18,8 @@ public interface CommentMapper
     List<VideoComment> findVideoCommentByVideoIdWithHot(@Param("videoId")int videoId);
 
     List<VideoComment> findVideoCommentByVideoIdWithNew(@Param("videoId")int videoId);
+
+    List<DynamicComment> findDynamicCommentByDynamicId(@Param("dynamicId") int dynamicId);
+
+    void insertOneDynamicComment(DynamicComment dynamicComment);
 }

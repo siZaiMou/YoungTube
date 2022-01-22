@@ -36,4 +36,6 @@ public interface UserService
     Integer findUserFollowCount(int userId);
 
     Map<Integer, User> findDynamicUsers(List<Dynamic> dynamicList);
+
+    void findDynamicCommentUsers(Map<Integer, User> dynamicUserList, List<Dynamic> dynamicList);
 }

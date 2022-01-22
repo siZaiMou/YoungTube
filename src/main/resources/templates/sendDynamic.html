@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>发表动态</title>
+    <link rel="stylesheet" th:href="@{/notcommon/sendDynamic/css/reset.css}"/>
+    <link rel="stylesheet" th:href="@{/notcommon/sendDynamic/css/index.css}"/>
+    <script>
+        function sendDynamic()
+        {
+            var spaceUserId =/*[[${session.nowUser.userId}]]*/'3';
+            var dynamicContent = $("#dynamicContent").text();
+            $.post("/dynamic/sendDynamic",{"userId":spaceUserId,"dynamicContent":dynamicContent});
+            alert("发布成功");
+            location.href="/pages/toDynamicList/"+spaceUserId;
+        }
+    </script>
+</head>
+<body>
+<!--message start-->
+<div id="message">
+    <p>有什么新鲜事想告诉大家?</p>
+    <div class="edit" id="dynamicContent" contenteditable="true"></div>
+
+    <div class="but">
+        <!-- 左下角的表情图片-->
+        <img th:src="@{/notcommon/sendDynamic/images/bba_thumb.gif}" class="imgface" />
+        <!-- 发表按钮-->
+        <span class="msg_but" onclick="sendDynamic()">发表</span>
+        <!-- Expression frame(表情框) start-->
+        <div class="face">
+            <ul>
+                <li><img th:src="@{/notcommon/sendDynamic/images/zz2_thumb.gif}" title="[织]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/horse2_thumb.gif}" title="[神马]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/fuyun_thumb.gif}" title="[浮云]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/geili_thumb.gif}" title="[给力]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/wg_thumb.gif}" title="[围观]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/vw_thumb.gif}" title="[威武]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/panda_thumb.gif}" title="[熊猫]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/rabbit_thumb.gif}" title="兔子]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/otm_thumb.gif}" title="[奥特曼]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/j_thumb.gif}" title="[囧]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/hufen_thumb.gif}" title="[互粉]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/liwu_thumb.gif}" title="[礼物]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/smilea_thumb.gif}" title="呵呵]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/tootha_thumb.gif}" title="嘻嘻]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/laugh.gif}" title="[哈哈]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/tza_thumb.gif}" title="[可爱]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/kl_thumb.gif}" title="[可怜]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/kbsa_thumb.gif}" title="[挖鼻屎]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/cj_thumb.gif}" title="[吃惊]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/shamea_thumb.gif}" title="[害羞]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/zy_thumb.gif}" title="[挤眼]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/bz_thumb.gif}" title="[闭嘴]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/bs2_thumb.gif}" title="[鄙视]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/lovea_thumb.gif}" title="[爱你]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/sada_thumb.gif}" title="[泪]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/heia_thumb.gif}" title="[偷笑]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/qq_thumb.gif}" title="[亲亲]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/sb_thumb.gif}" title="[生病]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/mb_thumb.gif}" title="[太开心]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/ldln_thumb.gif}" title="[懒得理你]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/yhh_thumb.gif}" title="[右哼哼]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/zhh_thumb.gif}" title="[左哼哼]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/x_thumb.gif}" title="[嘘]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/cry.gif}" title="[衰]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/wq_thumb.gif}" title="[委屈]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/t_thumb.gif}" title="[吐]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/k_thumb.gif}" title="[打哈气]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/bba_thumb.gif}" title="[抱抱]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/angrya_thumb.gif}" title="[怒]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/yw_thumb.gif}" title="[疑问]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/cza_thumb.gif}" title="[馋嘴]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/88_thumb.gif}" title="[拜拜]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/sk_thumb.gif}" title="[思考]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/sweata_thumb.gif}" title="[汗]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/sleepya_thumb.gif}" title="[困]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/sleepa_thumb.gif}" title="[睡觉]" width="" height="22" alt="#"></li>
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/money_thumb.le="[黑线]" width="" height="22" alt="#"></li>-->
+                <!--                <li><img th:src="@{/notcommon/sendDynamic/images/yx_thumb.gif}" title="[阴险]" width="" height="22" alt="#"></li>-->
+                <!--                <li><img th:src="@{/notcommon/sendDynamic/images/nm_thumb.gif}" title=gif}" title="[钱]" width="" height="22" alt="#"></li>-->
+                <li><img th:src="@{/notcommon/sendDynamic/images/sw_thumb.gif}" title="[失望]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/cool_thumb.gif}" title="[酷]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/hsa_thumb.gif}" title="[花心]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/hatea_thumb.gif}" title="[哼]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/gza_thumb.gif}" title="[鼓掌]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/dizzya_thumb.gif}" title="[晕]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/bs_thumb.gif}" title="[悲伤]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/crazya_thumb.gif}" title="[抓狂]" width="" height="22" alt="#"></li>
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/h_thumb.gif}" tit"[怒骂]" width="" height="22" alt="#"></li>-->
+                <li><img th:src="@{/notcommon/sendDynamic/images/hearta_thumb.gif}" title="[心]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/unheart.gif}" title="[伤心]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/pig.gif}" title="[猪头]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/ok_thumb.gif}" title="[ok]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/ye_thumb.gif}" title="[耶]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/good_thumb.gif}" title="[good]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/no_thumb.gif}" title="[不要]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/z2_thumb.gif}" title="[赞]" width="" height="22" alt="#"></li>
+                <li><img th:src="@{/notcommon/sendDynamic/images/come_thumb.gif}" title="[来]" width="" height="22" alt="#"></li>
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/sad_thumb.gif}" title="[弱]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/lazu_thumb.gif}" title="[蜡烛]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/clock_thumb.gif}" title="[钟]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/cake.gif}" title="[蛋糕]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/m_thumb.gif}" title="[话筒]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/weijin_thumb.gif}" title="[围脖]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/lxhzhuanfa_thumb.gif}" title="[转发]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/lxhluguo_thumb.gif}" title="[路过这儿]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/bofubianlian_thumb.gif}" title="[bofu变脸]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/gbzkun_thumb.gif}" title="[gbz困]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/boboshengmenqi_thumb.gif}" title="[生闷气]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/chn_buyaoya_thumb.gif}" title="[不要啊]" width="" height="22" alt="#" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/daxiongleibenxiong_thumb.gif}" title="[dx泪奔]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/cat_yunqizhong_thumb.gif}" title="[运气中]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/youqian_thumb.gif}" title="[有钱]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/cf_thumb.gif}" title="[冲锋]" width="" height="22" alt="#"></li>-->
+<!--                <li><img th:src="@{/notcommon/sendDynamic/images/camera_thumb.gif}" title="[照相机]" width="" height="22" alt="#"></li>-->
+            </ul>
+        </div>
+        <!-- Expression frame(表情框) end-->
+    </div>
+</div>
+<!--message end-->
+<!--显示底下的评论信息-->
+<div class="msgBox">
+</div>
+
+<script th:src="@{/common/js/jquery-3.3.1.js}"></script>
+<script type="text/javascript" th:src="@{/notcommon/sendDynamic/js/index.js}"></script>
+</body>
+</html>

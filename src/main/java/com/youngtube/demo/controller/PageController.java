@@ -106,4 +106,10 @@ public class PageController
         return "forward:/dynamic/loadDynamicList/"+userId;
     }
 
+    @RequestMapping("/toSendDynamic")
+    public String toSendDynamic()
+    {
+        return "sendDynamic";
+    }
+
 }

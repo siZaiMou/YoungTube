@@ -1,5 +1,6 @@
 package com.youngtube.demo.controller;
 
+import com.youngtube.demo.entity.DynamicComment;
 import com.youngtube.demo.entity.User;
 import com.youngtube.demo.entity.VideoComment;
 import com.youngtube.demo.service.CommentService;
@@ -53,5 +54,12 @@ public class CommentController
         model.addAttribute("videoComments_new",videoComments_new);
         model.addAttribute("commentUsers_new",commentUsers_new);
         return "videoPlay::comment_new";
+    }
+
+    @RequestMapping("/sendDynamicComment")
+    @ResponseBody
+    public void sendDynamicComment(DynamicComment dynamicComment)
+    {
+        commentService.saveDynamicComment(dynamicComment);
     }
 }

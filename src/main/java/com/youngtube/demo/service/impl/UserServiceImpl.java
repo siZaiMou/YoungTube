@@ -1,9 +1,6 @@
 package com.youngtube.demo.service.impl;
 
-import com.youngtube.demo.entity.Dynamic;
-import com.youngtube.demo.entity.User;
-import com.youngtube.demo.entity.Video;
-import com.youngtube.demo.entity.VideoComment;
+import com.youngtube.demo.entity.*;
 import com.youngtube.demo.mapper.UserMapper;
 import com.youngtube.demo.service.UserService;
 import com.youngtube.demo.untils.Md5Util;
@@ -148,6 +145,19 @@ public class UserServiceImpl implements UserService
             dynamicUsers.put(dynamic.getUserId(),userMapper.findOneByUserId(dynamic.getUserId()));
         }
         return dynamicUsers;
+    }
+
+    @Override
+    public void findDynamicCommentUsers(Map<Integer, User> dynamicUserList, List<Dynamic> dynamicList)
+    {
+        for(Dynamic dynamic:dynamicList)
+        {
+            List<DynamicComment> dynamicCommentList = dynamic.getDynamicCommentList();
+            for(DynamicComment comment:dynamicCommentList)
+            {
+                dynamicUserList.put(comment.getUserId(),userMapper.findOneByUserId(comment.getUserId()));
+            }
+        }
     }
 
 
