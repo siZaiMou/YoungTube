@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.youngtube.demo.mapper.FavoriteMapper">
+
+
+    <insert id="insertOneFavorite" parameterType="favorite">
+        insert into favorite
+        values (#{favoriteId}, #{favoriteName}, #{userId})
+    </insert>
+
+    <select id="findFavoriteListByUserId" resultType="favorite">
+        select *
+        from favorite
+        where userId = #{userId}
+    </select>
+
+    <select id="findFavoriteVideoIdList" resultType="java.lang.Integer">
+        select videoId
+        from videoFavorite
+        where favoriteId = #{favoriteId}
+        order by favoriteDate desc
+    </select>
+
+    <select id="findFavoriteDateList" resultType="java.util.Date">
+        select favoriteDate
+        from videoFavorite
+        where favoriteId = #{favoriteId}
+        order by favoriteDate desc
+    </select>
+
+</mapper>

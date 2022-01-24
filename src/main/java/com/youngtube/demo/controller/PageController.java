@@ -112,10 +112,11 @@ public class PageController
         return "sendDynamic";
     }
 
-    @RequestMapping("/toVideoFavorite")
-    public String toVideoFavorite()
+    @RequestMapping("/toVideoFavorite/{userId}")
+    public String toVideoFavorite(@PathVariable("userId")int userId)
     {
-        return "videoFavorite";
+        return "forward:/favorite/loadFavoriteList/"+userId;
     }
+
 
 }

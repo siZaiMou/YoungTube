@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 20/01/2022 10:45:05
+ Date: 24/01/2022 21:32:04
 */
 
 SET NAMES utf8mb4;
@@ -80,7 +80,7 @@ CREATE TABLE `danmu`  (
   `position` int NULL DEFAULT NULL,
   `danmuAuditStatus` int NULL DEFAULT 0,
   PRIMARY KEY (`danmuId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of danmu
@@ -102,6 +102,9 @@ INSERT INTO `danmu` VALUES (21, 1, 3, '你好你好', 0, '16777215', 6.13621, '2
 INSERT INTO `danmu` VALUES (22, 2, 6, '笑死', 0, '16777215', 2.94546, '2022-01-19 11:04:59', 0, 0);
 INSERT INTO `danmu` VALUES (23, 4, 6, '你好你好', 0, '16777215', 4.46197, '2022-01-20 00:40:07', 0, 0);
 INSERT INTO `danmu` VALUES (24, 1, 6, '弹幕', 0, '16769331', 10.3979, '2022-01-20 02:21:37', 1, 0);
+INSERT INTO `danmu` VALUES (25, 2, 6, 'aaaa', 0, '6610199', 1.88827, '2022-01-20 11:30:58', 0, 0);
+INSERT INTO `danmu` VALUES (26, 1, 3, 'eee', 0, '16777215', 1.93032, '2022-01-21 03:19:03', 0, 0);
+INSERT INTO `danmu` VALUES (27, 1, 3, '11', 0, '16777215', 8.68919, '2022-01-21 03:20:13', 0, 0);
 
 -- ----------------------------
 -- Table structure for dynamic
@@ -114,7 +117,7 @@ CREATE TABLE `dynamic`  (
   `dynamicIsTop` int NULL DEFAULT 0,
   `dynamicDate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`dynamicId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dynamic
@@ -134,6 +137,11 @@ INSERT INTO `dynamic` VALUES (12, 6, '然而我还，令人感叹', 0, '2022-01-
 INSERT INTO `dynamic` VALUES (13, 6, '私密马赛', 0, '2022-01-19 11:07:24');
 INSERT INTO `dynamic` VALUES (14, 3, '呃呃呃呃呃', 0, '2022-01-19 11:08:21');
 INSERT INTO `dynamic` VALUES (15, 6, '动态动态', 0, '2022-01-20 02:23:29');
+INSERT INTO `dynamic` VALUES (16, 6, '你好你好', 0, '2022-01-20 11:32:31');
+INSERT INTO `dynamic` VALUES (17, 6, '笑死笑死', 0, '2022-01-22 07:29:12');
+INSERT INTO `dynamic` VALUES (18, 3, 'eee', 0, '2022-01-22 09:11:54');
+INSERT INTO `dynamic` VALUES (19, 3, '', 0, '2022-01-22 09:14:47');
+INSERT INTO `dynamic` VALUES (20, 3, 'sukisuki', 0, '2022-01-22 09:16:20');
 
 -- ----------------------------
 -- Table structure for dynamiccomment
@@ -144,32 +152,46 @@ CREATE TABLE `dynamiccomment`  (
   `userId` int NULL DEFAULT NULL,
   `dynamicId` int NULL DEFAULT NULL,
   `commentContent` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `commentPraise` int NULL DEFAULT NULL,
-  `commentDislike` int NULL DEFAULT NULL,
+  `commentPraise` int NULL DEFAULT 0,
+  `commentDislike` int NULL DEFAULT 0,
   `commentDate` datetime NULL DEFAULT NULL,
-  `fatherCommentId` int NULL DEFAULT NULL,
+  `fatherCommentId` int NULL DEFAULT 0,
   `commentAuditStatus` int NULL DEFAULT 0,
   `dynamicCommentIsTop` int NULL DEFAULT 0,
   PRIMARY KEY (`commentId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dynamiccomment
 -- ----------------------------
+INSERT INTO `dynamiccomment` VALUES (1, 6, 17, '666', 0, 0, '2022-01-22 08:19:08', 0, 0, 0);
+INSERT INTO `dynamiccomment` VALUES (2, 6, 17, 'dwdwd', 0, 0, '2022-01-22 08:19:51', 0, 0, 0);
+INSERT INTO `dynamiccomment` VALUES (3, 3, 20, 'wadwadwa', 0, 0, '2022-01-22 09:24:22', 0, 0, 0);
+INSERT INTO `dynamiccomment` VALUES (4, 3, 20, '这个是否有点', 0, 0, '2022-01-24 01:19:48', 0, 0, 0);
+INSERT INTO `dynamiccomment` VALUES (5, 3, 3, 'wdwdwdwdwdwd', 0, 0, '2022-01-24 01:20:41', 0, 0, 0);
+INSERT INTO `dynamiccomment` VALUES (6, 3, 19, '好发', 0, 0, '2022-01-24 01:32:15', 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for dynamicpraise
 -- ----------------------------
 DROP TABLE IF EXISTS `dynamicpraise`;
 CREATE TABLE `dynamicpraise`  (
-  `dynamicId` int NULL DEFAULT NULL,
-  `userId` int NULL DEFAULT NULL,
-  `praiseDate` datetime NULL DEFAULT NULL
+  `dynamicId` int NOT NULL,
+  `userId` int NOT NULL,
+  `praiseDate` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`dynamicId`, `userId`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dynamicpraise
 -- ----------------------------
+INSERT INTO `dynamicpraise` VALUES (5, 6, '2022-01-22 07:24:38');
+INSERT INTO `dynamicpraise` VALUES (8, 3, '2022-01-24 01:22:48');
+INSERT INTO `dynamicpraise` VALUES (11, 6, '2022-01-22 07:24:50');
+INSERT INTO `dynamicpraise` VALUES (15, 6, '2022-01-22 07:24:44');
+INSERT INTO `dynamicpraise` VALUES (17, 6, '2022-01-22 07:29:19');
+INSERT INTO `dynamicpraise` VALUES (19, 3, '2022-01-22 09:21:52');
+INSERT INTO `dynamicpraise` VALUES (20, 3, '2022-01-22 09:21:51');
 
 -- ----------------------------
 -- Table structure for favorite
@@ -185,6 +207,10 @@ CREATE TABLE `favorite`  (
 -- ----------------------------
 -- Records of favorite
 -- ----------------------------
+INSERT INTO `favorite` VALUES (1, '默认收藏夹', 3);
+INSERT INTO `favorite` VALUES (2, '守望先锋', 3);
+INSERT INTO `favorite` VALUES (3, '东北往事', 3);
+INSERT INTO `favorite` VALUES (4, '黑马程序员', 3);
 
 -- ----------------------------
 -- Table structure for follow
@@ -201,8 +227,9 @@ CREATE TABLE `follow`  (
 -- ----------------------------
 -- Records of follow
 -- ----------------------------
-INSERT INTO `follow` VALUES (3, 3, '2022-01-18 01:24:55', 0);
 INSERT INTO `follow` VALUES (3, 5, '2022-01-16 08:05:01', 0);
+INSERT INTO `follow` VALUES (6, 3, '2022-01-22 10:07:36', 0);
+INSERT INTO `follow` VALUES (6, 5, '2022-01-20 11:32:06', 0);
 
 -- ----------------------------
 -- Table structure for history
@@ -298,7 +325,7 @@ CREATE TABLE `suggestion`  (
   `assessorId` int NULL DEFAULT NULL,
   `assessDate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`suggestionId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of suggestion
@@ -418,7 +445,8 @@ INSERT INTO `videoclick` VALUES (3, 8, '2022-01-16 03:19:18', 0);
 INSERT INTO `videoclick` VALUES (3, 10, '2022-01-18 01:23:52', 0);
 INSERT INTO `videoclick` VALUES (5, 1, '2022-01-16 02:49:51', 0);
 INSERT INTO `videoclick` VALUES (5, 6, '2022-01-16 03:06:24', 0);
-INSERT INTO `videoclick` VALUES (6, 2, '2022-01-19 11:04:38', 0);
+INSERT INTO `videoclick` VALUES (6, 1, '2022-01-20 11:33:31', 0);
+INSERT INTO `videoclick` VALUES (6, 2, '2022-01-20 11:31:23', 0);
 
 -- ----------------------------
 -- Table structure for videocoin
@@ -460,7 +488,7 @@ CREATE TABLE `videocomment`  (
   `commentAuditStatus` int NULL DEFAULT 0,
   `videoCommentIsTop` int NULL DEFAULT 0,
   PRIMARY KEY (`commentId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of videocomment
@@ -486,6 +514,10 @@ INSERT INTO `videocomment` VALUES (18, 6, 1, '666', 0, 0, '2022-01-19 11:26:20',
 INSERT INTO `videocomment` VALUES (19, 6, 1, '4444', 0, 0, '2022-01-19 11:26:35', 0, 0, 0);
 INSERT INTO `videocomment` VALUES (20, 6, 8, '好好好，笑死', 0, 0, '2022-01-19 11:31:16', 0, 0, 0);
 INSERT INTO `videocomment` VALUES (21, 6, 1, '你好你好你好\n', 0, 0, '2022-01-20 02:22:26', 0, 0, 0);
+INSERT INTO `videocomment` VALUES (22, 6, 2, 'pinglun ', 0, 0, '2022-01-20 11:31:39', 0, 0, 0);
+INSERT INTO `videocomment` VALUES (23, 3, 1, 'eee', 0, 0, '2022-01-21 03:18:52', 0, 0, 0);
+INSERT INTO `videocomment` VALUES (24, 3, 1, 'eee笑死', 0, 0, '2022-01-21 03:20:25', 0, 0, 0);
+INSERT INTO `videocomment` VALUES (25, 3, 6, '得到', 0, 0, '2022-01-21 03:21:48', 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for videofavorite
@@ -501,6 +533,8 @@ CREATE TABLE `videofavorite`  (
 -- ----------------------------
 -- Records of videofavorite
 -- ----------------------------
+INSERT INTO `videofavorite` VALUES (1, 1, '2022-01-24 21:14:54');
+INSERT INTO `videofavorite` VALUES (1, 2, '2022-01-24 21:24:19');
 
 -- ----------------------------
 -- Table structure for videotag

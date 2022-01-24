@@ -97,7 +97,7 @@ public class VideoServiceImpl implements VideoService
         return videoMapper.findVideoByUserId(userId);
     }
 
-    //通过算法得到五条实施热榜视频
+    //通过算法得到五条实时热榜视频
     @Override
     public List<Video> findTimeHotVideos()
     {

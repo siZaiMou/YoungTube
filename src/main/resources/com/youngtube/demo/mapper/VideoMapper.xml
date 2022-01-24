@@ -79,4 +79,11 @@
         from video limit 5
     </select>
 
+    <select id="findVideosByVideoIds" resultType="video">
+        select videoId,videoName,videoFrontSrc from video where videoId in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
 </mapper>

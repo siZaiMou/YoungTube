@@ -24,13 +24,20 @@ public interface VideoMapper
 
     Video findOneById(@Param("videoId") int videoId);
 
+    //查询20条相关视频,参数应根据service层算法给出
     List<Video> find20WithVideoId();
 
     List<Video> findVideosBySearch(@Param("categoryId") int categoryId, @Param("searchTex") String searchTex, @Param("searchMode") int searchMode);
 
+    //用户投稿视频数
     Integer findVideoCountByUserId(@Param("userId") int userId);
 
+    //用户投稿视频
     List<Video> findVideoByUserId(@Param("userId")int userId);
 
+    //查询5条实时热榜视频
     List<Video> find5WithTimeHot();
+
+    //根据id列表查询视频列表
+    List<Video> findVideosByVideoIds(List<Integer> videoIdList);
 }

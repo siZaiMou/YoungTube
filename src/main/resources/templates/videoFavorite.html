@@ -150,7 +150,37 @@
 
 </head>
 <script th:inline="javascript">
-    function choose(ele) {
+    window.onload=function ()
+    {
+        var favorites = document.getElementsByClassName("favorite_color");
+        $(favorites[0]).css("border-right", "solid 5px #df4500");
+        choose(favorites[0]);
+        search2();
+    }
+    function createFavorite() //新建收藏夹
+    {
+        var favorites = document.getElementsByClassName("favorite_color");
+        if(favorites.length>10)
+        {
+            alert("最多可以创建10个收藏夹!");
+            return;
+        }
+        var userId=/*[[${session.nowUser.userId}]]*/'0';
+        var favoriteName = prompt("请输入收藏夹名称");
+        if(favoriteName!=null&&favoriteName.length>0)
+        {
+            $.post("/favorite/createFavorite",{"userId":userId,"favoriteName":favoriteName});
+            alert("创建成功!");
+            location.reload();
+        }
+        else
+        {
+            alert("请输入正确的收藏夹名称!");
+        }
+    }
+    function choose(ele) { //选中收藏夹
+        var favoriteId=parseInt(ele.getAttribute("favoriteId"));
+        $("#con_collect_nonull").load("/favorite/loadFavoriteVideoList/"+favoriteId);
         var favorites = document.getElementsByClassName("favorite_color");
         for(let i=0;i<favorites.length;i++)
         {
@@ -158,98 +188,73 @@
         }
         $(ele).css("border-right", "solid 5px #df4500");
     }
+    function search2()//搜索相关
+    {
+        $('#search_text2').click(function () //搜索输入框点击
+        {
+            $("#search_text2").text('');
+        });
+        $('#search_text2').blur(function () //搜索输入框失去焦点
+        {
+            var txt = $("#search_text2").text();
+            if (txt == '') {
+                $("#search_text2").text('输入搜索内容');
+            }
+
+        });
+        $("#search_text2").on('keydown', function (event) { //搜索输入框回车
+            //获取keyCode
+            var keyCode = event.keyCode;
+            if (keyCode === 13) {
+                $("#search_button2").click();
+                $("#search_text2").text('');
+            }
+        });
+        $('#search_button2').click(function () //搜索按钮点击
+        {
+
+            var txt = $("#search_text2").text();
+            txt = txt.trim();
+            if (txt.length > 0) {
+                if (txt == '输入搜索内容') {
+                    $("#search_text2").text('');
+                }
+                location.href = "/pages/toVideoList?searchText=" + $("#search_text2").text();
+            } else {
+                location.href = "/pages/toIndex";
+            }
+        });
+    }
+
+    function toVideoPlay(videoId)
+    {
+        location.href="/pages/toVideoPlay/"+videoId;
+    }
 </script>
 <body>
 <div th:replace="/header.html::#header1"></div>
 <header class="header" role="banner">
     <h1 class="logo">
-        <a href="#">我的<span>收藏</span></a>
+        <a onclick="createFavorite()">新建<span>收藏夹</span></a>
     </h1>
     <div class="nav-wrap">
         <nav class="main-nav" role="navigation">
             <ul class="unstyled list-hover-slide">
-                <li class="favorite_color" onclick="choose(this)"><a>默认收藏夹</a></li>
-                <li class="favorite_color" onclick="choose(this)"><a>Work</a></li>
-                <li class="favorite_color" onclick="choose(this)"><a>Contact</a></li>
-                <li class="favorite_color" onclick="choose(this)"><a>Blog</a></li>
-                <li class="favorite_color" onclick="choose(this)"><a>Bldog</a></li>
+                <li th:each="singleFavorite:${favoriteList}" th:favoriteId="${singleFavorite.favoriteId}" class="favorite_color" onclick="choose(this)"><a>[[${singleFavorite.favoriteName}]]</a></li>
             </ul>
         </nav>
     </div>
 </header>
 
 <div id="con_collect_nonull">
-    <div class="per_collect">
+
+    <div th:fragment="favoriteVideoList" th:each="singleVideo,singleVideoStat:${favoriteVideoList}" class="per_collect">
         <div class="per_collect_video_pic">
-            <img src="/notcommon/personspace/img/videoPic.png"
+            <img th:src="${singleVideo.videoFrontSrc}" th:onclick="|toVideoPlay(${singleVideo.videoId})|"
                  style="width: 100%; height: 100%; float: left">
         </div>
-        <div class="per_collect_video_title"><span>宁宁宁宁宁宁宁宁宁</span></div>
-        <div class="per_collect_video_time"><span>收藏时间:</span></div>
-    </div>
-    <div class="per_collect">
-        <div class="per_collect_video_pic">
-            <img src="/notcommon/personspace/img/videoPic.png"
-                 style="width: 100%; height: 100%; float: left">
-        </div>
-        <div class="per_collect_video_title"><span>宁宁宁宁宁宁宁宁宁</span></div>
-        <div class="per_collect_video_time"><span>收藏时间:</span></div>
-    </div>
-    <div class="per_collect">
-        <div class="per_collect_video_pic">
-            <img src="/notcommon/personspace/img/videoPic.png"
-                 style="width: 100%; height: 100%; float: left">
-        </div>
-        <div class="per_collect_video_title"><span>宁宁宁宁宁宁宁宁宁</span></div>
-        <div class="per_collect_video_time"><span>收藏时间:</span></div>
-    </div>
-    <div class="per_collect">
-        <div class="per_collect_video_pic">
-            <img src="/notcommon/personspace/img/videoPic.png"
-                 style="width: 100%; height: 100%; float: left">
-        </div>
-        <div class="per_collect_video_title"><span>宁宁宁宁宁宁宁宁宁</span></div>
-        <div class="per_collect_video_time"><span>收藏时间:</span></div>
-    </div>
-    <div class="per_collect">
-        <div class="per_collect_video_pic">
-            <img src="/notcommon/personspace/img/videoPic.png"
-                 style="width: 100%; height: 100%; float: left">
-        </div>
-        <div class="per_collect_video_title"><span>宁宁宁宁宁宁宁宁宁</span></div>
-        <div class="per_collect_video_time"><span>收藏时间:</span></div>
-    </div>
-    <div class="per_collect">
-        <div class="per_collect_video_pic">
-            <img src="/notcommon/personspace/img/videoPic.png"
-                 style="width: 100%; height: 100%; float: left">
-        </div>
-        <div class="per_collect_video_title"><span>宁宁宁宁宁宁宁宁宁</span></div>
-        <div class="per_collect_video_time"><span>收藏时间:</span></div>
-    </div>
-    <div class="per_collect">
-        <div class="per_collect_video_pic">
-            <img src="/notcommon/personspace/img/videoPic.png"
-                 style="width: 100%; height: 100%; float: left">
-        </div>
-        <div class="per_collect_video_title"><span>宁宁宁宁宁宁宁宁宁</span></div>
-        <div class="per_collect_video_time"><span>收藏时间:</span></div>
-    </div>
-    <div class="per_collect">
-        <div class="per_collect_video_pic">
-            <img src="/notcommon/personspace/img/videoPic.png"
-                 style="width: 100%; height: 100%; float: left">
-        </div>
-        <div class="per_collect_video_title"><span>宁宁宁宁宁宁宁宁宁</span></div>
-        <div class="per_collect_video_time"><span>收藏时间:</span></div>
-    </div>
-    <div class="per_collect">
-        <div class="per_collect_video_pic">
-            <img src="/notcommon/personspace/img/videoPic.png"
-                 style="width: 100%; height: 100%; float: left">
-        </div>
-        <div class="per_collect_video_title"><span>宁宁宁宁宁宁宁宁宁</span></div>
-        <div class="per_collect_video_time"><span>收藏时间:</span></div>
+        <div class="per_collect_video_title" th:onclick="|toVideoPlay(${singleVideo.videoId})|"><span >[[${singleVideo.videoName}]]</span></div>
+        <div class="per_collect_video_time"><span>收藏时间:[[${#dates.format(favoriteDateList[singleVideoStat.index],'yyyy-MM-dd HH:mm:ss')}]]</span></div>
     </div>
 
 </div>
