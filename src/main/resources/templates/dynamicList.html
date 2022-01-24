@@ -27,6 +27,18 @@
             border: none;
         }
 
+        .rightBottom {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ccc;
+            position: fixed;
+            _position: absolute;
+            right: 10px;
+            bottom: 10px;
+            padding: 4px;
+            background-color: #abc6ff;
+        }
+
         .clearfix:after {
             content: ".";
             display: block;
@@ -330,12 +342,12 @@
                 var praisesTotal = box.getElementsByClassName('praises-total')[0];
                 var oldTotal = parseInt(praisesTotal.getAttribute('total'));
                 var newTotal;
-                var userId=/*[[${session.nowUser.userId}]]*/'1';
-                var dynamicId=parseInt(praisesTotal.getAttribute('dynamicId'));//自定义属性
+                var userId =/*[[${session.nowUser.userId}]]*/'1';
+                var dynamicId = parseInt(praisesTotal.getAttribute('dynamicId'));//自定义属性
                 if (txt == '赞') {
                     newTotal = oldTotal + 1;
                     $.ajaxSettings.async = false;
-                    $.post("/dynamic/sendDynamicPraise",{"userId":userId,"dynamicId":dynamicId});
+                    $.post("/dynamic/sendDynamicPraise", {"userId": userId, "dynamicId": dynamicId});
                     $.ajaxSettings.async = true;
                     praisesTotal.setAttribute('total', newTotal);
                     praisesTotal.innerHTML = (newTotal == 1) ? '我觉得很赞' : '我和' + oldTotal + '个人觉得很赞';
@@ -343,7 +355,7 @@
                 } else {
                     newTotal = oldTotal - 1;
                     $.ajaxSettings.async = false;
-                    $.post("/dynamic/cancelDynamicPraise",{"userId":userId,"dynamicId":dynamicId});
+                    $.post("/dynamic/cancelDynamicPraise", {"userId": userId, "dynamicId": dynamicId});
                     $.ajaxSettings.async = true;
                     praisesTotal.setAttribute('total', newTotal);
                     praisesTotal.innerHTML = (newTotal == 0) ? '' : newTotal + '个人觉得很赞';
@@ -358,13 +370,17 @@
              * @param el 点击的元素
              */
             function reply(box, el) {
-                var userId=/*[[${session.nowUser.userId}]]*/'1';
+                var userId =/*[[${session.nowUser.userId}]]*/'1';
                 var commentList = box.getElementsByClassName('comment-list')[0];
                 var textarea = box.getElementsByClassName('comment')[0];
                 var commentBox = document.createElement('div');
-                var dynamicId=parseInt(commentList.getAttribute('dynamicId'));//自定义属性
+                var dynamicId = parseInt(commentList.getAttribute('dynamicId'));//自定义属性
                 $.ajaxSettings.async = false;
-                $.post("/comment/sendDynamicComment",{"userId":userId,"dynamicId":dynamicId,"commentContent":textarea.value});
+                $.post("/comment/sendDynamicComment", {
+                    "userId": userId,
+                    "dynamicId": dynamicId,
+                    "commentContent": textarea.value
+                });
                 $.ajaxSettings.async = true;
 
                 commentBox.className = 'comment-box clearfix';
@@ -508,11 +524,18 @@
     </script>
 
 </head>
-<body style="background-color: lightyellow">
+<body>
 <!--<script th:inline="javascript" th:src="@{/notcommon/dynamic_all/js/demo.js}"></script>-->
 
+<script>
+    function sendDynamic()
+    {
+        location.href="/pages/toSendDynamic";
+    }
+</script>
 <div th:replace="/header.html::#header1"></div>
-
+　
+<button class="rightBottom" onclick="sendDynamic()">我要发动态</button>
 <div id="list">
     <div class="box clearfix" th:each="singleDynamic:${dynamicList}">
         <a class="close" href="javascript:;">×</a>
@@ -535,15 +558,18 @@
                 [[${singleDynamic.dynamicPraiseCount}]]个人觉得很赞
             </div>
             <div class="comment-list" th:dynamicId="${singleDynamic.dynamicId}">
-                <div class="comment-box clearfix" user="self" th:each="singleComment:${singleDynamic.dynamicCommentList}">
-                    <img class="myhead" th:onclick="|toUserSpace(${singleComment.userId})|" th:src="|${dynamicUserList[singleComment.userId].userHeadSrc}|" alt=""/>
+                <div class="comment-box clearfix" user="self"
+                     th:each="singleComment:${singleDynamic.dynamicCommentList}">
+                    <img class="myhead" th:onclick="|toUserSpace(${singleComment.userId})|"
+                         th:src="|${dynamicUserList[singleComment.userId].userHeadSrc}|" alt=""/>
                     <div class="comment-content">
-                        <p class="comment-text"><span class="user" th:onclick="|toUserSpace(${singleComment.userId})|">[[${dynamicUserList[singleComment.userId].userPetName}]]：</span>[[${singleComment.commentContent}]]</p>
+                        <p class="comment-text"><span class="user" th:onclick="|toUserSpace(${singleComment.userId})|">[[${dynamicUserList[singleComment.userId].userPetName}]]：</span>[[${singleComment.commentContent}]]
+                        </p>
                         <p class="comment-time">
                             [[${#dates.format(singleComment.commentDate,'yyyy-MM-dd HH:mm:ss')}]]
-<!--                            <a href="javascript:;" class="comment-praise" total="1" my="0"-->
-<!--                               style="display: inline-block">1 赞</a>-->
-<!--                            <a href="javascript:;" class="comment-operate">删除</a>-->
+                            <!--                            <a href="javascript:;" class="comment-praise" total="1" my="0"-->
+                            <!--                               style="display: inline-block">1 赞</a>-->
+                            <!--                            <a href="javascript:;" class="comment-operate">删除</a>-->
                         </p>
                     </div>
                 </div>

@@ -112,4 +112,10 @@ public class PageController
         return "sendDynamic";
     }
 
+    @RequestMapping("/toVideoFavorite")
+    public String toVideoFavorite()
+    {
+        return "videoFavorite";
+    }
+
 }
