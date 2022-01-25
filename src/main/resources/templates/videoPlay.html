@@ -1221,6 +1221,88 @@
             content: "\E75C";
         }
     </style>
+
+    <style type="text/css">
+        #hidebg {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            background-color: #000;
+            width: 100%; /*宽度设置为100%，这样才能使隐藏背景层覆盖原页面*/
+            filter: alpha(opacity=60); /*设置透明度为60%*/
+            opacity: 0.6; /*非IE浏览器下设置透明度为60%*/
+            display: none; /* http://www.jb51.net */
+            z-Index: 2;
+        }
+
+        #hidebox {
+            position: fixed;
+            _position: absolute;
+            margin: 0;
+            width: 400px;
+            height: 192px;
+            top: 40%;
+            left: 40%;
+            background-color: #fff;
+            display: none;
+            cursor: pointer;
+            z-Index: 3;
+            text-align: center;
+
+        }
+
+        #content {
+            text-align: center;
+            cursor: pointer;
+            z-Index: 1;
+        }
+
+        .box-head {
+            font-size: 18px;
+            padding-top: 18px;
+            padding-bottom: 10px;
+        }
+
+        .box-textarea {
+            font-size: 14px;
+            padding-top: 30px;
+            padding-bottom: 32px;
+        }
+
+        .hidebox-hr {
+            width: 384px;
+            text-align: center;
+            /* padding: 0; */
+            padding-left: 8px;
+        }
+
+        .clickbtn {
+            display: block;
+            width: 107px;
+            height: 33px;
+            border-radius: 3px;
+            font-size: 18px;
+        }
+
+        .cancel {
+            background-color: #ededed;
+            float: left;
+            margin-left: 88px;
+        }
+
+        .confirm {
+            background-color: #00aed8;
+            color: #ffffff;
+            float: left;
+            margin-left: 22px;
+        }
+
+        .boxbtn {
+            width: 100%;
+            height: 33px;
+            line-height: 33px;
+        }
+    </style>
 </head>
 
 <body>
@@ -1298,7 +1380,8 @@
         videoPraise();
         videoCoin();
         upFollow();
-        search2();
+        search2()
+
     }
 
 </script>
@@ -1366,15 +1449,90 @@
                         <i id="coin" class="van-icon-videodetails_throw" style=""></i>
                         [[${video.videoCoinCount}]]
                        </span>
-                    <span title="收藏人数" class="collect"><canvas width="34" height="34" class="ring-progress"
-                                                               style="width:34px;height:34px;left:-3px;top:-3px;"></canvas>
+                    <span title="收藏人数" class="collect" onclick="showbox()"><canvas width="34" height="34"
+                                                                                   class="ring-progress"
+                                                                                   style="width:34px;height:34px;left:-3px;top:-3px;"></canvas>
                         <!----><i class="van-icon-videodetails_collec" style=""></i>[[${video.videoFavoriteCount}]]
                       </span>
                     <span title="分享" class="share"><i class="van-icon-videodetails_share"></i>[[${video.videoTransmitCount}]]
                        </span>
                 </div>
+
+
+                <div id="hidebg"></div>
+                <div id="hidebox">
+                    <div>
+                        <p class="box-head">选择收藏夹</p>
+                        <form id="favoriteForm" method="post">
+                            <input name="hasFavorite" th:fragment="favoriteList" th:favoriteId="${singleFavorite.favoriteId}" th:each="singleFavorite:${favoriteList}" type="checkbox"
+                                   th:if="${singleFavorite.nowVideoIsFavorite==true}" checked="checked" th:text="|${singleFavorite.favoriteName} &nbsp;|">
+                            <input name="notFavorite" th:fragment="favoriteList" th:favoriteId="${singleFavorite.favoriteId}" th:each="singleFavorite:${favoriteList}" type="checkbox"
+                                   th:if="${singleFavorite.nowVideoIsFavorite==false}" th:text="|${singleFavorite.favoriteName} &nbsp;|">
+                        </form>
+                        <div class="boxbtn">
+                            <a class="clickbtn cancel" onclick="hidebox()">取消</a>
+                            <a class="clickbtn confirm" href="javascript:void(0);" onclick="videoFavorite();">确认</a>
+                        </div>
+                    </div>
+                </div>
+
                 <!--为视频互动绑定事件-->
                 <script th:inline="javascript">
+                    function showbox() //显示隐藏层和弹出层
+                    {
+                        var nowUser = /*[[${session.nowUser}]]*/'nowUser';
+                        var videoId =/*[[${video.videoId}]]*/'1';
+                        if (nowUser == null || nowUser.userId <= 0) {
+                            alert("请先登录!");
+                            return;
+                        }
+                        $("#favoriteForm").load("/favorite/loadFavoriteListAsyn/",{"userId":nowUser.userId,"videoId":videoId});
+
+                        var hideobj = document.getElementById("hidebg");
+                        hidebg.style.display = "block"; //显示隐藏层
+                        hidebg.style.height = document.body.clientHeight + "px"; //设置隐藏层的高度为当前页面高度
+                        document.getElementById("hidebox").style.display = "block"; //显示弹出层
+                    }
+
+                    function hidebox() //去除隐藏层和弹出层
+                    {
+                        document.getElementById("hidebg").style.display = "none";
+                        document.getElementById("hidebox").style.display = "none";
+                    }
+
+                    function videoFavorite()//视频收藏
+                    {
+                        var fvts1=document.getElementsByName("hasFavorite");
+                        var fvts2=document.getElementsByName("notFavorite");
+                        var cancelFavoriteIds=new Array();
+                        var addFavoriteIds=new Array();
+                        for(let i=0;i<fvts1.length;i++)
+                        {
+                            if(fvts1[i].checked==false)//原来打勾的现在没打勾，取消已收藏
+                            {
+                                cancelFavoriteIds.push(fvts1[i].getAttribute("favoriteId"));
+                            }
+                        }
+                        for(let i=0;i<fvts2.length;i++)
+                        {
+                            if(fvts2[i].checked==true)//打勾，收藏
+                            {
+                                addFavoriteIds.push(fvts2[i].getAttribute("favoriteId"));
+                            }
+                        }
+
+                        var vid =/*[[${video.videoId}]]*/'1';
+                        if(cancelFavoriteIds.length>0)
+                        {
+                            $.post("/favorite/cancelVideoFavorites",{"favoriteIds":cancelFavoriteIds,"videoId":vid});
+                        }
+                        if(addFavoriteIds.length>0)
+                        {
+                            $.post("/favorite/addVideoFavorites",{"favoriteIds":addFavoriteIds,"videoId":vid});
+                        }
+                        hidebox();
+                    }
+
                     function videoPraise() {
                         var nowUser = /*[[${session.nowUser}]]*/'nowUser';
                         var vid =/*[[${video.videoId}]]*/'1';
@@ -1667,7 +1825,7 @@
                                     <br>
                                     <p style="color: red;">
                                         留言者:[[${commentUsers_hot[singleComment.userId].userPetName}]]<a href=""
-                                                                                                           style="color: darkgoldenrod;text-decoration:none;">&nbsp;</a><span
+                                                                                                        style="color: darkgoldenrod;text-decoration:none;">&nbsp;</a><span
                                             style="color: blue;">&nbsp;&nbsp;&nbsp;留言时间:[[${#dates.format(singleComment.commentDate,'yyyy-MM-dd HH:mm:ss')}]]</span>
                                     </p>
                                 </li>

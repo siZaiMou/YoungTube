@@ -21,4 +21,10 @@ public interface FavoriteMapper
     List<Integer> findFavoriteVideoIdList(@Param("favoriteId")int favoriteId);
 
     List<Date> findFavoriteDateList(@Param("favoriteId")int favoriteId);
+
+    Integer findOneFavorite(@Param("favoriteId")int favoriteId, @Param("videoId") int videoId);
+
+    void deleteOneVideoFavorite(@Param("favoriteId")int favoriteId, @Param("videoId") int videoId);
+
+    void insertOneVideoFavorite(@Param("favoriteId")int favoriteId, @Param("videoId") int videoId,@Param("favoriteDate")Date date);
 }

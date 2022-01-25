@@ -15,4 +15,10 @@ public interface FavoriteService
     List<Video> findFavoriteVideoList(int favoriteId);
 
     List<Date> findFavoriteDateList(int favoriteId);
+
+    void packageVideoIsFavorite(List<Favorite> favoriteList,int videoId);
+
+    void cancelVideoFavorites(int[] favoriteIds, int videoId);
+
+    void addVideoFavorites(int[] favoriteIds, int videoId);
 }

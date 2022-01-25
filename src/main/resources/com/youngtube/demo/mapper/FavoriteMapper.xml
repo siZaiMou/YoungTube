@@ -29,4 +29,23 @@
         order by favoriteDate desc
     </select>
 
+    <select id="findOneFavorite" resultType="java.lang.Integer">
+        select count(favoriteId)
+        from videoFavorite
+        where favoriteId = #{favoriteId}
+          and videoId = #{videoId}
+    </select>
+
+    <delete id="deleteOneVideoFavorite">
+        delete
+        from videoFavorite
+        where favoriteId = #{favoriteId}
+          and videoId = #{videoId}
+    </delete>
+
+    <insert id="insertOneVideoFavorite">
+        insert into videoFavorite
+        values (#{favoriteId}, #{videoId}, #{favoriteDate})
+    </insert>
+
 </mapper>

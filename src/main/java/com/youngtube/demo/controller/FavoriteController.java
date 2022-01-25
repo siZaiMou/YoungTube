@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -34,9 +35,21 @@ public class FavoriteController
     {
         List<Favorite> favoriteList = favoriteService.findFavoriteList(userId);
         model.addAttribute("favoriteList",favoriteList);
+        model.addAttribute("favoriteUserId",userId);
         return "videoFavorite";
     }
 
+    //在收藏视频时异步加载所有收藏夹
+    @RequestMapping("/loadFavoriteListAsyn")
+    public String loadFavoriteListAsyn(int userId,int videoId, Model model)
+    {
+        List<Favorite> favoriteList = favoriteService.findFavoriteList(userId);
+        favoriteService.packageVideoIsFavorite(favoriteList,videoId);
+        model.addAttribute("favoriteList",favoriteList);
+        return "videoPlay::favoriteList";
+    }
+
+    //收藏的视频
     @RequestMapping("/loadFavoriteVideoList/{favoriteId}")
     public String loadFavoriteVideoList(@PathVariable("favoriteId")int favoriteId,Model model)
     {
@@ -45,5 +58,21 @@ public class FavoriteController
         model.addAttribute("favoriteVideoList",favoriteVideoList);
         model.addAttribute("favoriteDateList",favoriteDateList);
         return "videoFavorite::favoriteVideoList";
+    }
+
+    //取消收藏
+    @RequestMapping("cancelVideoFavorites")
+    @ResponseBody
+    public void cancelVideoFavorites(@RequestParam(value = "favoriteIds[]",defaultValue = "")int[] favoriteIds,int videoId)
+    {
+        favoriteService.cancelVideoFavorites(favoriteIds,videoId);
+    }
+
+    //添加收藏
+    @RequestMapping("addVideoFavorites")
+    @ResponseBody
+    public void addVideoFavorites(@RequestParam(value = "favoriteIds[]",defaultValue = "") int[] favoriteIds, int videoId)
+    {
+        favoriteService.addVideoFavorites(favoriteIds,videoId);
     }
 }

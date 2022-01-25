@@ -56,4 +56,31 @@ public class FavoriteServiceImpl implements FavoriteService
     {
         return favoriteMapper.findFavoriteDateList(favoriteId);
     }
+
+    @Override
+    public void packageVideoIsFavorite(List<Favorite> favoriteList,int videoId)
+    {
+        for(Favorite favorite:favoriteList)
+        {
+            favorite.setNowVideoIsFavorite(favoriteMapper.findOneFavorite(favorite.getFavoriteId(),videoId)>0?true:false);
+        }
+    }
+
+    @Override
+    public void cancelVideoFavorites(int[] favoriteIds, int videoId)
+    {
+        for(int favoriteId:favoriteIds)
+        {
+            favoriteMapper.deleteOneVideoFavorite(favoriteId,videoId);
+        }
+    }
+
+    @Override
+    public void addVideoFavorites(int[] favoriteIds, int videoId)
+    {
+        for(int favoriteId:favoriteIds)
+        {
+            favoriteMapper.insertOneVideoFavorite(favoriteId,videoId,new Date());
+        }
+    }
 }
