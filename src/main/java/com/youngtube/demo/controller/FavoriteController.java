@@ -39,10 +39,30 @@ public class FavoriteController
         return "videoFavorite";
     }
 
+    //视频播放页查看视频是否被收藏
+    @RequestMapping("/videoIsFavorite")
+    @ResponseBody
+    public boolean videoIsFavorite(int userId,int videoId)
+    {
+        boolean isFavorite = false;//当前用户是否收藏该视频
+        List<Favorite> favoriteList = favoriteService.findFavoriteList(userId);
+        favoriteService.packageVideoIsFavorite(favoriteList,videoId);
+        for(Favorite favorite:favoriteList)
+        {
+            if(favorite.isNowVideoIsFavorite()==true)
+            {
+                isFavorite=true;
+                break;
+            }
+        }
+        return isFavorite;
+    }
+
     //在收藏视频时异步加载所有收藏夹
     @RequestMapping("/loadFavoriteListAsyn")
     public String loadFavoriteListAsyn(int userId,int videoId, Model model)
     {
+        boolean isFavorite = false;//当前用户是否收藏该视频
         List<Favorite> favoriteList = favoriteService.findFavoriteList(userId);
         favoriteService.packageVideoIsFavorite(favoriteList,videoId);
         model.addAttribute("favoriteList",favoriteList);

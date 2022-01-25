@@ -83,4 +83,20 @@ public class FavoriteServiceImpl implements FavoriteService
             favoriteMapper.insertOneVideoFavorite(favoriteId,videoId,new Date());
         }
     }
+
+    //视频收藏数
+    @Override
+    public int findVideoFavoriteCount(int videoId)
+    {
+        List<Integer> videoFavoriteIdList = favoriteMapper.findVideoFavoriteIdList(videoId);//查找所有收藏该视频的收藏夹id
+        if(videoFavoriteIdList.size()>0)
+        {
+            List<Integer> favoriteUserIdList = favoriteMapper.findFavoriteUserIdList(videoFavoriteIdList);//查找收藏夹所属用户id
+            return favoriteUserIdList.size();
+        }
+       else
+        {
+            return 0;
+        }
+    }
 }

@@ -1380,8 +1380,8 @@
         videoPraise();
         videoCoin();
         upFollow();
-        search2()
-
+        search2();
+        videoIsFavorite();
     }
 
 </script>
@@ -1449,10 +1449,11 @@
                         <i id="coin" class="van-icon-videodetails_throw" style=""></i>
                         [[${video.videoCoinCount}]]
                        </span>
-                    <span title="收藏人数" class="collect" onclick="showbox()"><canvas width="34" height="34"
-                                                                                   class="ring-progress"
-                                                                                   style="width:34px;height:34px;left:-3px;top:-3px;"></canvas>
-                        <!----><i class="van-icon-videodetails_collec" style=""></i>[[${video.videoFavoriteCount}]]
+                    <span title="收藏人数" class="collect"
+                          onclick="showbox()"><canvas width="34" height="34"
+                                                      class="ring-progress"
+                                                      style="width:34px;height:34px;left:-3px;top:-3px;"></canvas>
+                        <!----><i id="favoriteCount" class="van-icon-videodetails_collec" style="color: #00a1d6;"></i>[[${video.videoFavoriteCount}]]
                       </span>
                     <span title="分享" class="share"><i class="van-icon-videodetails_share"></i>[[${video.videoTransmitCount}]]
                        </span>
@@ -1464,10 +1465,16 @@
                     <div>
                         <p class="box-head">选择收藏夹</p>
                         <form id="favoriteForm" method="post">
-                            <input name="hasFavorite" th:fragment="favoriteList" th:favoriteId="${singleFavorite.favoriteId}" th:each="singleFavorite:${favoriteList}" type="checkbox"
-                                   th:if="${singleFavorite.nowVideoIsFavorite==true}" checked="checked" th:text="|${singleFavorite.favoriteName} &nbsp;|">
-                            <input name="notFavorite" th:fragment="favoriteList" th:favoriteId="${singleFavorite.favoriteId}" th:each="singleFavorite:${favoriteList}" type="checkbox"
-                                   th:if="${singleFavorite.nowVideoIsFavorite==false}" th:text="|${singleFavorite.favoriteName} &nbsp;|">
+                            <input name="hasFavorite" th:fragment="favoriteList"
+                                   th:favoriteId="${singleFavorite.favoriteId}" th:each="singleFavorite:${favoriteList}"
+                                   type="checkbox"
+                                   th:if="${singleFavorite.nowVideoIsFavorite==true}" checked="checked"
+                                   th:text="|${singleFavorite.favoriteName} &nbsp;|">
+                            <input name="notFavorite" th:fragment="favoriteList"
+                                   th:favoriteId="${singleFavorite.favoriteId}" th:each="singleFavorite:${favoriteList}"
+                                   type="checkbox"
+                                   th:if="${singleFavorite.nowVideoIsFavorite==false}"
+                                   th:text="|${singleFavorite.favoriteName} &nbsp;|">
                         </form>
                         <div class="boxbtn">
                             <a class="clickbtn cancel" onclick="hidebox()">取消</a>
@@ -1486,7 +1493,10 @@
                             alert("请先登录!");
                             return;
                         }
-                        $("#favoriteForm").load("/favorite/loadFavoriteListAsyn/",{"userId":nowUser.userId,"videoId":videoId});
+                        $("#favoriteForm").load("/favorite/loadFavoriteListAsyn/", {
+                            "userId": nowUser.userId,
+                            "videoId": videoId
+                        });
 
                         var hideobj = document.getElementById("hidebg");
                         hidebg.style.display = "block"; //显示隐藏层
@@ -1502,38 +1512,65 @@
 
                     function videoFavorite()//视频收藏
                     {
-                        var fvts1=document.getElementsByName("hasFavorite");
-                        var fvts2=document.getElementsByName("notFavorite");
-                        var cancelFavoriteIds=new Array();
-                        var addFavoriteIds=new Array();
-                        for(let i=0;i<fvts1.length;i++)
-                        {
-                            if(fvts1[i].checked==false)//原来打勾的现在没打勾，取消已收藏
+                        var fvts1 = document.getElementsByName("hasFavorite"); //原来已经收藏，显示时打勾
+                        var fvts2 = document.getElementsByName("notFavorite"); //原来未收藏，显示时不打勾
+                        var cancelFavoriteIds = new Array();
+                        var addFavoriteIds = new Array();
+                        for (let i = 0; i < fvts1.length; i++) {
+                            if (fvts1[i].checked == false)//原来打勾的现在没打勾，取消已收藏
                             {
                                 cancelFavoriteIds.push(fvts1[i].getAttribute("favoriteId"));
                             }
                         }
-                        for(let i=0;i<fvts2.length;i++)
-                        {
-                            if(fvts2[i].checked==true)//打勾，收藏
+                        for (let i = 0; i < fvts2.length; i++) {
+                            if (fvts2[i].checked == true)//打勾，收藏
                             {
                                 addFavoriteIds.push(fvts2[i].getAttribute("favoriteId"));
                             }
                         }
 
                         var vid =/*[[${video.videoId}]]*/'1';
-                        if(cancelFavoriteIds.length>0)
-                        {
-                            $.post("/favorite/cancelVideoFavorites",{"favoriteIds":cancelFavoriteIds,"videoId":vid});
+                        if (cancelFavoriteIds.length > 0) {
+                            $.post("/favorite/cancelVideoFavorites", {
+                                "favoriteIds": cancelFavoriteIds,
+                                "videoId": vid
+                            });
                         }
-                        if(addFavoriteIds.length>0)
-                        {
-                            $.post("/favorite/addVideoFavorites",{"favoriteIds":addFavoriteIds,"videoId":vid});
+                        if (addFavoriteIds.length > 0) {
+                            $.post("/favorite/addVideoFavorites", {"favoriteIds": addFavoriteIds, "videoId": vid});
                         }
+                        location.reload();
                         hidebox();
                     }
 
-                    function videoPraise() {
+                    function videoIsFavorite()//视频是否被收藏
+                    {
+                        var nowUser = /*[[${session.nowUser}]]*/'nowUser';
+                        var vid =/*[[${video.videoId}]]*/'1';
+                        var isFavorite = false;
+                        if (nowUser != null && nowUser.userId > 0) {
+                            var uid =/*[[${session.nowUser.userId}]]*/'3';
+                            $.ajaxSettings.async = false; //关闭异步，否则无法正确为isPraise赋值
+                            $.get("/favorite/videoIsFavorite", {"userId": uid,"videoId": vid}, function (flag) {
+                                isFavorite = flag;
+                            });
+                            $.ajaxSettings.async = true;
+                            if (isFavorite == 'true' || isFavorite==true)
+                            {
+                                $("#favoriteCount").css("color","#00a1d6");
+                            }
+                            else
+                            {
+                                $("#favoriteCount").css("color","#757575");
+                            }
+                        }
+                        else
+                        {
+                            $("#favoriteCount").css("color","#757575");
+                        }
+                    }
+
+                    function videoPraise() {//视频点赞
                         var nowUser = /*[[${session.nowUser}]]*/'nowUser';
                         var vid =/*[[${video.videoId}]]*/'1';
                         var isPraise = false;

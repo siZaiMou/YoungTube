@@ -21,4 +21,6 @@ public interface FavoriteService
     void cancelVideoFavorites(int[] favoriteIds, int videoId);
 
     void addVideoFavorites(int[] favoriteIds, int videoId);
+
+    int findVideoFavoriteCount(int videoId);
 }

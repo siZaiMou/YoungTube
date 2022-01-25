@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.youngtube.demo.entity.User;
 import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.entity.VideoCategory;
+import com.youngtube.demo.service.FavoriteService;
 import com.youngtube.demo.service.InteractionService;
 import com.youngtube.demo.service.UserService;
 import com.youngtube.demo.service.VideoService;
@@ -31,6 +32,9 @@ public class VideoController
 
     @Autowired
     InteractionService interactionService;
+
+    @Autowired
+    FavoriteService favoriteService;
 
     //在主页为用户推荐6个视频，可刷新，不分区
     @RequestMapping("/loadOnRecommand")
@@ -86,9 +90,11 @@ public class VideoController
         int praiseCount = interactionService.getVideoPraiseCount(videoId);
         int coinCount = interactionService.getVideoCoinCount(videoId);
         int userFans = userService.findUserFansCount(video.getVideoUpId());
+        int favoriteCount = favoriteService.findVideoFavoriteCount(videoId);
         video.setVideoPraiseCount(praiseCount);
         video.setVideoCoinCount(coinCount);
         up.setUserFans(userFans);
+        video.setVideoFavoriteCount(favoriteCount);
         model.addAttribute("video",video);
         model.addAttribute("up",up);
         return "videoPlay";

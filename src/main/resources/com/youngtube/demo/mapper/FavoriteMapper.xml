@@ -48,4 +48,17 @@
         values (#{favoriteId}, #{videoId}, #{favoriteDate})
     </insert>
 
+    <select id="findVideoFavoriteIdList" resultType="java.lang.Integer">
+        select favoriteId
+        from videoFavorite
+        where videoId = #{videoId}
+    </select>
+
+    <select id="findFavoriteUserIdList" resultType="java.lang.Integer">
+        select distinct userId from favorite where favoriteId in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
 </mapper>
