@@ -9,12 +9,14 @@ import com.youngtube.demo.mapper.VideoMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
 class DemoApplicationTests
@@ -28,6 +30,8 @@ class DemoApplicationTests
     CategoryMapper categoryMapper;
     @Autowired
     VideoMapper videoMapper;
+    @Autowired
+    RedisTemplate redisTemplate;
 
     @Test
     void contextLoads()
@@ -66,4 +70,16 @@ class DemoApplicationTests
         }
     }
 
+    @Test
+    void redisTest()
+    {
+        Video video = (Video)redisTemplate.opsForValue().get("video"+1);
+        if(video==null)
+        {
+            video=videoMapper.findOneById(1);
+            redisTemplate.opsForValue().set("video"+1,video);
+            redisTemplate.expire("video"+1,10, TimeUnit.MINUTES);
+        }
+        System.out.println(video);
+    }
 }

@@ -40,26 +40,12 @@ public class PageController
     @RequestMapping("/toIndex")
     public String toIndex(HttpSession session)
     {
-        if(session.getAttribute("nowUser")==null)
-        {
-            User us = new User();
-            us.setUserId(-1);
-            session.setAttribute("nowUser",us);
-        }
-
         return "index";
     }
 
     @RequestMapping("/toVideoPlay/{videoId}")
     public String toVideoPlay(@PathVariable("videoId")int videoId,HttpSession session)
     {
-
-        if(session.getAttribute("nowUser")==null)
-        {
-            User us = new User();
-            us.setUserId(-1);
-            session.setAttribute("nowUser",us);
-        }
         return "forward:/video/loadOneWithUp/"+videoId;
     }
 
@@ -79,7 +65,7 @@ public class PageController
 
     //搜索、分区跳转至视频列表,mode=0为按热度，mode=1为按时间(暂),"n.u.l.l."暂标识无搜索内容的情况，与搜索内容为""区别开
     @RequestMapping("/toVideoList")
-    public String toVideoList(@RequestParam(value="categoryId",required = false,defaultValue = "0")String str_categoryId,@RequestParam(value="searchText",required = false,defaultValue = "n.u.l.l.")String searchText,@RequestParam(value="searchMode",required = false,defaultValue = "0")int searchMode,@RequestParam(name="currentPage",required = false,defaultValue = "1")int currentPage)
+    public String toVideoList(@RequestParam(value="categoryId",required = false,defaultValue = "0")String str_categoryId,@RequestParam(value="searchText",required = false,defaultValue = "n.u.l.l.")String searchText,@RequestParam(value="searchMode",required = false,defaultValue = "0")int searchMode,@RequestParam(name="currentPage",required = false,defaultValue = "1")int currentPage,HttpSession session)
     {
         int categoryId=0;
         try
@@ -101,19 +87,19 @@ public class PageController
     }
 
     @RequestMapping("/toDynamicList/{userId}")
-    public String toDynamicList(@PathVariable("userId")int userId)
+    public String toDynamicList(@PathVariable("userId")int userId,HttpSession session)
     {
         return "forward:/dynamic/loadDynamicList/"+userId;
     }
 
     @RequestMapping("/toSendDynamic")
-    public String toSendDynamic()
+    public String toSendDynamic(HttpSession session)
     {
         return "sendDynamic";
     }
 
     @RequestMapping("/toVideoFavorite/{userId}")
-    public String toVideoFavorite(@PathVariable("userId")int userId)
+    public String toVideoFavorite(@PathVariable("userId")int userId,HttpSession session)
     {
         return "forward:/favorite/loadFavoriteList/"+userId;
     }

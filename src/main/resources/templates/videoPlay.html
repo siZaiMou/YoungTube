@@ -7,6 +7,9 @@
     <script th:src="@{/common/js/jquery-3.3.1.js}"></script>
     <link rel="stylesheet" th:href="@{/notcommon/Homepage/videoPlay/font/iconfont.css}">
     <script th:src="@{/notcommon/Homepage/js/bluebird.min.js}"></script>
+    <!--    获取用户ip-->
+
+    </script>
     <script type="text/javascript">
         function isIE() {
             if (!!window.ActiveXObject || "ActiveXObject" in window) {
@@ -1347,7 +1350,7 @@
 </script>
 
 <!--    引入顶部导航条-->
-<div th:replace="/header.html::#header1"></div>
+<div th:replace="header.html::#header1"></div>
 
 <script src="http://cdn.jsdelivr.net/bluebird/3.5.0/bluebird.min.js"></script>
 
@@ -1371,9 +1374,19 @@
 
 
 <script th:src="@{/notcommon/Homepage/videoPlay/js/DPlayer.min.js}"></script>
+
+<!--    获取用户ip(统计播放量用)-->
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+<script th:inline="javascript">
+    function setNowUserIp ()
+    {
+        $.post("/user/setNowUserIp",{"userIp":returnCitySN["cip"]});
+    }
+</script>
 <script th:inline="javascript">
     window.onload = function () {
         loadDanmu();
+        setNowUserIp();
         var vid =/*[[${video.videoId}]]*/'1';
         $('#video_relate').load("/video/loadOnRelate/" + vid);
         sendComment();

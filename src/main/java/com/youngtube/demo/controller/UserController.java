@@ -27,6 +27,16 @@ public class UserController
     @Autowired
     VideoService videoService;
 
+    //播放页获取当前用户ip(无论是否登录),以统计播放量
+    @RequestMapping("/setNowUserIp")
+    @ResponseBody
+    public void setNowUserIp(String userIp,HttpSession session)
+    {
+        User nowUser = (User)session.getAttribute("nowUser");
+        nowUser.setUserIp(userIp);
+        session.setAttribute("nowUser",nowUser);
+    }
+
     @RequestMapping("/regist")
     public String userRegist(User user)
     {
