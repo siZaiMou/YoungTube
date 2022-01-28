@@ -8,6 +8,7 @@ import com.youngtube.demo.service.FavoriteService;
 import com.youngtube.demo.service.InteractionService;
 import com.youngtube.demo.service.UserService;
 import com.youngtube.demo.service.VideoService;
+import com.youngtube.demo.untils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +36,9 @@ public class VideoController
 
     @Autowired
     FavoriteService favoriteService;
+
+    @Autowired
+    RedisUtil redisUtil;
 
     //在主页为用户推荐6个视频，可刷新，不分区
     @RequestMapping("/loadOnRecommand")
@@ -85,16 +89,37 @@ public class VideoController
     @RequestMapping("/loadOneWithUp/{videoId}")
     public String loadOneWithUp(@PathVariable("videoId")int videoId,Model model)
     {
-        Video video = videoService.findOneByVideoId(videoId);
-        User up = userService.findOneByUserId(video.getVideoUpId());
-        int praiseCount = interactionService.getVideoPraiseCount(videoId);
-        int coinCount = interactionService.getVideoCoinCount(videoId);
-        int userFans = userService.findUserFansCount(video.getVideoUpId());
-        int favoriteCount = favoriteService.findVideoFavoriteCount(videoId);
-        video.setVideoPraiseCount(praiseCount);
-        video.setVideoCoinCount(coinCount);
-        up.setUserFans(userFans);
-        video.setVideoFavoriteCount(favoriteCount);
+        Video video;
+        User up;
+        if(true) //if中应为满足热点视频的条件，由算法得出
+        {
+            boolean inRedis = redisUtil.hasKey("videoId"+videoId);
+            if(!inRedis)
+            {
+                video = videoService.findOneByVideoId(videoId);
+                int praiseCount = interactionService.getVideoPraiseCount(videoId);
+                int coinCount = interactionService.getVideoCoinCount(videoId);
+                int favoriteCount = favoriteService.findVideoFavoriteCount(videoId);
+                video.setVideoPraiseCount(praiseCount);
+                video.setVideoCoinCount(coinCount);
+                video.setVideoFavoriteCount(favoriteCount);
+                up = userService.findOneByUserId(video.getVideoUpId());
+                int userFans = userService.findUserFansCount(video.getVideoUpId());
+                up.setUserFans(userFans);
+
+                redisUtil.set("videoId"+videoId,video,24*60*60);
+                redisUtil.set("userId"+video.getVideoUpId(),up,24*60*60);
+            }
+            else
+            {
+                video=(Video)redisUtil.get("videoId"+videoId);
+                up = (User)redisUtil.get("userId"+video.getVideoUpId());
+                int favoriteCount = favoriteService.findVideoFavoriteCount(videoId);
+                video.setVideoFavoriteCount(favoriteCount); //获取收藏该视频的人数，收藏夹和用户为多对一关系，收藏操作多选框，不能通过简单的增加和取消收藏改变收藏人数
+                redisUtil.set("videoId"+videoId,video,24*60*60);
+            }
+        }
+
         model.addAttribute("video",video);
         model.addAttribute("up",up);
         return "videoPlay";

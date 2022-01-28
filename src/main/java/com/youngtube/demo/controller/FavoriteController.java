@@ -58,7 +58,7 @@ public class FavoriteController
         return isFavorite;
     }
 
-    //在收藏视频时异步加载所有收藏夹
+    //在点击收藏视频时异步加载所有收藏夹，并显示视频是否被用户的某个收藏夹收藏
     @RequestMapping("/loadFavoriteListAsyn")
     public String loadFavoriteListAsyn(int userId,int videoId, Model model)
     {
@@ -69,7 +69,7 @@ public class FavoriteController
         return "videoPlay::favoriteList";
     }
 
-    //收藏的视频
+    //某个收藏夹中收藏的所有视频
     @RequestMapping("/loadFavoriteVideoList/{favoriteId}")
     public String loadFavoriteVideoList(@PathVariable("favoriteId")int favoriteId,Model model)
     {

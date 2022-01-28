@@ -3,6 +3,7 @@ package com.youngtube.demo.controller;
 import com.youngtube.demo.entity.User;
 import com.youngtube.demo.service.UserService;
 import com.youngtube.demo.service.VideoService;
+import com.youngtube.demo.untils.RedisUtil;
 import io.netty.handler.codec.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ public class UserController
 
     @Autowired
     VideoService videoService;
+
 
     //播放页获取当前用户ip(无论是否登录),以统计播放量
     @RequestMapping("/setNowUserIp")

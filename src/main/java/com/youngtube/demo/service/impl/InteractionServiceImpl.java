@@ -1,8 +1,10 @@
 package com.youngtube.demo.service.impl;
 
 import com.youngtube.demo.entity.Dynamic;
+import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.mapper.InteractionMapper;
 import com.youngtube.demo.service.InteractionService;
+import com.youngtube.demo.untils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +18,31 @@ public class InteractionServiceImpl implements InteractionService
     @Autowired
     InteractionMapper interactionMapper;
 
+    @Autowired
+    RedisUtil redisUtil;
+
     @Override
     public void insertVideoPraise(int videoId, int userId)
     {
         interactionMapper.insertOneVideoPraise(videoId,userId,new Date());
+        if(redisUtil.hasKey("videoId"+videoId)) //点赞后保持redis中数据一致性
+        {
+            Video video=(Video)redisUtil.get("videoId"+videoId);
+            video.setVideoPraiseCount(video.getVideoPraiseCount()+1);
+            redisUtil.set("videoId"+videoId,video,24*60*60);
+        }
     }
 
     @Override
     public void deleteVideoPraise(int videoId, int userId)
     {
         interactionMapper.deleteOneVideoPraise(videoId,userId);
+        if(redisUtil.hasKey("videoId"+videoId)) //取消点赞后保持redis中数据一致性
+        {
+            Video video=(Video)redisUtil.get("videoId"+videoId);
+            video.setVideoPraiseCount(video.getVideoPraiseCount()-1);
+            redisUtil.set("videoId"+videoId,video,24*60*60);
+        }
     }
 
     @Override
@@ -53,6 +70,12 @@ public class InteractionServiceImpl implements InteractionService
     public void insertVideoCoin(int videoId, int userId,int coinCount)
     {
         interactionMapper.insertOneVideoCoin(videoId,userId,coinCount,new Date());
+        if(redisUtil.hasKey("videoId"+videoId)) //投币后保持redis中数据一致性
+        {
+            Video video=(Video)redisUtil.get("videoId"+videoId);
+            video.setVideoCoinCount(video.getVideoCoinCount()+1);
+            redisUtil.set("videoId"+videoId,video,24*60*60);
+        }
     }
 
     @Override

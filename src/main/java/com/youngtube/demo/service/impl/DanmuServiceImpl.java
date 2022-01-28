@@ -4,6 +4,7 @@ import com.youngtube.demo.entity.Danmu;
 import com.youngtube.demo.mapper.DanmuMapper;
 import com.youngtube.demo.mapper.UserMapper;
 import com.youngtube.demo.service.DanmuService;
+import com.youngtube.demo.untils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class DanmuServiceImpl implements DanmuService
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    RedisUtil redisUtil;
+
     //写入弹幕，高并发场景下应使用消息队列,此处模拟
     @Override
     public int saveDanmu(Danmu danmu)
@@ -25,6 +29,12 @@ public class DanmuServiceImpl implements DanmuService
         try
         {
             danmuMapper.insertOne(danmu);
+            if(redisUtil.hasKey("danmu_videoId"+danmu.getVideoId()))
+            {
+                List<Danmu> danmuList = (List<Danmu>) redisUtil.get("danmu_videoId"+danmu.getVideoId());
+                danmuList.add(danmu);
+                redisUtil.set("danmu_videoId"+danmu.getVideoId(),danmuList,24*60*60); //更新redis中弹幕
+            }
         }
         catch (Exception e)
         {
@@ -37,9 +47,18 @@ public class DanmuServiceImpl implements DanmuService
     @Override
     public String getJsonDanmuByVideoId(int id)
     {
+        List<Danmu> danmuList;
+        if(!redisUtil.hasKey("danmu_videoId"+id))
+        {
+            danmuList = danmuMapper.findDanmuByVideoId(id); //热点视频的弹幕列表存储在redis中
+            redisUtil.set("danmu_videoId"+id,danmuList,24*60*60);
+        }
+        else
+        {
+            danmuList = (List<Danmu>) redisUtil.get("danmu_videoId"+id);
+        }
         String pre="{\"code\":0,\"data\":[";
         String danmus="";
-        List<Danmu> danmuList = danmuMapper.findDanmuByVideoId(id);
         if(danmuList.size()<=0)
         {
             return "{\"code\":0,\"data\":[]}";

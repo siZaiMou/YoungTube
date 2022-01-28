@@ -5,6 +5,7 @@ import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.mapper.FavoriteMapper;
 import com.youngtube.demo.mapper.VideoMapper;
 import com.youngtube.demo.service.FavoriteService;
+import com.youngtube.demo.untils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public class FavoriteServiceImpl implements FavoriteService
 
     @Autowired
     VideoMapper videoMapper;
+
+    @Autowired
+    RedisUtil redisUtil;
 
     @Override
     public void saveOneFavorite(Favorite favorite)

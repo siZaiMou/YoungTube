@@ -2,6 +2,7 @@ package com.youngtube.demo.controller;
 
 import com.youngtube.demo.entity.Danmu;
 import com.youngtube.demo.service.DanmuService;
+import com.youngtube.demo.untils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class DanmuController
     @Autowired
     DanmuService danmuService;
 
-    @PostMapping(value="/insertDanmu/v3")
+    @PostMapping(value="/insertDanmu/v3")//发送弹幕
     @ResponseBody
     public Map<String,Object> insertDanmu(@RequestBody Map<String,String> param)
     {
@@ -43,7 +44,7 @@ public class DanmuController
 
     @GetMapping("/insertDanmu/v3")
     @ResponseBody
-    public String getDanmu(int id)
+    public String getDanmu(int id)//读取视频弹幕
     {
         String danmus = danmuService.getJsonDanmuByVideoId(id);
         return danmus;

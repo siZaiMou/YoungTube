@@ -2,11 +2,12 @@ package com.youngtube.demo.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class User
+public class User implements Serializable
 {
     private int userId;
     private String userPetName;//用户昵称

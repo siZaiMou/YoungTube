@@ -2,10 +2,11 @@ package com.youngtube.demo.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class Danmu
+public class Danmu implements Serializable
 {
     private int danmuId;
     private int videoId;

@@ -4,6 +4,7 @@ import com.youngtube.demo.entity.*;
 import com.youngtube.demo.mapper.UserMapper;
 import com.youngtube.demo.service.UserService;
 import com.youngtube.demo.untils.Md5Util;
+import com.youngtube.demo.untils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,9 @@ public class UserServiceImpl implements UserService
 {
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    RedisUtil redisUtil;
 
     @Override
     public void regist(User user)
@@ -99,12 +103,24 @@ public class UserServiceImpl implements UserService
     public void saveFollow(int followUserId, int followedUserId, int followMode)
     {
         userMapper.insertOneUserFollow(followUserId, followedUserId, new Date(), followMode);
+        if(redisUtil.hasKey("userId"+followedUserId))//关注后保持redis中粉丝数正确
+        {
+            User user = (User)redisUtil.get("userId"+followedUserId);
+            user.setUserFans(user.getUserFans()+1);
+            redisUtil.set("userId"+followedUserId,user,24*60*60);
+        }
     }
 
     @Override
     public void cancelFollow(int followUserId, int followedUserId)
     {
         userMapper.deleteOneUserFollow(followUserId, followedUserId);
+        if(redisUtil.hasKey("userId"+followedUserId))//取关后保持redis中粉丝数正确
+        {
+            User user = (User)redisUtil.get("userId"+followedUserId);
+            user.setUserFans(user.getUserFans()-1);
+            redisUtil.set("userId"+followedUserId,user,24*60*60);
+        }
     }
 
     //查询视频返回结果的up主信息
