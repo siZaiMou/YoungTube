@@ -6,7 +6,7 @@
     <insert id="insertOneVideoComment" parameterType="videoComment">
         insert into videoComment
         values (#{commentId}, #{userId}, #{videoId}, #{commentContent},
-                #{commentPraise}, #{commentDislike}, #{commentDate}, #{fatherCommentId},
+                #{commentPraiseCount}, #{commentIsPraise}, #{commentDate}, #{fatherCommentId}, #{replyCommentId},
                 #{commentAuditStatus}, #{videoCommentIsTop})
     </insert>
 
@@ -15,6 +15,28 @@
         from videoComment
         where videoId = #{videoId}
         order by commentPraise desc, commentDislike asc
+    </select>
+
+    <select id="findFatherVideoCommentByVideoIdWithHot" resultType="videoComment">
+        select *
+        from videoComment
+        where videoId = #{videoId}
+          and fatherCommentId = 0
+        order by commentPraiseCount desc
+    </select>
+
+    <select id="findReplyVideoCommentByVideoId" resultType="videoComment">
+        select *
+        from videoComment
+        where videoId = #{videoId}
+          and fatherCommentId = #{fatherCommentId}
+        order by commentDate desc
+    </select>
+
+    <select id="findReplyVideoCommentUserId" resultType="java.lang.Integer">
+        select userId
+        from videoComment
+        where commentId = #{commentId}
     </select>
 
     <select id="findVideoCommentByVideoIdWithNew" resultType="videoComment">

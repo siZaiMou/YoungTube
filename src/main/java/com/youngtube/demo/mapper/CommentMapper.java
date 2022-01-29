@@ -22,4 +22,10 @@ public interface CommentMapper
     List<DynamicComment> findDynamicCommentByDynamicId(@Param("dynamicId") int dynamicId);
 
     void insertOneDynamicComment(DynamicComment dynamicComment);
+
+    List<VideoComment> findFatherVideoCommentByVideoIdWithHot(@Param("videoId") int videoId);
+
+    List<VideoComment> findReplyVideoCommentByVideoId(@Param("videoId") int videoId, @Param("fatherCommentId") int fatherCommentId);
+
+    Integer findReplyVideoCommentUserId(@Param("commentId")int replyCommentId);
 }

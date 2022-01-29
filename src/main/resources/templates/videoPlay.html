@@ -1391,7 +1391,7 @@
         sendNowUserIp();
         var vid =/*[[${video.videoId}]]*/'1';
         $('#video_relate').load("/video/loadOnRelate/" + vid);
-        sendComment();
+        loadCommentArea();
         videoPraise();
         videoCoin();
         upFollow();
@@ -1713,53 +1713,87 @@
             <!-- 视频标签区结束 -->
 
 
+            <script th:id="javascript">
+                function loadCommentArea() {
+                    var videoId =/*[[${video.videoId}]]*/'1';
+                    $("#commentArea").hide();
+                    $("#commentToggleButton").click(function () {
+                            $("#comment_load").load("/comment/getVideoCommentWithHot/" + videoId);
+                            $("#commentArea").show();
+                            $("#commentToggleButton").text('隐藏评论区');
+                            $("#commentToggleButton").unbind();
+                            $("#commentToggleButton").click(function () {
+                                    if ($("#commentToggleButton").text() == '显示评论区') {
+                                        $("#commentArea").show();
+                                        $("#commentToggleButton").text('隐藏评论区');
+                                    } else {
+                                        $("#commentArea").hide();
+                                        $("#commentToggleButton").text('显示评论区');
+                                    }
+                                }
+                            );
+                        }
+                    );
+
+                }
+            </script>
             <!-- 评论区 -->
 
             <div id="comment" class="comment-m report-wrap-module report-scroll-module">
                 <div class="common">
-                    <div class="b-head"><span class="b-head-t results"></span><span class="b-head-t">评论</span></div>
+                    <div class="b-head"><span class="b-head-t results"></span><span id="commentToggleButton"
+                                                                                    class="b-head-t">显示评论区</span></div>
                     <div class="comment"></div>
                     <div class="all-comments">
-                        <div class="all-comments-info">
+                        <div id="commentArea" class="all-comments-info">
 
                             <div class="commentAll">
                                 <!--评论区域 begin-->
                                 <div class="reviewArea clearfix">
-                                    <textarea class="content comment-input" placeholder="Please enter a comment&hellip;"
+                                    <textarea class="content comment-input" placeholder="发送一条友善的评论&hellip;"
                                               onkeyup="keyUP(this)"></textarea>
                                     <a href="javascript:;" class="plBtn">评论</a>
                                 </div>
                                 <!--评论区域 end-->
                                 <!--回复区域 begin-->
-                                <div class="comment-show">
+                                <div id="comment_load" class="comment-show">
 
-                                    <div class="comment-show-con clearfix">
+                                    <div th:fragment="comment_hot" th:each="singleVideoComment:${videoComments_hot}" class="comment-show-con clearfix">
                                         <div class="comment-show-con-img pull-left"><img
-                                                src="/notcommon/Homepage/mycssAndimg/header-img-comment_03.png" alt=""></div>
+                                                th:src="|${commentUsers_hot[singleVideoComment.userId].userHeadSrc}|"
+                                                alt="">
+                                        </div>
                                         <div class="comment-show-con-list pull-left clearfix">
                                             <div class="pl-text clearfix">
-                                                <a href="#" class="comment-size-name">张三 : </a>
-                                                <span class="my-pl-con">&nbsp;来啊 造作啊!</span>
+                                                <a href="#" th:commentId="${singleVideoComment.commentId}" th:fatherId="${singleVideoComment.commentId}" class="comment-size-name">[[${commentUsers_hot[singleVideoComment.userId].userPetName}]]
+                                                    : </a>
+                                                <span class="my-pl-con">&nbsp;[[${singleVideoComment.commentContent}]]</span>
                                             </div>
                                             <div class="date-dz">
-                                                <span class="date-dz-left pull-left comment-time">2017-5-2 11:11:39</span>
+                                                <span class="date-dz-left pull-left comment-time">[[${#dates.format(singleVideoComment.commentDate,'yyyy-MM-dd HH:mm:ss')}]]</span>
                                                 <div class="date-dz-right pull-right comment-pl-block">
-                                                    <a href="javascript:;" class="removeBlock">删除</a>
+                                                    <a href="javascript:;"
+                                                       th:if="${session.nowUser.userId eq singleVideoComment.userId}"
+                                                       class="removeBlock">删除</a>
                                                     <a href="javascript:;"
                                                        class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
                                                     <span class="pull-left date-dz-line">|</span>
                                                     <a href="javascript:;" class="date-dz-z pull-left"><i
-                                                            class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
+                                                            class="date-dz-z-click-red"></i>赞 (<i class="z-num">[[${singleVideoComment.commentPraiseCount}]]</i>)</a>
                                                 </div>
                                             </div>
                                             <div class="hf-list-con">
-                                                <div class="all-pl-con">
+                                                <div class="all-pl-con"
+                                                     th:each="singleReplyComment:${singleVideoComment.replyCommentList}">
                                                     <div class="pl-text hfpl-text clearfix">
-                                                        <a href="#" class="comment-size-name">我的名字:</a>
-                                                        <span class="my-pl-con">楼中楼</span></div>
+                                                        <a href="#" th:fatherId="${singleVideoComment.commentId}" th:commentId="${singleReplyComment.commentId}" class="comment-size-name">[[${commentUsers_hot[singleReplyComment.userId].userPetName}]]:</a>
+                                                        <span class="my-pl-con">回复
+                                                        <a href="#" class="atName">@[[${commentUsers_hot[singleReplyComment.replyUserId].userPetName}]]</a>[[${singleReplyComment.commentContent}]]</span>
+                                                    </div>
                                                     <div class="date-dz"><span
-                                                            class="date-dz-left pull-left comment-time">2017-5-2 11:11:39</span>
+                                                            class="date-dz-left pull-left comment-time">[[${#dates.format(singleReplyComment.commentDate,'yyyy-MM-dd HH:mm:ss')}]]</span>
                                                         <div class="date-dz-right pull-right comment-pl-block"><a
+                                                                th:if="${session.nowUser.userId eq singleReplyComment.userId}"
                                                                 href="javascript:;"
                                                                 class="removeBlock">删除</a>
                                                             <a href="javascript:;"
@@ -1768,26 +1802,7 @@
                                                                     class="pull-left date-dz-line">|</span> <a
                                                                     href="javascript:;"
                                                                     class="date-dz-z pull-left"><i
-                                                                    class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="all-pl-con">
-                                                    <div class="pl-text hfpl-text clearfix">
-                                                        <a href="#" class="comment-size-name">我的名字:</a>
-                                                        <span class="my-pl-con">楼中楼</span></div>
-                                                    <div class="date-dz"><span
-                                                            class="date-dz-left pull-left comment-time">2017-5-2 11:11:39</span>
-                                                        <div class="date-dz-right pull-right comment-pl-block"><a
-                                                                href="javascript:;"
-                                                                class="removeBlock">删除</a>
-                                                            <a href="javascript:;"
-                                                               class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
-                                                            <span
-                                                                    class="pull-left date-dz-line">|</span> <a
-                                                                    href="javascript:;"
-                                                                    class="date-dz-z pull-left"><i
-                                                                    class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
+                                                                    class="date-dz-z-click-red"></i>赞 (<i class="z-num">[[${singleReplyComment.commentPraiseCount}]]</i>)</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1795,65 +1810,35 @@
                                         </div>
                                     </div>
 
-
-                                    <div class="comment-show-con clearfix">
-                                        <div class="comment-show-con-img pull-left"><img
-                                                src="images/header-img-comment_03.png" alt=""></div>
-                                        <div class="comment-show-con-list pull-left clearfix">
-                                            <div class="pl-text clearfix">
-                                                <a href="#" class="comment-size-name">张三 : </a>
-                                                <span class="my-pl-con">&nbsp;来啊 造作啊!</span>
-                                            </div>
-                                            <div class="date-dz">
-                                                <span class="date-dz-left pull-left comment-time">2017-5-2 11:11:39</span>
-                                                <div class="date-dz-right pull-right comment-pl-block">
-                                                    <a href="javascript:;" class="removeBlock">删除</a>
-                                                    <a href="javascript:;"
-                                                       class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
-                                                    <span class="pull-left date-dz-line">|</span>
-                                                    <a href="javascript:;" class="date-dz-z pull-left"><i
-                                                            class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
-                                                </div>
-                                            </div>
-                                            <div class="hf-list-con"></div>
-                                        </div>
-                                    </div>
 
                                 </div>
                                 <!--回复区域 end-->
                             </div>
 
-                            <!-- 这里是自定义的js,视频评论发送 -->
+                            <!-- 视频评论发送,由评论/回复点击事件调用 -->
                             <script th:inline="javascript">
-                                function sendComment() {
+                                function sendComment(commentContent, fatherCommentId, replyCommentId) {
                                     var html = "";
-                                    $("#button").click(function () {
-                                        var nowUser = /*[[${session.nowUser}]]*/'nowUser';
-                                        if (nowUser == null || nowUser.userId <= 0) {
-                                            alert("请先登录!");
-                                            return;
-                                        }
-                                        var videoId =/*[[${video.videoId}]]*/'1';
-                                        var userId =/*[[${session.nowUser.userId}]]*/'3';
-                                        var commentContent = $("#message").val(); //获取  留言内容
-                                        var fatherCommentId = 0;//获取父评论id(待实现)
-                                        if (message == null || message == "") {
-                                            alert("请输入评论内容");
 
-                                        } else {
-                                            $.post("/comment/sendVideoComment", {
-                                                "userId": userId,
-                                                "videoId": videoId,
-                                                "commentContent": commentContent,
-                                                "fatherCommentId": fatherCommentId
-                                            }, function (test) {
-                                                alert("发送成功!");
-                                                $("#message").val("");
-                                                $('#slider').load("/comment/getVideoCommentWithHot/" + videoId);
-                                                $('#messDivId').load("/comment/getVideoCommentWithNew/" + videoId);
-                                            })
-                                        }
-                                    });
+                                    var videoId =/*[[${video.videoId}]]*/'1';
+                                    var userId =/*[[${session.nowUser.userId}]]*/'3';
+                                    if (commentContent == null || commentContent == "") {
+                                        alert("请输入评论内容");
+
+                                    } else {
+                                        $.post("/comment/sendVideoComment", {
+                                            "userId": userId,
+                                            "videoId": videoId,
+                                            "commentContent": commentContent,
+                                            "fatherCommentId": fatherCommentId,
+                                            "replyCommentId": replyCommentId
+                                        }, function (test) {
+                                            alert("发送成功!");
+                                            $("#message").val("");
+                                            $('#slider').load("/comment/getVideoCommentWithHot/" + videoId);
+                                            $('#messDivId').load("/comment/getVideoCommentWithNew/" + videoId);
+                                        })
+                                    }
                                 }
                             </script>
                             <!--textarea高度自适应-->
@@ -1872,8 +1857,13 @@
                                 }
                             </script>
                             <!--点击评论创建评论条-->
-                            <script type="text/javascript">
+                            <script th:inline="javascript" type="text/javascript">
                                 $('.commentAll').on('click', '.plBtn', function () {
+                                    var nowUser = /*[[${session.nowUser}]]*/'nowUser';
+                                    if (nowUser == null || nowUser.userId <= 0) {
+                                        alert("请先登录!");
+                                        return;
+                                    }
                                     var myDate = new Date();
                                     //获取当前年
                                     var year = myDate.getFullYear();
@@ -1887,11 +1877,14 @@
                                     var s = myDate.getSeconds();
                                     if (s < 10) s = '0' + s;
                                     var now = year + '-' + month + "-" + date + " " + h + ':' + m + ":" + s;
+                                    var nowUserName = /*[[${session.nowUser.userPetName}]]*/'nowUser';
+                                    var nowUserHead = /*[[${session.nowUser.userHeadSrc}]]*/'nowUser';
                                     //获取输入内容
                                     var oSize = $(this).siblings('.flex-text-wrap').find('.comment-input').val();
                                     console.log(oSize);
                                     //动态创建评论模块
-                                    oHtml = '<div class="comment-show-con clearfix"><div class="comment-show-con-img pull-left"><img src="images/header-img-comment_03.png" alt=""></div> <div class="comment-show-con-list pull-left clearfix"><div class="pl-text clearfix"> <a href="#" class="comment-size-name">David Beckham : </a> <span class="my-pl-con">&nbsp;' + oSize + '</span> </div> <div class="date-dz"> <span class="date-dz-left pull-left comment-time">' + now + '</span> <div class="date-dz-right pull-right comment-pl-block"><a href="javascript:;" class="removeBlock">删除</a> <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a> <span class="pull-left date-dz-line">|</span> <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a> </div> </div><div class="hf-list-con"></div></div> </div>';
+                                    sendComment(oSize, 0, 0);//调用
+                                    oHtml = '<div class="comment-show-con clearfix"><div class="comment-show-con-img pull-left"><img src="' + nowUserHead + '" alt=""></div> <div class="comment-show-con-list pull-left clearfix"><div class="pl-text clearfix"> <a href="#" class="comment-size-name">' + nowUserName + ': </a> <span class="my-pl-con">&nbsp;' + oSize + '</span> </div> <div class="date-dz"> <span class="date-dz-left pull-left comment-time">' + now + '</span> <div class="date-dz-right pull-right comment-pl-block"><a href="javascript:;" class="removeBlock">删除</a> <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a> <span class="pull-left date-dz-line">|</span> <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">0</i>)</a> </div> </div><div class="hf-list-con"></div></div> </div>';
                                     if (oSize.replace(/(^\s*)|(\s*$)/g, "") != '') {
                                         $(this).parents('.reviewArea ').siblings('.comment-show').prepend(oHtml);
                                         $(this).siblings('.flex-text-wrap').find('.comment-input').prop('value', '').siblings('pre').find('span').text('');
@@ -1899,10 +1892,21 @@
                                 });
                             </script>
                             <!--点击回复动态创建回复块-->
-                            <script type="text/javascript">
+                            <script th:id="javascript" type="text/javascript">
+
+                                var replyCommentId;
+                                var fatherCommentId;
                                 $('.comment-show').on('click', '.pl-hf', function () {
+                                    var nowUser = /*[[${session.nowUser}]]*/'nowUser';
+                                    if (nowUser == null || nowUser.userId <= 0) {
+                                        alert("请先登录!");
+                                        return;
+                                    }
                                     //获取回复人的名字
                                     var fhName = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
+                                    //获取回复评论id和父id
+                                    replyCommentId = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').attr("commentId");
+                                    fatherCommentId = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').attr("fatherId");
                                     //回复@
                                     var fhN = '回复@' + fhName;
                                     //var oInput = $(this).parents('.date-dz-right').parents('.date-dz').siblings('.hf-con');
@@ -1941,13 +1945,17 @@
                                     var now = year + '-' + month + "-" + date + " " + h + ':' + m + ":" + s;
                                     //获取输入内容
                                     var oHfVal = $(this).siblings('.flex-text-wrap').find('.hf-input').val();
+
+                                    //发送评论
+                                    sendComment(oHfVal,fatherCommentId,replyCommentId);
+
                                     console.log(oHfVal)
                                     var oHfName = $(this).parents('.hf-con').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
                                     var oAllVal = '回复@' + oHfName;
                                     if (oHfVal.replace(/^ +| +$/g, '') == '' || oHfVal == oAllVal) {
 
                                     } else {
-                                        $.getJSON("json/pl.json", function (data) {
+                                        $.getJSON("/notcommon/Homepage/mycssAndimg/hf.json", function (data) {
                                             var oAt = '';
                                             var oHf = '';
                                             $.each(data, function (n, v) {

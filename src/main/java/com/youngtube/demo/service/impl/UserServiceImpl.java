@@ -71,9 +71,27 @@ public class UserServiceImpl implements UserService
     public Map<Integer, User> findCommentUsers(List<VideoComment> videoComments_hot)
     {
         Map<Integer, User> commentUsers = new HashMap<>();
-        for(VideoComment comment:videoComments_hot)
+        for(VideoComment comment:videoComments_hot) //封装每条父评论及其子评论涉及的用户信息
         {
-            commentUsers.put(comment.getUserId(), userMapper.findOneByUserId(comment.getUserId()));
+            if(!commentUsers.containsKey(comment.getUserId()))
+            {
+                commentUsers.put(comment.getUserId(), userMapper.findOneByUserId(comment.getUserId()));
+            }
+            if(comment.getReplyCommentList()!=null&&comment.getReplyCommentList().size()>0)
+            {
+                List<VideoComment> replyCommentList = comment.getReplyCommentList();
+                for(VideoComment singleReplyVideoComment:replyCommentList)
+                {
+                    if(!commentUsers.containsKey(singleReplyVideoComment.getUserId()))
+                    {
+                        commentUsers.put(singleReplyVideoComment.getUserId(), userMapper.findOneByUserId(singleReplyVideoComment.getUserId()));
+                    }
+                    if(!commentUsers.containsKey(singleReplyVideoComment.getReplyUserId()))
+                    {
+                        commentUsers.put(singleReplyVideoComment.getReplyUserId(), userMapper.findOneByUserId(singleReplyVideoComment.getReplyUserId()));
+                    }
+                }
+            }
         }
         return commentUsers;
     }

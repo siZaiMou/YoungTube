@@ -28,8 +28,20 @@ public class CommentServiceImpl implements CommentService
     @Override
     public List<VideoComment> findVideoCommentWithHot(int videoId)
     {
-        List<VideoComment> videoComments_hot = commentMapper.findVideoCommentByVideoIdWithHot(videoId);
-        return videoComments_hot;
+        List<VideoComment> videoComments_hot_father = commentMapper.findFatherVideoCommentByVideoIdWithHot(videoId);//按热度查找这个视频下的父评论
+        for(VideoComment singleFatherComment:videoComments_hot_father)
+        {
+            List<VideoComment> replyCommentList = commentMapper.findReplyVideoCommentByVideoId(videoId,singleFatherComment.getCommentId());//查出属于此父评论的所有子评论
+            if(replyCommentList!=null&&replyCommentList.size()>0)
+            {
+                for(VideoComment singleReplyComment:replyCommentList)
+                {
+                    singleReplyComment.setReplyUserId(commentMapper.findReplyVideoCommentUserId(singleReplyComment.getReplyCommentId()));//查出直接回复的用户id
+                }
+            }
+            singleFatherComment.setReplyCommentList(replyCommentList);
+        }
+        return videoComments_hot_father;//返回封装好子评论的父评论
     }
 
     //得到按时间排好序的评论
