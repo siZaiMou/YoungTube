@@ -1778,8 +1778,14 @@
                                                     <a href="javascript:;"
                                                        class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
                                                     <span class="pull-left date-dz-line">|</span>
-                                                    <a href="javascript:;" class="date-dz-z pull-left"><i
-                                                            class="date-dz-z-click-red"></i>赞 (<i class="z-num">[[${singleVideoComment.commentPraiseCount}]]</i>)</a>
+                                                    <a th:if="${singleVideoComment.commentIsPraise==true}" href="javascript:;" class="date-dz-z pull-left date-dz-z-click">
+                                                        <i class="date-dz-z-click-red red"></i>
+                                                        赞 (<i th:commentId="${singleVideoComment.commentId}" class="z-num">[[${singleVideoComment.commentPraiseCount}]]</i>)
+                                                    </a>
+                                                    <a th:if="${singleVideoComment.commentIsPraise==false}" href="javascript:;" class="date-dz-z pull-left">
+                                                        <i class="date-dz-z-click-red"></i>
+                                                        赞 (<i th:commentId="${singleVideoComment.commentId}" class="z-num">[[${singleVideoComment.commentPraiseCount}]]</i>)
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="hf-list-con">
@@ -1799,10 +1805,15 @@
                                                             <a href="javascript:;"
                                                                class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
                                                             <span
-                                                                    class="pull-left date-dz-line">|</span> <a
-                                                                    href="javascript:;"
-                                                                    class="date-dz-z pull-left"><i
-                                                                    class="date-dz-z-click-red"></i>赞 (<i class="z-num">[[${singleReplyComment.commentPraiseCount}]]</i>)</a>
+                                                                    class="pull-left date-dz-line">|</span>
+                                                            <a th:if="${singleReplyComment.commentIsPraise==true}" href="javascript:;" class="date-dz-z pull-left date-dz-z-click">
+                                                                <i class="date-dz-z-click-red red"></i>
+                                                                赞 (<i th:commentId="${singleReplyComment.commentId}" class="z-num">[[${singleReplyComment.commentPraiseCount}]]</i>)
+                                                            </a>
+                                                            <a th:if="${singleReplyComment.commentIsPraise==false}" href="javascript:;" class="date-dz-z pull-left">
+                                                                <i class="date-dz-z-click-red"></i>
+                                                                赞 (<i th:commentId="${singleReplyComment.commentId}" class="z-num">[[${singleReplyComment.commentPraiseCount}]]</i>)
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2002,16 +2013,25 @@
                                 })
                             </script>
                             <!--点赞-->
-                            <script type="text/javascript">
+                            <script th:inline="javascript" type="text/javascript">
                                 $('.comment-show').on('click', '.date-dz-z', function () {
+                                    var nowUser = /*[[${session.nowUser}]]*/'nowUser';
+                                    if (nowUser == null || nowUser.userId <= 0) {
+                                        alert("请先登录!");
+                                        return;
+                                    }
                                     var zNum = $(this).find('.z-num').html();
+                                    var commentId=$(this).find('.z-num').attr("commentId");
+                                    var userId=/*[[${session.nowUser.userId}]]*/'3';
                                     if ($(this).is('.date-dz-z-click')) {
                                         zNum--;
+                                        $.post("/comment/cancelVideoCommentPraise",{"userId":userId,"commentId":commentId});
                                         $(this).removeClass('date-dz-z-click red');
                                         $(this).find('.z-num').html(zNum);
                                         $(this).find('.date-dz-z-click-red').removeClass('red');
                                     } else {
                                         zNum++;
+                                        $.post("/comment/sendVideoCommentPraise",{"userId":userId,"commentId":commentId});
                                         $(this).addClass('date-dz-z-click');
                                         $(this).find('.z-num').html(zNum);
                                         $(this).find('.date-dz-z-click-red').addClass('red');

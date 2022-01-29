@@ -6,7 +6,7 @@
     <insert id="insertOneVideoComment" parameterType="videoComment">
         insert into videoComment
         values (#{commentId}, #{userId}, #{videoId}, #{commentContent},
-                #{commentPraiseCount}, #{commentIsPraise}, #{commentDate}, #{fatherCommentId}, #{replyCommentId},
+                #{commentDate}, #{fatherCommentId}, #{replyCommentId},
                 #{commentAuditStatus}, #{videoCommentIsTop})
     </insert>
 
@@ -14,7 +14,6 @@
         select *
         from videoComment
         where videoId = #{videoId}
-        order by commentPraise desc, commentDislike asc
     </select>
 
     <select id="findFatherVideoCommentByVideoIdWithHot" resultType="videoComment">
@@ -22,7 +21,6 @@
         from videoComment
         where videoId = #{videoId}
           and fatherCommentId = 0
-        order by commentPraiseCount desc
     </select>
 
     <select id="findReplyVideoCommentByVideoId" resultType="videoComment">
@@ -30,7 +28,7 @@
         from videoComment
         where videoId = #{videoId}
           and fatherCommentId = #{fatherCommentId}
-        order by commentDate desc
+        order by commentDate asc
     </select>
 
     <select id="findReplyVideoCommentUserId" resultType="java.lang.Integer">
@@ -59,4 +57,31 @@
                 #{commentDate}, #{fatherCommentId}, #{commentAuditStatus}, #{dynamicCommentIsTop})
     </insert>
 
+    <select id="findCommentPraiseCount" resultType="java.lang.Integer">
+        select count(userId)
+        from videoCommentClick
+        where commentId = #{commentId}
+          and clickMode = 0
+    </select>
+
+    <select id="findOneCommentPraise" resultType="java.lang.Integer">
+        select count(commentId)
+        from videoCommentClick
+        where commentId = #{commentId}
+          and userId = #{userId}
+          and clickMode = 0
+    </select>
+
+    <insert id="insertOneVideoCommentPraise">
+        insert into videoCommentClick
+        values (#{commentId}, #{userId}, #{clickDate}, #{clickMode})
+    </insert>
+
+    <delete id="deleteOneVideoCommentPraise">
+        delete
+        from videoCommentClick
+        where commentId = #{commentId}
+          and userId = #{userId}
+          and clickMode = 0
+    </delete>
 </mapper>

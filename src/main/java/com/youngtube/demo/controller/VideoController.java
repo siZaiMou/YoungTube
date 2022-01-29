@@ -45,32 +45,32 @@ public class VideoController
     public String loadOnRecommand(Model model)
     {
         List<Video> videos = videoService.findVideoToRecommend();
-        Map<Integer,String> userNames = userService.findUserNames(videos);
-        model.addAttribute("videos_recommend",videos);
-        model.addAttribute("userNames_recommend",userNames);
+        Map<Integer, String> userNames = userService.findUserNames(videos);
+        model.addAttribute("videos_recommend", videos);
+        model.addAttribute("userNames_recommend", userNames);
         return "index::video_recommend"; //thymeleaf中的th:fragment结合ajax异步刷新数据
     }
 
     //在主页按照分区为用户推荐8个视频，可刷新
     @RequestMapping("/loadOnHomePageWithCategory/{videoCategory}")
-    public String loadOnHomePageWithCategory(Model model,@PathVariable("videoCategory")int videoCategory)
+    public String loadOnHomePageWithCategory(Model model, @PathVariable("videoCategory") int videoCategory)
     {
         List<Video> videos = videoService.findVideoToHomePage(videoCategory);
         Collections.shuffle(videos); //乱序，数据不够，测试使用
-        Map<Integer,String> userNames = userService.findUserNames(videos);
-        model.addAttribute("videos",videos);
-        model.addAttribute("userNames",userNames);
-        return "index::video_homepage"+videoCategory;
+        Map<Integer, String> userNames = userService.findUserNames(videos);
+        model.addAttribute("videos", videos);
+        model.addAttribute("userNames", userNames);
+        return "index::video_homepage" + videoCategory;
     }
 
     //7条分区热榜视频，不可刷新
     @RequestMapping("/loadOnRankWithCategory/{videoCategory}")
-    public String loadOnRankWithCategory(Model model,@PathVariable("videoCategory")int videoCategory)
+    public String loadOnRankWithCategory(Model model, @PathVariable("videoCategory") int videoCategory)
     {
         List<Video> videos = videoService.findVideoToRank(videoCategory);
         Collections.shuffle(videos); //乱序，数据不够，测试使用
-        model.addAttribute("videos_rank",videos);
-        return "index::video_rank_category"+videoCategory;
+        model.addAttribute("videos_rank", videos);
+        return "index::video_rank_category" + videoCategory;
     }
 
     //加载视频列表中的实时热榜
@@ -78,127 +78,126 @@ public class VideoController
     public String loadTimeHot(Model model)
     {
         List<Video> videos = videoService.findTimeHotVideos();
-        Map<Integer,String> userNames = userService.findUserNames(videos);
-        model.addAttribute("vidos_timeHot",videos);
-        model.addAttribute("ups_timeHot",userNames);
+        Map<Integer, String> userNames = userService.findUserNames(videos);
+        model.addAttribute("vidos_timeHot", videos);
+        model.addAttribute("ups_timeHot", userNames);
         System.out.println(videos);
         return "videoList::videos_timeHot";
     }
 
     //根据视频id获得视频和up主信息，返回视频播放界面
     @RequestMapping("/loadOneWithUp/{videoId}")
-    public String loadOneWithUp(@PathVariable("videoId")int videoId,Model model)
+    public String loadOneWithUp(@PathVariable("videoId") int videoId, Model model)
     {
         Video video;
         User up;
-        if(true) //if中应为满足热点视频的条件，由算法得出
+        if (true) //if中应为满足热点视频的条件，由算法得出
         {
-            boolean inRedis = redisUtil.hasKey("videoId"+videoId);
-            if(!inRedis)
-            {
-                video = videoService.findOneByVideoId(videoId);
-                int praiseCount = interactionService.getVideoPraiseCount(videoId);
-                int coinCount = interactionService.getVideoCoinCount(videoId);
-                int favoriteCount = favoriteService.findVideoFavoriteCount(videoId);
-                video.setVideoPraiseCount(praiseCount);
-                video.setVideoCoinCount(coinCount);
-                video.setVideoFavoriteCount(favoriteCount);
-                up = userService.findOneByUserId(video.getVideoUpId());
-                int userFans = userService.findUserFansCount(video.getVideoUpId());
-                up.setUserFans(userFans);
-
-                redisUtil.set("videoId"+videoId,video,24*60*60);
-                redisUtil.set("userId"+video.getVideoUpId(),up,24*60*60);
-            }
-            else
-            {
-                video=(Video)redisUtil.get("videoId"+videoId);
-                up = (User)redisUtil.get("userId"+video.getVideoUpId());
-                int favoriteCount = favoriteService.findVideoFavoriteCount(videoId);
-                video.setVideoFavoriteCount(favoriteCount); //获取收藏该视频的人数，收藏夹和用户为多对一关系，收藏操作多选框，不能通过简单的增加和取消收藏改变收藏人数
-                redisUtil.set("videoId"+videoId,video,24*60*60);
-            }
+            video = (Video) redisUtil.get("videoId" + videoId);
+            up = (User) redisUtil.get("userId" + video.getVideoUpId());
         }
+        if (video == null)
+        {
+            video = videoService.findOneByVideoId(videoId);
+            int praiseCount = interactionService.getVideoPraiseCount(videoId);
+            int coinCount = interactionService.getVideoCoinCount(videoId);
+            int favoriteCount = favoriteService.findVideoFavoriteCount(videoId);
+            video.setVideoPraiseCount(praiseCount);
+            video.setVideoCoinCount(coinCount);
+            video.setVideoFavoriteCount(favoriteCount);
+            redisUtil.set("videoId" + videoId, video, 24 * 60 * 60);
+        }
+        if (up == null)
+        {
+            up = userService.findOneByUserId(video.getVideoUpId());
+            int userFans = userService.findUserFansCount(video.getVideoUpId());
+            up.setUserFans(userFans);
+            redisUtil.set("userId" + video.getVideoUpId(), up, 24 * 60 * 60);
+        }
+        int favoriteCount = favoriteService.findVideoFavoriteCount(videoId);
+        video.setVideoFavoriteCount(favoriteCount); //获取收藏该视频的人数，收藏夹和用户为多对一关系，收藏操作多选框，不能通过简单的增加和取消收藏改变收藏人数
+        redisUtil.set("videoId" + videoId, video, 24 * 60 * 60);
 
-        model.addAttribute("video",video);
-        model.addAttribute("up",up);
+
+        model.addAttribute("video", video);
+        model.addAttribute("up", up);
         return "videoPlay";
     }
 
     //查询与当前视频相关联的20个视频
     @RequestMapping("/loadOnRelate/{videoId}")
-    public String loadOnRelate(@PathVariable("videoId")int videoId,Model model)
+    public String loadOnRelate(@PathVariable("videoId") int videoId, Model model)
     {
         List<Video> videos = videoService.findVideoToRelate(videoId);
-        Map<Integer,String> userNames = userService.findUserNames(videos);
-        model.addAttribute("videos_relate",videos);
-        model.addAttribute("userNames",userNames);
+        Map<Integer, String> userNames = userService.findUserNames(videos);
+        model.addAttribute("videos_relate", videos);
+        model.addAttribute("userNames", userNames);
         return "videoPlay::video_relate";
     }
 
     //视频点赞
     @RequestMapping("/sendVideoPraise")
     @ResponseBody
-    public void sendVideoPraise(int videoId,int userId)
+    public void sendVideoPraise(int videoId, int userId)
     {
-        interactionService.insertVideoPraise(videoId,userId);
+        interactionService.insertVideoPraise(videoId, userId);
     }
 
     //取消点赞
     @RequestMapping("/cancelVideoPraise")
     @ResponseBody
-    public void cancelVideoPraise(int videoId,int userId)
+    public void cancelVideoPraise(int videoId, int userId)
     {
-        interactionService.deleteVideoPraise(videoId,userId);
+        interactionService.deleteVideoPraise(videoId, userId);
     }
 
     //判断当前用户是否给视频点赞
     @RequestMapping("/videoIsPraise")
     @ResponseBody
-    public boolean videoIsPraise(int videoId,int userId)
+    public boolean videoIsPraise(int videoId, int userId)
     {
-        return interactionService.videoIsPraiseByUserId(videoId,userId);
+        return interactionService.videoIsPraiseByUserId(videoId, userId);
     }
 
     //视频投币
     @RequestMapping("/sendVideoCoin")
     @ResponseBody
-    public void sendVideoCoin(int videoId,int userId,@RequestParam(value="coinCount",required = false,defaultValue = "1") int coinCount)
+    public void sendVideoCoin(int videoId, int userId, @RequestParam(value = "coinCount", required = false, defaultValue = "1") int coinCount)
     {
-        userService.changeUserCoin(userId,coinCount);
-        interactionService.insertVideoCoin(videoId,userId,coinCount);
+        userService.changeUserCoin(userId, coinCount);
+        interactionService.insertVideoCoin(videoId, userId, coinCount);
     }
 
     //判断视频是否投币
     @RequestMapping("/videoIsCoin")
     @ResponseBody
-    public boolean videoIsCoin(int videoId,int userId)
+    public boolean videoIsCoin(int videoId, int userId)
     {
-        return interactionService.videoIsCoinByUserId(videoId,userId);
+        return interactionService.videoIsCoinByUserId(videoId, userId);
     }
 
     //返回分区、查询得到的视频列表(同步)
     @RequestMapping("/loadVideoList")
-    public String loadVideoList(int categoryId,String searchTex,int searchMode,int currentPage,Model model) //使用searchText作为参数名时，出现重复拼接问题
+    public String loadVideoList(int categoryId, String searchTex, int searchMode, int currentPage, Model model) //使用searchText作为参数名时，出现重复拼接问题
     {
-        List<Video>videoList = videoService.searchVideos(categoryId,searchTex,searchMode,currentPage);
-        Map<Integer,String>upNames = userService.findVideosUpNames(videoList);
+        List<Video> videoList = videoService.searchVideos(categoryId, searchTex, searchMode, currentPage);
+        Map<Integer, String> upNames = userService.findVideosUpNames(videoList);
 //        System.out.println(upNames);
         List<VideoCategory> videoCategoryList = videoService.findAllCategory();
         PageInfo<Video> pageInfo = new PageInfo(videoList);
 //        System.out.println(pageInfo);
-        model.addAttribute("videos_page",pageInfo);
-        model.addAttribute("video_up_names",upNames);
-        model.addAttribute("video_categorys",videoCategoryList);
+        model.addAttribute("videos_page", pageInfo);
+        model.addAttribute("video_up_names", upNames);
+        model.addAttribute("video_categorys", videoCategoryList);
         return "videoList";
     }
 
     //查询用户投稿的视频
     @RequestMapping("/loadVideosByUserId/{userId}")
-    public String loadVideosByUserId(@PathVariable("userId")int userId,Model model)
+    public String loadVideosByUserId(@PathVariable("userId") int userId, Model model)
     {
-        List<Video>up_videos=videoService.findVideoByUpId(userId);
-        model.addAttribute("up_videos",up_videos);
+        List<Video> up_videos = videoService.findVideoByUpId(userId);
+        model.addAttribute("up_videos", up_videos);
         return "userSpace::up_videos";
     }
 }

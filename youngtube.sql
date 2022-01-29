@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 29/01/2022 12:20:05
+ Date: 29/01/2022 16:35:04
 */
 
 SET NAMES utf8mb4;
@@ -490,8 +490,6 @@ CREATE TABLE `videocomment`  (
   `userId` int NULL DEFAULT NULL,
   `videoId` int NULL DEFAULT NULL,
   `commentContent` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `commentPraiseCount` int NULL DEFAULT 0,
-  `commentIsPraise` int NULL DEFAULT 0,
   `commentDate` datetime NULL DEFAULT NULL,
   `fatherCommentId` int NULL DEFAULT 0,
   `replyCommentId` int NULL DEFAULT 0,
@@ -503,15 +501,34 @@ CREATE TABLE `videocomment`  (
 -- ----------------------------
 -- Records of videocomment
 -- ----------------------------
-INSERT INTO `videocomment` VALUES (1, 5, 1, '父评论测试', 0, 0, '2022-01-29 09:24:09', 0, 0, 0, 0);
-INSERT INTO `videocomment` VALUES (2, 3, 1, '子评论回复父评论', 0, 0, '2022-01-29 09:24:39', 1, 1, 0, 0);
-INSERT INTO `videocomment` VALUES (3, 3, 1, '子评论回复子评论', 0, 0, '2022-01-29 09:25:18', 1, 2, 0, 0);
-INSERT INTO `videocomment` VALUES (4, 3, 1, '笑死', 0, 0, '2022-01-29 03:44:01', 0, 0, 0, 0);
-INSERT INTO `videocomment` VALUES (5, 3, 1, 'rrr', 0, 0, '2022-01-29 03:51:14', 0, 0, 0, 0);
-INSERT INTO `videocomment` VALUES (6, 3, 1, '回复@avavaava:开什么玩笑', 0, 0, '2022-01-29 04:15:48', 1, 2, 0, 0);
-INSERT INTO `videocomment` VALUES (7, 3, 1, '回复@avavaava:我要吐了', 0, 0, '2022-01-29 04:16:04', 1, 6, 0, 0);
-INSERT INTO `videocomment` VALUES (8, 3, 1, '的味道', 0, 0, '2022-01-29 04:17:28', 0, 0, 0, 0);
-INSERT INTO `videocomment` VALUES (9, 3, 1, '回复@avavaava\r\n                                                    : 差不多得了', 0, 0, '2022-01-29 04:18:20', 8, 8, 0, 0);
+INSERT INTO `videocomment` VALUES (1, 5, 1, '父评论测试', '2022-01-29 09:24:09', 0, 0, 0, 0);
+INSERT INTO `videocomment` VALUES (2, 3, 1, '子评论回复父评论', '2022-01-29 09:24:39', 1, 1, 0, 0);
+INSERT INTO `videocomment` VALUES (3, 3, 1, '子评论回复子评论', '2022-01-29 09:25:18', 1, 2, 0, 0);
+INSERT INTO `videocomment` VALUES (4, 3, 1, '笑死', '2022-01-29 03:44:01', 0, 0, 0, 0);
+INSERT INTO `videocomment` VALUES (5, 3, 1, 'rrr', '2022-01-29 03:51:14', 0, 0, 0, 0);
+INSERT INTO `videocomment` VALUES (6, 3, 1, '回复@avavaava:开什么玩笑', '2022-01-29 04:15:48', 1, 2, 0, 0);
+INSERT INTO `videocomment` VALUES (7, 3, 1, '回复@avavaava:我要吐了', '2022-01-29 04:16:04', 1, 6, 0, 0);
+INSERT INTO `videocomment` VALUES (8, 3, 1, '的味道', '2022-01-29 04:17:28', 0, 0, 0, 0);
+INSERT INTO `videocomment` VALUES (9, 3, 1, '回复@avavaava\r\n                                                    : 差不多得了', '2022-01-29 04:18:20', 8, 8, 0, 0);
+INSERT INTO `videocomment` VALUES (10, 3, 1, '回复@avavaava:????', '2022-01-29 08:33:55', 1, 6, 0, 0);
+INSERT INTO `videocomment` VALUES (11, 3, 1, '回复@我的名字 : 逆天', '2022-01-29 08:34:05', 0, 0, 0, 0);
+
+-- ----------------------------
+-- Table structure for videocommentclick
+-- ----------------------------
+DROP TABLE IF EXISTS `videocommentclick`;
+CREATE TABLE `videocommentclick`  (
+  `commentId` int NULL DEFAULT NULL,
+  `userId` int NULL DEFAULT NULL,
+  `clickDate` datetime NULL DEFAULT NULL,
+  `clickMode` int NULL DEFAULT 0
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of videocommentclick
+-- ----------------------------
+INSERT INTO `videocommentclick` VALUES (2, 3, '2022-01-29 08:24:57', 0);
+INSERT INTO `videocommentclick` VALUES (1, 3, '2022-01-29 08:30:39', 0);
 
 -- ----------------------------
 -- Table structure for videofavorite

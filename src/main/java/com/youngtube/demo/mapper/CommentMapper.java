@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -28,4 +29,12 @@ public interface CommentMapper
     List<VideoComment> findReplyVideoCommentByVideoId(@Param("videoId") int videoId, @Param("fatherCommentId") int fatherCommentId);
 
     Integer findReplyVideoCommentUserId(@Param("commentId")int replyCommentId);
+
+    Integer findCommentPraiseCount(@Param("commentId") int commentId);
+
+    Integer findOneCommentPraise(@Param("userId") int userId, @Param("commentId") int commentId);
+
+    void insertOneVideoCommentPraise(@Param("userId") int userId, @Param("commentId") int commentId, @Param("clickDate")Date date, @Param("clickMode") int clickMode);
+
+    void deleteOneVideoCommentPraise(@Param("userId") int userId, @Param("commentId") int commentId);
 }
