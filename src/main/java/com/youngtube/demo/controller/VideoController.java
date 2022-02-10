@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -87,14 +88,17 @@ public class VideoController
 
     //根据视频id获得视频和up主信息，返回视频播放界面
     @RequestMapping("/loadOneWithUp/{videoId}")
-    public String loadOneWithUp(@PathVariable("videoId") int videoId, Model model)
+    public String loadOneWithUp(@PathVariable("videoId") int videoId, Model model,HttpSession session)
     {
         Video video;
-        User up;
+        User up = null;
         if (true) //if中应为满足热点视频的条件，由算法得出
         {
             video = (Video) redisUtil.get("videoId" + videoId);
-            up = (User) redisUtil.get("userId" + video.getVideoUpId());
+            if(video!=null)
+            {
+                up = (User) redisUtil.get("userId" + video.getVideoUpId());
+            }
         }
         if (video == null)
         {

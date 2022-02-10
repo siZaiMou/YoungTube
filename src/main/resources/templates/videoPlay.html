@@ -1713,12 +1713,13 @@
             <!-- 视频标签区结束 -->
 
 
-            <script th:id="javascript">
+            <script th:inline="javascript">
                 function loadCommentArea() {
                     var videoId =/*[[${video.videoId}]]*/'1';
                     $("#commentArea").hide();
                     $("#commentToggleButton").click(function () {
-                            $("#comment_load").load("/comment/getVideoCommentWithHot/" + videoId);
+                            $("#comment_load").load("/comment/getVideoCommentWithHot/" + videoId); //第一次点击评论区显示后加载，之后点击显示不加载
+
                             $("#commentArea").show();
                             $("#commentToggleButton").text('隐藏评论区');
                             $("#commentToggleButton").unbind();
@@ -1760,12 +1761,12 @@
 
                                     <div th:fragment="comment_hot" th:each="singleVideoComment:${videoComments_hot}" class="comment-show-con clearfix">
                                         <div class="comment-show-con-img pull-left"><img
-                                                th:src="|${commentUsers_hot[singleVideoComment.userId].userHeadSrc}|"
+                                                th:src="|${commentUsers_hot[singleVideoComment.userId].userHeadSrc}|" th:onclick="|toUserSpace(${commentUsers_hot[singleVideoComment.userId].userId})|"
                                                 alt="">
                                         </div>
                                         <div class="comment-show-con-list pull-left clearfix">
                                             <div class="pl-text clearfix">
-                                                <a href="#" th:commentId="${singleVideoComment.commentId}" th:fatherId="${singleVideoComment.commentId}" class="comment-size-name">[[${commentUsers_hot[singleVideoComment.userId].userPetName}]]
+                                                <a href="#" th:commentId="${singleVideoComment.commentId}" th:fatherId="${singleVideoComment.commentId}" th:onclick="|toUserSpace(${commentUsers_hot[singleVideoComment.userId].userId})|" class="comment-size-name">[[${commentUsers_hot[singleVideoComment.userId].userPetName}]]
                                                     : </a>
                                                 <span class="my-pl-con">&nbsp;[[${singleVideoComment.commentContent}]]</span>
                                             </div>
@@ -1788,13 +1789,14 @@
                                                     </a>
                                                 </div>
                                             </div>
+                                                    <!--楼中楼-->
                                             <div class="hf-list-con">
                                                 <div class="all-pl-con"
                                                      th:each="singleReplyComment:${singleVideoComment.replyCommentList}">
                                                     <div class="pl-text hfpl-text clearfix">
-                                                        <a href="#" th:fatherId="${singleVideoComment.commentId}" th:commentId="${singleReplyComment.commentId}" class="comment-size-name">[[${commentUsers_hot[singleReplyComment.userId].userPetName}]]:</a>
+                                                        <a href="#" th:fatherId="${singleVideoComment.commentId}" th:commentId="${singleReplyComment.commentId}" th:onclick="|toUserSpace(${commentUsers_hot[singleReplyComment.userId].userId})|" class="comment-size-name">[[${commentUsers_hot[singleReplyComment.userId].userPetName}]]:</a>
                                                         <span class="my-pl-con">回复
-                                                        <a href="#" class="atName">@[[${commentUsers_hot[singleReplyComment.replyUserId].userPetName}]]</a>[[${singleReplyComment.commentContent}]]</span>
+                                                        <a href="#" th:onclick="|toUserSpace(${commentUsers_hot[singleReplyComment.replyUserId].userId})|" class="atName">@[[${commentUsers_hot[singleReplyComment.replyUserId].userPetName}]]</a>[[${singleReplyComment.commentContent}]]</span>
                                                     </div>
                                                     <div class="date-dz"><span
                                                             class="date-dz-left pull-left comment-time">[[${#dates.format(singleReplyComment.commentDate,'yyyy-MM-dd HH:mm:ss')}]]</span>
@@ -1828,6 +1830,9 @@
 
                             <!-- 视频评论发送,由评论/回复点击事件调用 -->
                             <script th:inline="javascript">
+                                function toUserSpace(userId) {
+                                    location.href = "/pages/toUserSpace/" + userId;
+                                }
                                 function sendComment(commentContent, fatherCommentId, replyCommentId) {
                                     var html = "";
 
@@ -1845,9 +1850,6 @@
                                             "replyCommentId": replyCommentId
                                         }, function (test) {
                                             alert("发送成功!");
-                                            $("#message").val("");
-                                            $('#slider').load("/comment/getVideoCommentWithHot/" + videoId);
-                                            $('#messDivId').load("/comment/getVideoCommentWithNew/" + videoId);
                                         })
                                     }
                                 }
@@ -1903,7 +1905,7 @@
                                 });
                             </script>
                             <!--点击回复动态创建回复块-->
-                            <script th:id="javascript" type="text/javascript">
+                            <script th:inline="javascript" type="text/javascript">
 
                                 var replyCommentId;
                                 var fatherCommentId;
@@ -2340,7 +2342,7 @@
                         <div class="card-box" th:fragment="video_relate"
                              th:each="singleVideo,singleVideoStat:${videos_relate}">
                             <div class="pic-box">
-                                <div class="pic"><a href=""><img
+                                <div class="pic"><a th:href="|/pages/toVideoPlay/${singleVideo.videoId}|"><img
                                         th:src="${singleVideo.videoFrontSrc}"
                                         th:alt="${singleVideo.videoName}" width="168" height="95"></a><span
                                         class="mask-video"></span><span
@@ -2350,7 +2352,7 @@
                                                                                     style="display:none;"></span>
                                 </div>
                             </div>
-                            <div class="info"><a th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"
+                            <div class="info"><a th:href="|/pages/toVideoPlay/${singleVideo.videoId}|"
                                                  title="实习老师粉笔画让网友跪服 神还原《你的名字》" class="title">[[${singleVideo.videoName}]]</a>
                                 <div class="count up"><a href="//space.bilibili.com/583792/" target="_blank"
                                                          th:text="|${userNames[singleVideo.videoUpId]}|">H·D</a>
