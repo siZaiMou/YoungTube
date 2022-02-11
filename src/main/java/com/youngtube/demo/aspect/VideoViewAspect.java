@@ -1,13 +1,11 @@
 package com.youngtube.demo.aspect;
 
 import com.youngtube.demo.entity.User;
+import com.youngtube.demo.entity.vo.VideoViewVO;
 import com.youngtube.demo.untils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -40,16 +38,24 @@ public class VideoViewAspect
         videoId = (int)args[0];
         HttpSession session = (HttpSession) args[2];
         Map<Integer,Map<String,Long>> viewMap; //键为视频id;值为记录ip和上次更新时间的map
-        if(session.getAttribute("viewMap")==null)
+        VideoViewVO videoViewVO; //封装viewMap的vo对象，redis对此vo对象进行操作
+        videoViewVO = (VideoViewVO) redisUtil.get("videoViewStatusMap");
+        if(videoViewVO==null)
         {
             viewMap = new HashMap<>();//map记录ip及上次更新时间，如果距离上次时间不足6小时则不更新播放量
-            session.setAttribute("viewMap",viewMap);
+            videoViewVO = new VideoViewVO();
+            videoViewVO.setViewMap(viewMap);
+            redisUtil.set("videoViewStatusMap",videoViewVO);
         }
         if(session.getAttribute("nowUser")!=null)
         {
-            viewMap = (Map<Integer, Map<String, Long>>) session.getAttribute("viewMap");
+            viewMap = videoViewVO.getViewMap();
             Map<String,Long> ipAndView; //暂时存放viewMap的值
             String ip = ((User)session.getAttribute("nowUser")).getUserIp();
+            if(ip==null)
+            {
+                return;
+            }
             Long now = new Date().getTime();
             if(viewMap.containsKey(videoId))//记录过当前视频的播放量情况
             {
@@ -60,7 +66,8 @@ public class VideoViewAspect
                     {
                         ipAndView.put(ip,now);
                         viewMap.put(videoId,ipAndView);
-                        session.setAttribute("viewMap",viewMap);
+                        videoViewVO.setViewMap(viewMap);
+                        redisUtil.set("videoViewStatusMap",videoViewVO);
                         this.updateVideoId = videoId;
                     }
                 }
@@ -70,7 +77,8 @@ public class VideoViewAspect
                     ipAndView.put(ip,now);
                     viewMap.put(videoId,ipAndView);
                     this.updateVideoId = videoId;
-                    session.setAttribute("viewMap",viewMap);
+                    videoViewVO.setViewMap(viewMap);
+                    redisUtil.set("videoViewStatusMap",videoViewVO);
                 }
             }
             else //未记录过当前视频的播放情况
@@ -79,15 +87,23 @@ public class VideoViewAspect
                 ipAndView.put(ip,now);
                 viewMap.put(videoId,ipAndView);
                 this.updateVideoId = videoId;
-                session.setAttribute("viewMap",viewMap);
+                videoViewVO.setViewMap(viewMap);
+                redisUtil.set("videoViewStatusMap",videoViewVO);
             }
         }
     }
 
     //更新视频播放量,包括redis与mysql中数据的更新，考虑到并发情况下的数据一致性，需要对redis的自增操作加锁
-    @After(value = "loadOneWithUp()")
+    @AfterReturning(value = "loadOneWithUp()")
     public void afterMethod(JoinPoint point)
     {
-        System.out.println(this.updateVideoId);
+        if(updateVideoId>0)
+        {
+            if(redisUtil.hasKey("videoId_viewCount"+this.updateVideoId))//播放量一定已在controller的方法中被存入redis
+            {
+                redisUtil.incr("videoId_viewCount"+this.updateVideoId,1); //redis执行原子操作，不会出现并发导致的数据错误
+            }
+        }
+
     }
 }

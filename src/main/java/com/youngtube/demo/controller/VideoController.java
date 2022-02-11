@@ -105,11 +105,10 @@ public class VideoController
             video = videoService.findOneByVideoId(videoId);
             int praiseCount = interactionService.getVideoPraiseCount(videoId);
             int coinCount = interactionService.getVideoCoinCount(videoId);
-            int favoriteCount = favoriteService.findVideoFavoriteCount(videoId);
+//            int favoriteCount = favoriteService.findVideoFavoriteCount(videoId);
             video.setVideoPraiseCount(praiseCount);
             video.setVideoCoinCount(coinCount);
-            video.setVideoFavoriteCount(favoriteCount);
-            redisUtil.set("videoId" + videoId, video, 24 * 60 * 60);
+//            video.setVideoFavoriteCount(favoriteCount);
         }
         if (up == null)
         {
@@ -118,9 +117,21 @@ public class VideoController
             up.setUserFans(userFans);
             redisUtil.set("userId" + video.getVideoUpId(), up, 24 * 60 * 60);
         }
+
         int favoriteCount = favoriteService.findVideoFavoriteCount(videoId);
         video.setVideoFavoriteCount(favoriteCount); //获取收藏该视频的人数，收藏夹和用户为多对一关系，收藏操作多选框，不能通过简单的增加和取消收藏改变收藏人数
-        redisUtil.set("videoId" + videoId, video, 24 * 60 * 60);
+
+        if(!redisUtil.hasKey("videoId_viewCount"+videoId)) //如果redis中没有存放该video的播放量(单独的数据结构)，则将数据库中播放量放入redis
+        {
+            redisUtil.set("videoId_viewCount"+videoId,video.getVideoViewCount(),24*60*60);
+        }
+        else //将redis中的播放量取出，此处可能导致的redis和mysql的数据不一致会在切面的after方法中解决
+        {
+            int videoViewCount = (int) redisUtil.get("videoId_viewCount"+videoId);
+            video.setVideoViewCount(videoViewCount);
+        }
+
+        redisUtil.set("videoId" + videoId, video, 24 * 60 * 60);//暂时无法通过redis执行收藏数的更新操作，此项数据从数据库中读取后再统一存入redis
 
 
         model.addAttribute("video", video);

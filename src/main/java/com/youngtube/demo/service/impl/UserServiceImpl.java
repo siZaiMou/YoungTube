@@ -147,7 +147,7 @@ public class UserServiceImpl implements UserService
     {
         Map<Integer,String> ups = new HashMap<>();
         int len = videoList.size();
-        for(int i=1;i<len;i++) //两次重复
+        for(int i=1;i<len;i++) //两次重复且带有额外不相干数据,PageHelper的bug
         {
             if(((Object)videoList.get(i)) instanceof Video)
             {
