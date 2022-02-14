@@ -3,9 +3,11 @@ package com.youngtube.demo;
 import com.github.pagehelper.PageHelper;
 import com.youngtube.demo.entity.User;
 import com.youngtube.demo.entity.Video;
+import com.youngtube.demo.listener.ListenerHandle;
 import com.youngtube.demo.mapper.CategoryMapper;
 import com.youngtube.demo.mapper.UserMapper;
 import com.youngtube.demo.mapper.VideoMapper;
+import com.youngtube.demo.untils.RedisUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +18,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
@@ -32,6 +35,11 @@ class DemoApplicationTests
     VideoMapper videoMapper;
     @Autowired
     RedisTemplate redisTemplate;
+    @Autowired
+    RedisUtil redisUtil;
+    @Autowired
+    ListenerHandle listenerHandle;
+
 
     @Test
     void contextLoads()
@@ -81,5 +89,22 @@ class DemoApplicationTests
             redisTemplate.expire("video"+1,10, TimeUnit.MINUTES);
         }
         System.out.println(video);
+    }
+
+    @Test
+    void getRedisKeyByGlob()
+    {
+        Set set = redisTemplate.keys("videoId_viewCount*");
+        for(Object s:set)
+        {
+            System.out.println(s);
+        }
+    }
+
+    @Test
+    void listenerHandleTest()
+    {
+        listenerHandle.afterDestroy();
+        System.out.println(listenerHandle);
     }
 }

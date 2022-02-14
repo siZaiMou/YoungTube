@@ -86,4 +86,9 @@
         </foreach>
     </select>
 
+    <update id="updateVideoViewCount">
+        update video
+        set videoViewCount = #{videoViewCount}
+        where videoId = #{videoId}
+    </update>
 </mapper>

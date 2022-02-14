@@ -5,6 +5,7 @@ import com.youngtube.demo.entity.VideoCategory;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public interface VideoService
 {
@@ -27,4 +28,6 @@ public interface VideoService
     List<Video> findVideoByUpId(int userId);
 
     List<Video> findTimeHotVideos();
+
+    void updateVideoViewCount(Map<Integer, Integer> videoIdAndViewCount);
 }

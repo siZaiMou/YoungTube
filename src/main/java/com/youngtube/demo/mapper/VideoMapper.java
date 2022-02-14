@@ -40,4 +40,7 @@ public interface VideoMapper
 
     //根据id列表查询视频列表
     List<Video> findVideosByVideoIds(List<Integer> videoIdList);
+
+    //redis播放量更新到mysql中
+    void updateVideoViewCount(@Param("videoId")Integer videoId, @Param("videoViewCount")Integer videoViewCount);
 }

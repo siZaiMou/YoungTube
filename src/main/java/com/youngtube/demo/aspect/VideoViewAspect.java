@@ -45,7 +45,7 @@ public class VideoViewAspect
             viewMap = new HashMap<>();//map记录ip及上次更新时间，如果距离上次时间不足6小时则不更新播放量
             videoViewVO = new VideoViewVO();
             videoViewVO.setViewMap(viewMap);
-            redisUtil.set("videoViewStatusMap",videoViewVO);
+            redisUtil.set("videoViewStatusMap",videoViewVO,24*60*60);
         }
         if(session.getAttribute("nowUser")!=null)
         {
@@ -67,7 +67,7 @@ public class VideoViewAspect
                         ipAndView.put(ip,now);
                         viewMap.put(videoId,ipAndView);
                         videoViewVO.setViewMap(viewMap);
-                        redisUtil.set("videoViewStatusMap",videoViewVO);
+                        redisUtil.set("videoViewStatusMap",videoViewVO,24*60*60);
                         this.updateVideoId = videoId;
                     }
                 }
@@ -78,7 +78,7 @@ public class VideoViewAspect
                     viewMap.put(videoId,ipAndView);
                     this.updateVideoId = videoId;
                     videoViewVO.setViewMap(viewMap);
-                    redisUtil.set("videoViewStatusMap",videoViewVO);
+                    redisUtil.set("videoViewStatusMap",videoViewVO,24*60*60);
                 }
             }
             else //未记录过当前视频的播放情况
@@ -88,7 +88,7 @@ public class VideoViewAspect
                 viewMap.put(videoId,ipAndView);
                 this.updateVideoId = videoId;
                 videoViewVO.setViewMap(viewMap);
-                redisUtil.set("videoViewStatusMap",videoViewVO);
+                redisUtil.set("videoViewStatusMap",videoViewVO,24*60*60);
             }
         }
     }

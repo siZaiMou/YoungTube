@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 public class VideoServiceImpl implements VideoService
@@ -103,5 +105,15 @@ public class VideoServiceImpl implements VideoService
     {
         //算法在service层
         return videoMapper.find5WithTimeHot();
+    }
+
+    @Override
+    public void updateVideoViewCount(Map<Integer, Integer> videoIdAndViewCount)
+    {
+        Set<Map.Entry<Integer, Integer>> entries = videoIdAndViewCount.entrySet();
+        for(Map.Entry<Integer,Integer>entry: entries)
+        {
+            videoMapper.updateVideoViewCount(entry.getKey(),entry.getValue());
+        }
     }
 }
