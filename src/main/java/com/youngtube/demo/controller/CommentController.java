@@ -36,7 +36,7 @@ public class CommentController
     @ResponseBody
     public void sendVideoComment(VideoComment videoComment)
     {
-        commentService.saveVideoComment(videoComment);
+        commentService.saveVideoComment_MQ_producer(videoComment);
     }
 
     @RequestMapping("/getVideoCommentWithHot/{videoId}")

@@ -1,10 +1,13 @@
 package com.youngtube.demo.service.impl;
 
+import com.youngtube.demo.config.RabbitMQConfig_producer;
 import com.youngtube.demo.entity.Dynamic;
 import com.youngtube.demo.entity.DynamicComment;
 import com.youngtube.demo.entity.VideoComment;
 import com.youngtube.demo.mapper.CommentMapper;
 import com.youngtube.demo.service.CommentService;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +20,28 @@ public class CommentServiceImpl implements CommentService
     @Autowired
     CommentMapper commentMapper;
 
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
-    //写评论，性能待优化(RabbitMQ)
+    //直接写入评论
     @Override
     public void saveVideoComment(VideoComment videoComment)
     {
+        commentMapper.insertOneVideoComment(videoComment);
+    }
+
+
+    @Override
+    public void saveVideoComment_MQ_producer(VideoComment videoComment) //发送VideoComment对象到rabbitmq的videoComment队列
+    {
+        rabbitTemplate.convertAndSend(RabbitMQConfig_producer.EXCHANGE_NAME,"videoComment",videoComment);
+    }
+
+    @Override
+    @RabbitListener(queues = "videoComment",concurrency = "5-10",containerFactory = "mqConsumerlistenerContainer")
+    public void saveVideoComment_MQ_consumer(VideoComment videoComment) //监听videoComment队列,定量接收视频评论对象,实现数据限流
+    {
+        //System.out.println(videoComment);
         commentMapper.insertOneVideoComment(videoComment);
     }
 

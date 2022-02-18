@@ -27,7 +27,7 @@ public class ListenerHandle
     @PostConstruct
     public void init()
     {
-        System.out.println("初始化咯~");
+        System.out.println("初始化");
     }
 
     //关闭时将redis播放量写入mysql

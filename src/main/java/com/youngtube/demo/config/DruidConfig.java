@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.sql.DataSource;
 
 @SpringBootConfiguration
-public class MyConfigurer implements WebMvcConfigurer
+public class DruidConfig implements WebMvcConfigurer
 {
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry){
@@ -36,34 +36,6 @@ public class MyConfigurer implements WebMvcConfigurer
         return new DruidDataSource();
     }
 
-
-//    /**
-//     * 配置session工厂
-//     * 排除springboot自动配置的pagehelper拦截器
-//     * @return
-//     * @throws Exception
-//     */
-//    @Bean
-//    public
-//    SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-//        final SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-//
-//        sqlSessionFactoryBean.setDataSource(dataSource);
-//
-//        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-//        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath*:/mapper/*Mapper.xml"));
-//
-////        PageInterceptor pageInterceptor = new PageInterceptor();
-////        Properties properties = new Properties();
-////        properties.setProperty("helperDialect", "oracle");
-////        properties.setProperty("reasonable", "true");
-////        properties.setProperty("supportMethodsArguments", "true");
-////        properties.setProperty("params", "pageNum=pageNum;pageSize=pageSize");
-////        pageInterceptor.setProperties(properties);
-////        sqlSessionFactoryBean.setPlugins(new Interceptor[]{pageInterceptor});
-//
-//        return sqlSessionFactoryBean.getObject();
-//    }
 
 
 }

@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 29/01/2022 16:35:04
+ Date: 18/02/2022 22:16:25
 */
 
 SET NAMES utf8mb4;
@@ -163,7 +163,7 @@ CREATE TABLE `dynamiccomment`  (
   `commentAuditStatus` int NULL DEFAULT 0,
   `dynamicCommentIsTop` int NULL DEFAULT 0,
   PRIMARY KEY (`commentId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dynamiccomment
@@ -395,11 +395,11 @@ CREATE TABLE `video`  (
 -- ----------------------------
 -- Records of video
 -- ----------------------------
-INSERT INTO `video` VALUES (1, '某科学的超电磁炮精剪', '喜欢我二次元吗?', 1, '/video/videoFont/paojie.png', '/video/paojie.mp4', 0, '2022-01-12 09:03:12', 0, 5, 0, '02:29');
-INSERT INTO `video` VALUES (2, '刀剑神域', '喜欢我刀剑神域吗?', 1, '/video/videoFont/daojian.png', '/video/meimei.mp4', 0, '2022-01-12 09:03:14', 0, 5, 0, '04:31');
-INSERT INTO `video` VALUES (3, '随机对对子不要笑蹭饭大挑战', '喜欢我p大将吗?', 2, '/video/videoFont/wuyu.png', '/video/xiaoyuan.mp4', 11021, '2022-01-12 09:03:16', 0, 5, 0, '01:25');
+INSERT INTO `video` VALUES (1, '某科学的超电磁炮精剪', '喜欢我二次元吗?', 1, '/video/videoFont/paojie.png', '/video/paojie.mp4', 3, '2022-01-12 09:03:12', 0, 5, 0, '02:29');
+INSERT INTO `video` VALUES (2, '刀剑神域', '喜欢我刀剑神域吗?', 1, '/video/videoFont/daojian.png', '/video/meimei.mp4', 1, '2022-01-12 09:03:14', 0, 5, 0, '04:31');
+INSERT INTO `video` VALUES (3, '随机对对子不要笑蹭饭大挑战', '喜欢我p大将吗?', 2, '/video/videoFont/wuyu.png', '/video/xiaoyuan.mp4', 11022, '2022-01-12 09:03:16', 0, 5, 0, '01:25');
 INSERT INTO `video` VALUES (4, '嘉然的战争', '欧内的手哈嘉嘉', 1, '/video/videoFont/bilansuo.png', '/video/longnvpu.mp4', 0, '2022-01-12 09:05:08', 0, 5, 0, '03:02');
-INSERT INTO `video` VALUES (5, '小艾锐评', '早该图图了', 3, '/video/videoFont/zhiyuxiang.png', '/video/longnvpu.mp4', 0, '2022-01-12 12:18:41', 0, 3, 0, '02:15');
+INSERT INTO `video` VALUES (5, '小艾锐评', '早该图图了', 3, '/video/videoFont/zhiyuxiang.png', '/video/longnvpu.mp4', 2, '2022-01-12 12:18:41', 0, 3, 0, '02:15');
 INSERT INTO `video` VALUES (6, '温暖二次元', '闹挺大', 1, '/video/videoFont/zhongerbing.png', '/video/longnvpu.mp4', 231, '2022-01-12 12:19:44', 0, 5, 0, '05:23');
 INSERT INTO `video` VALUES (7, '美国疫情现状', 'winwin', 3, '/video/videoFont/daojian.png', '/video/longnvpu.mp4', 0, '2022-01-12 13:05:28', 0, 5, 0, '06:44');
 INSERT INTO `video` VALUES (8, '回家', '下北泽金曲', 4, '/video/videoFont/wuyu.png', '/video/paojie.mp4', 31, '2022-01-12 13:06:35', 0, 3, 0, '01:58');
@@ -496,7 +496,7 @@ CREATE TABLE `videocomment`  (
   `commentAuditStatus` int NULL DEFAULT 0,
   `videoCommentIsTop` int NULL DEFAULT 0,
   PRIMARY KEY (`commentId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of videocomment
@@ -512,6 +512,18 @@ INSERT INTO `videocomment` VALUES (8, 3, 1, '的味道', '2022-01-29 04:17:28', 
 INSERT INTO `videocomment` VALUES (9, 3, 1, '回复@avavaava\r\n                                                    : 差不多得了', '2022-01-29 04:18:20', 8, 8, 0, 0);
 INSERT INTO `videocomment` VALUES (10, 3, 1, '回复@avavaava:????', '2022-01-29 08:33:55', 1, 6, 0, 0);
 INSERT INTO `videocomment` VALUES (11, 3, 1, '回复@我的名字 : 逆天', '2022-01-29 08:34:05', 0, 0, 0, 0);
+INSERT INTO `videocomment` VALUES (12, -1, 6, '回复@avavaava:ee', '2022-02-10 12:50:24', 1, 6, 0, 0);
+INSERT INTO `videocomment` VALUES (13, -1, 6, '回复@avavaava:rr', '2022-02-10 12:52:37', 1, 6, 0, 0);
+INSERT INTO `videocomment` VALUES (14, 3, 10, 'ee', '2022-02-10 13:21:37', 0, 0, 0, 0);
+INSERT INTO `videocomment` VALUES (15, 3, 10, '回复@avavaava: bbb', '2022-02-10 13:22:14', 0, 0, 0, 0);
+INSERT INTO `videocomment` VALUES (16, 3, 10, '回复@avavaava\r\n                                                    : eee', '2022-02-10 13:22:27', 15, 15, 0, 0);
+INSERT INTO `videocomment` VALUES (17, 3, 10, '回复@avavaava:呃呃呃', '2022-02-10 13:22:44', 15, 16, 0, 0);
+INSERT INTO `videocomment` VALUES (18, 3, 10, '回复@avavaava:鹅鹅鹅', '2022-02-10 13:22:55', 15, 17, 0, 0);
+INSERT INTO `videocomment` VALUES (19, 3, 10, '1wae回复@avavaava\r\n                                                    : 文案', '2022-02-10 13:24:07', 14, 14, 0, 0);
+INSERT INTO `videocomment` VALUES (20, 3, 10, '1wae回复@avavaava:呃呃、\r\n', '2022-02-10 13:25:20', 14, 19, 0, 0);
+INSERT INTO `videocomment` VALUES (21, 3, 10, '呃呃呃', '2022-02-10 13:27:14', 14, 19, 0, 0);
+INSERT INTO `videocomment` VALUES (22, 3, 1, '你好你好', '2022-02-18 13:59:00', 0, 0, 0, 0);
+INSERT INTO `videocomment` VALUES (23, 3, 1, '....xss', '2022-02-18 13:59:38', 0, 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for videocommentclick

@@ -1,15 +1,23 @@
 package com.youngtube.demo.entity;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Tolerate;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+@Builder
 @Data
-public class VideoComment
+public class VideoComment implements Serializable
 {
+    @Tolerate
+    public VideoComment() //rabbitmq需要一个无参的构造方法
+    {}
+
     private int commentId;
     private int userId;
     private int videoId;

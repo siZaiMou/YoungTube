@@ -11,6 +11,10 @@ public interface CommentService
 {
     void saveVideoComment(VideoComment videoComment);
 
+    void saveVideoComment_MQ_producer(VideoComment videoComment);
+
+    void saveVideoComment_MQ_consumer(VideoComment videoComment);
+
     List<VideoComment> findVideoCommentWithHot(int videoId,int userId);
 
     List<VideoComment> findVideoCommentWithNew(int videoId);
