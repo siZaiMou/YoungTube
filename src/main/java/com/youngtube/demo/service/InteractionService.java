@@ -9,6 +9,10 @@ public interface InteractionService
 {
     void insertVideoPraise(int videoId, int userId);
 
+    void insertVideoPraise_MQ_producer(int videoId, int userId);
+
+    void insertVideoPraise_MQ_consumer(String message);
+
     void deleteVideoPraise(int videoId, int userId);
 
     Integer getVideoPraiseCount(int videoId);

@@ -30,19 +30,20 @@ public class CommentServiceImpl implements CommentService
         commentMapper.insertOneVideoComment(videoComment);
     }
 
-
+    //发送VideoComment对象到rabbitmq的videoComment队列
     @Override
-    public void saveVideoComment_MQ_producer(VideoComment videoComment) //发送VideoComment对象到rabbitmq的videoComment队列
+    public void saveVideoComment_MQ_producer(VideoComment videoComment)
     {
         rabbitTemplate.convertAndSend(RabbitMQConfig_producer.EXCHANGE_NAME,"videoComment",videoComment);
     }
 
+    //监听videoComment队列,定量接收视频评论对象,实现数据限流
     @Override
     @RabbitListener(queues = "videoComment",concurrency = "5-10",containerFactory = "mqConsumerlistenerContainer")
-    public void saveVideoComment_MQ_consumer(VideoComment videoComment) //监听videoComment队列,定量接收视频评论对象,实现数据限流
+    public void saveVideoComment_MQ_consumer(VideoComment videoComment)
     {
         //System.out.println(videoComment);
-        commentMapper.insertOneVideoComment(videoComment);
+        this.saveVideoComment(videoComment);
     }
 
     //算法得到按热度排好序的评论，性能待优化(Redis)

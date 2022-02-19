@@ -1,10 +1,13 @@
 package com.youngtube.demo.service.impl;
 
+import com.youngtube.demo.config.RabbitMQConfig_producer;
 import com.youngtube.demo.entity.Dynamic;
 import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.mapper.InteractionMapper;
 import com.youngtube.demo.service.InteractionService;
 import com.youngtube.demo.untils.RedisUtil;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,9 @@ public class InteractionServiceImpl implements InteractionService
     @Autowired
     RedisUtil redisUtil;
 
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
     @Override
     public void insertVideoPraise(int videoId, int userId)
     {
@@ -32,6 +38,27 @@ public class InteractionServiceImpl implements InteractionService
             redisUtil.set("videoId"+videoId,video,24*60*60);
         }
     }
+
+    //向消息队列发送视频点赞数据(字符串形式)
+    @Override
+    public void insertVideoPraise_MQ_producer(int videoId, int userId)
+    {
+        String message = videoId+","+userId;
+        rabbitTemplate.convertAndSend(RabbitMQConfig_producer.EXCHANGE_NAME,"videoPraise",message);
+    }
+
+    //监听videoPraise队列,限流获得点赞数据
+    @Override
+    @RabbitListener(queues = "videoPraise",concurrency = "5-10",containerFactory = "mqConsumerlistenerContainer")
+    public void insertVideoPraise_MQ_consumer(String message)
+    {
+        String[] split = message.split(",");
+        int videoId = Integer.parseInt(split[0]);
+        int userId = Integer.parseInt(split[1]);
+//        System.out.println("videoId="+videoId+" "+"userId="+userId);
+        this.insertVideoPraise(videoId,userId);
+    }
+
 
     @Override
     public void deleteVideoPraise(int videoId, int userId)

@@ -155,7 +155,7 @@ public class VideoController
     @ResponseBody
     public void sendVideoPraise(int videoId, int userId)
     {
-        interactionService.insertVideoPraise(videoId, userId);
+        interactionService.insertVideoPraise_MQ_producer(videoId, userId);
     }
 
     //取消点赞

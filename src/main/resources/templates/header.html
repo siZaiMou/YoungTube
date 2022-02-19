@@ -102,7 +102,7 @@
 
 <header id="header1">
     <script th:inline="javascript">
-        function toUserSpace()
+        function toUserSpace1()
         {
             var userId=/*[[${session.nowUser.userId}]]*/'3';
             location.href="/pages/toUserSpace/"+userId;
@@ -137,7 +137,7 @@
                     </div>
 
                     <div th:if="${session.nowUser.userId}>0" class="login-box">
-                        <img th:src="${session.nowUser.userHeadSrc}" onclick="toUserSpace()"
+                        <img th:src="${session.nowUser.userHeadSrc}" th:onclick="toUserSpace1()"
                              style="margin-top: 7px; height: 30px;width: 30px;border-radius:50%;overflow: hidden">
 
                         <p class="login-box" onmouseout="asjdh()" onmouseover="project()"><a
