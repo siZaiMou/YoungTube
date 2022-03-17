@@ -32,6 +32,9 @@ public class RabbitMQConfig_producer
         return QueueBuilder.durable("videoComment").build();
     }
 
+    @Bean("danmu")
+    public Queue bootQueue3(){return QueueBuilder.durable("danmu").build();}
+
     @Bean
     public Binding bindQueueExchange1(@Qualifier("videoPraise")Queue queue, @Qualifier("bootExchange")Exchange exchange)
     {
@@ -42,6 +45,12 @@ public class RabbitMQConfig_producer
     public Binding bindQueueExchange2(@Qualifier("videoComment")Queue queue, @Qualifier("bootExchange")Exchange exchange)
     {
         return BindingBuilder.bind(queue).to(exchange).with("videoComment").noargs();
+    }
+
+    @Bean
+    public Binding bindQueueExchange3(@Qualifier("danmu")Queue queue, @Qualifier("bootExchange")Exchange exchange)
+    {
+        return BindingBuilder.bind(queue).to(exchange).with("danmu").noargs();
     }
 
     @Bean

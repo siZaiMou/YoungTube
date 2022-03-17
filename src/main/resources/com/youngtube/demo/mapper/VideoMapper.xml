@@ -13,12 +13,15 @@
                videoUpId,
                videoTeenagerMode,
                videoDuring
-        from video limit 8
+        from video
+        order by videoViewCount desc limit 8
+
     </select>
 
     <select id="find6WithRecommend" resultType="video">
         select videoId, videoName, videoFrontSrc, videoViewCount, videoAuditStatus, videoUpId, videoTeenagerMode
-        from video limit 6
+        from video
+        order by videoViewCount desc limit 6
     </select>
 
     <select id="find7ByCategoryAndRank" resultType="video">

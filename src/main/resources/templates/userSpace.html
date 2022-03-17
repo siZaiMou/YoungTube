@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer" />
     <title th:if="|${session.nowUser.userId != space_user.userId}|">个人主页</title>
     <title th:if="|${session.nowUser.userId == space_user.userId}|">我的主页</title>
     <link rel="stylesheet" th:href="@{/notcommon/personspace/css/yk-base.css}">

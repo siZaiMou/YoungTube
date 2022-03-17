@@ -1,11 +1,15 @@
 package com.youngtube.demo.service.impl;
 
+import com.youngtube.demo.config.RabbitMQConfig_producer;
 import com.youngtube.demo.entity.Danmu;
 import com.youngtube.demo.mapper.DanmuMapper;
 import com.youngtube.demo.mapper.UserMapper;
 import com.youngtube.demo.service.DanmuService;
 import com.youngtube.demo.untils.RedisUtil;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,13 +26,16 @@ public class DanmuServiceImpl implements DanmuService
     @Autowired
     RedisUtil redisUtil;
 
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
     //写入弹幕，高并发场景下应使用消息队列,此处模拟
     @Override
     public int saveDanmu(Danmu danmu)
     {
         try
         {
-            danmuMapper.insertOne(danmu);
+            this.saveDanmu_MQ_producer(danmu);
             if(redisUtil.hasKey("danmu_videoId"+danmu.getVideoId()))
             {
                 List<Danmu> danmuList = (List<Danmu>) redisUtil.get("danmu_videoId"+danmu.getVideoId());
@@ -42,6 +49,21 @@ public class DanmuServiceImpl implements DanmuService
         }
         return 0;
     }
+
+    @Override
+    public void saveDanmu_MQ_producer(Danmu danmu)
+    {
+        rabbitTemplate.convertAndSend(RabbitMQConfig_producer.EXCHANGE_NAME,"videoComment",danmu);
+
+    }
+
+    @Override
+    @RabbitListener(queues = "danmu",concurrency = "5-10",containerFactory = "mqConsumerlistenerContainer")
+    public void saveDanmu_MQ_consumer(Danmu danmu)
+    {
+        danmuMapper.insertOne(danmu);
+    }
+
 
     //将查询到的弹幕转化为dplayer要求的json格式
     @Override
