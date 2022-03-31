@@ -1,13 +1,16 @@
 package com.youngtube.demo.controller;
 
 import com.youngtube.demo.entity.User;
+import com.youngtube.demo.entity.VideoCategory;
 import com.youngtube.demo.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/pages")
@@ -102,6 +105,15 @@ public class PageController
     public String toVideoFavorite(@PathVariable("userId")int userId,HttpSession session)
     {
         return "forward:/favorite/loadFavoriteList/"+userId;
+    }
+
+    @RequestMapping("/toVideoUpload")
+    public String toVideoUpload(Model model,HttpSession session)
+    {
+        List<VideoCategory> allCategory = videoService.findAllCategory();
+
+        model.addAttribute("categorys",allCategory);
+        return "videoUpload";
     }
 
 

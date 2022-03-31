@@ -1,8 +1,11 @@
 package com.youngtube.demo.controller;
 
+import com.google.gson.Gson;
+import com.youngtube.demo.entity.VideoUpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Random;
 
 @Controller
@@ -66,4 +70,38 @@ public class CheckController
         g.drawString(checkCode,15,25);
         ImageIO.write(image,"PNG",response.getOutputStream());
     }
+
+    //视频上传
+    @RequestMapping(value = "/percentAJAX", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public @ResponseBody void percentAJAX(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        if (request.getSession().getAttribute("video") == null) {
+            // new 出一个实体
+            VideoUpEntity video = new VideoUpEntity();
+            video.setPercent(0);
+            video.setFileName("请稍后..");
+            video.setFileSize(0);
+            video.setFileSY(0);
+            video.setTag(0);
+            // 放入session中
+            request.getSession().setAttribute("videoFile", video);// 放入到session中
+
+            // - -想不到办法....就先让线程休息3秒在往下跑吧
+            /*
+             * try { Thread.sleep(3000); } catch (InterruptedException e) {
+             * System.out.println("线程休息出错"); e.printStackTrace(); }
+             */
+        } else {
+            VideoUpEntity video = (VideoUpEntity) request.getSession().getAttribute("videoFile");
+            // 设置编码
+            response.setCharacterEncoding("UTF-8");
+            request.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();
+            String sbb = gson.toJson(video);
+            out.write(sbb);
+        }
+
+    }
+
 }
