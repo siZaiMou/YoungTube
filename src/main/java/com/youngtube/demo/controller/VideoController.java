@@ -4,7 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.youngtube.demo.entity.User;
 import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.entity.VideoCategory;
-import com.youngtube.demo.entity.VideoUpEntity;
+import com.youngtube.demo.entity.VideoUploadEntity;
 import com.youngtube.demo.service.FavoriteService;
 import com.youngtube.demo.service.InteractionService;
 import com.youngtube.demo.service.UserService;
@@ -224,16 +224,14 @@ public class VideoController
     }
 
     @RequestMapping("/videoUpload")
-    public String videoUpload(@RequestParam("files") MultipartFile[] files, HttpServletRequest request, Video upVideo, String Fruit)
+    public String videoUpload(@RequestParam("videoFiles") MultipartFile[] files, HttpServletRequest request, Video upVideo,HttpSession session)
     {
-
         if (files != null && files.length > 0) {
             // 循环获取file数组中得文件
             for (int i = 0; i < files.length; i++) {
                 MultipartFile file = files[i];
                 Long timelable = System.currentTimeMillis();
                 String lable_time=timelable+"";
-
                 //myvideo.set
                 // 保存文件
                 System.out.println("正在调用保存方法");
@@ -243,7 +241,7 @@ public class VideoController
                     try {
 
                         // new 出一个实体
-                        VideoUpEntity videoFile = new VideoUpEntity();
+                        VideoUploadEntity videoFile = new VideoUploadEntity();
                         // 放入session中
                         request.getSession().setAttribute("videoFile", videoFile);// 放入到session中
 
@@ -302,29 +300,25 @@ public class VideoController
 
 
                         if(file.getOriginalFilename().contains(".mp4")) {
-                            upVideo.setVideoSrc("/static/videolook/" + lable_time + "_" + file.getOriginalFilename());
+                            upVideo.setVideoSrc("/video/" + lable_time + "_" + file.getOriginalFilename());
                         }else {
-                            upVideo.setVideoFrontSrc("/static/videolook/videolookimg/" + lable_time + "_" + file.getOriginalFilename());
+                            upVideo.setVideoFrontSrc("/video/videoFont/" + lable_time + "_" + file.getOriginalFilename());
 
                         }// 开始存储数据库 - - 这个好像好麻烦的说
 
-
-
-
+                        upVideo.setVideoUpId(((User)session.getAttribute("nowUser")).getUserId());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-                    /*************************
-                     * 我尼玛!这里
-                     *********************************/
 
                 }
             }
         }
+        videoService.saveVideo(upVideo);
         System.out.println("上传结束");
 
-        return "videoFileTop";
+        return "videoUpload";
 
     }
 }

@@ -94,4 +94,11 @@
         set videoViewCount = #{videoViewCount}
         where videoId = #{videoId}
     </update>
+
+    <insert id="insertOneVideo" parameterType="video">
+        insert into video
+        values (#{videoId}, #{videoName}, #{videoIntroduction}, #{videoCategory}, #{videoFrontSrc}, #{videoSrc},
+                #{videoViewCount}, #{videoIssuingTime}, #{videoAuditStatus}, #{videoUpId}, #{videoTeenagerMode},
+                #{videoDuring})
+    </insert>
 </mapper>

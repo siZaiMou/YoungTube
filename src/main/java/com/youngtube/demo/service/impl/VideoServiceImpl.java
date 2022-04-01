@@ -116,4 +116,10 @@ public class VideoServiceImpl implements VideoService
             videoMapper.updateVideoViewCount(entry.getKey(),entry.getValue());
         }
     }
+
+    @Override
+    public void saveVideo(Video video)
+    {
+        videoMapper.insertOneVideo(video);
+    }
 }

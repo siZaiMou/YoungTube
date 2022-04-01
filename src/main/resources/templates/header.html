@@ -20,6 +20,15 @@
             var userId=/*[[${session.nowUser.userId}]]*/'3';
             location.href="/pages/toUserSpace/"+userId;
         }
+        function toVideoUpload()
+        {
+            var nowUser = /*[[${session.nowUser}]]*/'nowUser';
+            if (nowUser == null || nowUser.userId <= 0) {
+                alert("请先登录!");
+                return;
+            }
+            location.href="/pages/toVideoUpload";
+        }
     </script>
     <div id="page_top">
         <div class="bg-wrap">
@@ -33,7 +42,7 @@
                         <li class="item item-home"><a th:href="@{/pages/toIndex}">主站</a></li>
                         <!-- <li class="item"><a href="Shopping.sf">周边</a></li> -->
                         <li class="item"><a href="Shopping.sf">商品购买</a>
-                        <li class="item"><a href="videoFileTop">我要投稿</a>
+                        <li class="item"><a th:onclick="toVideoUpload()">我要投稿</a>
                         <li class="item"><a href="forum.sf">进入论坛</a></li>
                         <li class="item" style="width: 300px;">
                             <a contenteditable="true" id="search_text1" style="color: #0AB5DA">输入搜索内容</a></li>
@@ -58,7 +67,7 @@
                         <p class="login-box"><a th:href="|/pages/toDynamicList/${session.nowUser.userId}|">动态</a></p>
                         <p class="login-box"><a th:href="|/pages/toVideoFavorite/${session.nowUser.userId}|">收藏</a></p>
                         <p class="login-box"><a href="history.html">历史</a></p>
-                        <p class="login-box"><a href="personal_index.html">上传视频</a></p>
+                        <p class="login-box"><a th:href="@{/pages/toVideoUpload}">上传视频</a></p>
                     </div>
 
                 </div>
@@ -107,6 +116,15 @@
             var userId=/*[[${session.nowUser.userId}]]*/'3';
             location.href="/pages/toUserSpace/"+userId;
         }
+        function toVidoeUpload1()
+        {
+            var nowUser = /*[[${session.nowUser}]]*/'nowUser';
+            if (nowUser == null || nowUser.userId <= 0) {
+                alert("请先登录!");
+                return;
+            }
+            location.href="/pages/toVideoUpload";
+        }
     </script>
     <div id="page_top">
         <div class="bg-wrap">
@@ -120,7 +138,7 @@
                         <li class="item item-home"><a th:href="@{/pages/toIndex}">主站</a></li>
                         <!-- <li class="item"><a href="Shopping.sf">周边</a></li> -->
                         <li class="item"><a href="Shopping.sf">商品购买</a>
-                        <li class="item"><a href="videoFileTop">我要投稿</a>
+                        <li class="item"><a th:onclick="toVideoUpload1()">我要投稿</a>
                         <li class="item"><a href="forum.sf">进入论坛</a></li>
                         <li class="item" style="width: 300px;">
                             <a id="search_text2" contenteditable="true" style="color: #0AB5DA">输入搜索内容</a></li>
@@ -145,7 +163,7 @@
                         <p class="login-box"><a th:href="|/pages/toDynamicList/${session.nowUser.userId}|">动态</a></p>
                         <p class="login-box"><a th:href="|/pages/toVideoFavorite/${session.nowUser.userId}|">收藏</a></p>
                         <p class="login-box"><a href="history.html">历史</a></p>
-                        <p class="login-box"><a href="personal_index.html">上传视频</a></p>
+                        <p class="login-box"><a th:href="@{/pages/toVideoUpload}">上传视频</a></p>
                     </div>
 
                 </div>

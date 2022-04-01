@@ -30,4 +30,6 @@ public interface VideoService
     List<Video> findTimeHotVideos();
 
     void updateVideoViewCount(Map<Integer, Integer> videoIdAndViewCount);
+
+    void saveVideo(Video video);
 }

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ch" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <base href="<%=basePath%>">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>YoungTube-视频投稿</title>
     <script th:src="@{/common/js/jquery-3.3.1.js}"></script>
@@ -28,7 +27,7 @@
             </div>
             <div>
                 <div><label for="image_file" style="color: wheat;">请选择投稿封面壁纸</label></div>
-                <div><input type="file" name="videoFront" id="videoFront" /></div>
+                <div><input type="file" name="videoFiles" id="videoFront" /></div>
             </div>
             <div>
                 <div><label for="image_file" style="color: wheat;">请输入视频标题</label></div>
@@ -44,12 +43,12 @@
                 <div><label for="image_file" style="color: wheat;">请选择投放区域</label></div>
                 <div>
                     <label th:each="category:${categorys}">
-                        <input name="Fruit" type="radio" th:value="${category.categoryId}"/>[[${category.categoryName}]]
+                        <input name="videoCategory" type="radio" th:value="${category.categoryId}"/>[[${category.categoryName}]]
                     </label>
                 </div>
             </div>
             <div>
-                <input type="button" value="立即投稿" id="tougao" />  <input type="button" id="fanhui" value="取消返回" />
+                <input type="button" value="立即投稿" id="tougao" />  <input type="button" id="fanhui" value="返回主页" />
             </div>
         </form>
         <div style="display: none;" id="daxiaobuneng"><b style="color: red;">总大小不能超过1g</b></div>
@@ -151,9 +150,6 @@
                         //alert(obj.test);
                         var a=obj.percent;
                         a += 1;
-                        /* <div id="none" style="width: 100%;height: 60px;background-color: blue;">
-                     <h1>啊开始的空间爱仕达空间</h1>
-                     </div> */
                         //得到DIV
                         html += "<div id='none2' style='width: "+a+"%;height: 60px;background-color: blue;'>";
                         html += "<h1>"+a+"%</h1>";

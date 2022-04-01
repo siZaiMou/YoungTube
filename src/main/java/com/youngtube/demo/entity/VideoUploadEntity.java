@@ -3,7 +3,7 @@ package com.youngtube.demo.entity;
 import lombok.Data;
 
 @Data
-public class VideoUpEntity
+public class VideoUploadEntity
 {
     private String fileName;// 文件名字
 
