@@ -19,7 +19,7 @@ import java.util.Map;
 @Component
 @Aspect
 @Slf4j
-public class VideoViewAspect
+public class VideoViewCountAspect
 {
     @Autowired
     private RedisUtil redisUtil;

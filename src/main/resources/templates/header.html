@@ -66,7 +66,7 @@
                                 href="yk_dynamic2.html">消息</a></p>
                         <p class="login-box"><a th:href="|/pages/toDynamicList/${session.nowUser.userId}|">动态</a></p>
                         <p class="login-box"><a th:href="|/pages/toVideoFavorite/${session.nowUser.userId}|">收藏</a></p>
-                        <p class="login-box"><a href="history.html">历史</a></p>
+                        <p class="login-box"><a th:href="|/pages/toViewHistory/${session.nowUser.userId}|">历史</a></p>
                         <p class="login-box"><a th:href="@{/pages/toVideoUpload}">上传视频</a></p>
                     </div>
 
@@ -162,7 +162,7 @@
                                 href="yk_dynamic2.html">消息</a></p>
                         <p class="login-box"><a th:href="|/pages/toDynamicList/${session.nowUser.userId}|">动态</a></p>
                         <p class="login-box"><a th:href="|/pages/toVideoFavorite/${session.nowUser.userId}|">收藏</a></p>
-                        <p class="login-box"><a href="history.html">历史</a></p>
+                        <p class="login-box"><a th:href="|/pages/toViewHistory/${session.nowUser.userId}|">历史</a></p>
                         <p class="login-box"><a th:href="@{/pages/toVideoUpload}">上传视频</a></p>
                     </div>
 

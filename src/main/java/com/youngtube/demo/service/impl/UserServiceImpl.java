@@ -194,5 +194,16 @@ public class UserServiceImpl implements UserService
         }
     }
 
+    @Override
+    public void saveUserViewHistory(int userId, Map<Integer, Date> integerDateMap)
+    {
+        Set<Map.Entry<Integer, Date>> videoIdAndData = integerDateMap.entrySet();
+        for(Map.Entry<Integer,Date>entry:videoIdAndData)
+        {
+            Object obj = entry.getKey();
+            userMapper.saveORUpdateViewHistory(userId,1,Integer.parseInt(obj.toString()),entry.getValue());
+        }
+    }
+
 
 }

@@ -6,6 +6,7 @@ import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.entity.VideoComment;
 import org.apache.catalina.mapper.Mapper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -38,4 +39,6 @@ public interface UserService
     Map<Integer, User> findDynamicUsers(List<Dynamic> dynamicList);
 
     void findDynamicCommentUsers(Map<Integer, User> dynamicUserList, List<Dynamic> dynamicList);
+
+    void saveUserViewHistory(int userId, Map<Integer, Date> integerDateMap);
 }

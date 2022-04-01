@@ -32,4 +32,6 @@ public interface VideoService
     void updateVideoViewCount(Map<Integer, Integer> videoIdAndViewCount);
 
     void saveVideo(Video video);
+
+    List<Video> findViewHistory(int userId);
 }

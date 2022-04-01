@@ -304,7 +304,7 @@ public class VideoController
                         }else {
                             upVideo.setVideoFrontSrc("/video/videoFont/" + lable_time + "_" + file.getOriginalFilename());
 
-                        }// 开始存储数据库 - - 这个好像好麻烦的说
+                        }
 
                         upVideo.setVideoUpId(((User)session.getAttribute("nowUser")).getUserId());
                     } catch (Exception e) {
@@ -319,6 +319,13 @@ public class VideoController
         System.out.println("上传结束");
 
         return "videoUpload";
+    }
 
+    @RequestMapping("/viewHistory/{userId}")
+    public String viewHistory(@PathVariable("userId") int userId,Model model)
+    {
+        List<Video> historyVideos = videoService.findViewHistory(userId);
+        model.addAttribute("historyVideos",historyVideos);
+        return "viewHistory";
     }
 }

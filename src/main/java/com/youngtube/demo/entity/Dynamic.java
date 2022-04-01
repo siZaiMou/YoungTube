@@ -14,6 +14,7 @@ public class Dynamic
     private int dynamicIsTop=0;//1为置顶
     private Date dynamicDate=new Date();
 
+    //以下字段用于显示
     private int dynamicPraiseCount=0;//动态点赞量,展示用
     private boolean dynamicIsPraise=false;//当前登录用户是否给这条动态点过赞,展示用
     private List<DynamicComment> dynamicCommentList;//这条动态的评论

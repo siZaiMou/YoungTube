@@ -17,6 +17,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -27,6 +29,9 @@ public class UserController
 
     @Autowired
     VideoService videoService;
+
+    @Autowired
+    RedisUtil redisUtil;
 
 
     //播放页获取当前用户ip(无论是否登录),以统计播放量

@@ -31,4 +31,6 @@ public interface UserMapper
     Integer findUserFollowCount(@Param("userId")int userId);
 
     List<Integer> findFollowedUserIds(@Param("userId") int userId);
+
+    void saveORUpdateViewHistory(@Param("userId") int userId, @Param("contentType") int contentType, @Param("contentId") Integer contentId,@Param("viewDate") Date viewDate);
 }

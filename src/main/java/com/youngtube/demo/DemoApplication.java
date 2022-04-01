@@ -3,10 +3,12 @@ package com.youngtube.demo;
 import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 //mvn install -DskipTests
 //@SpringBootApplication(exclude = PageHelperAutoConfiguration.class)
 @SpringBootApplication
+@EnableScheduling
 public class DemoApplication
 {
 

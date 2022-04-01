@@ -28,6 +28,7 @@ public class VideoComment implements Serializable
     private int commentAuditStatus=0;
     private int videoCommentIsTop=0; //1为置顶
 
+    //以下字段用于显示
     private int commentPraiseCount=0;//点赞数
     private int commentDislikeCount=0;//点踩数
     private boolean commentIsPraise=false;//是否被当前用户点赞

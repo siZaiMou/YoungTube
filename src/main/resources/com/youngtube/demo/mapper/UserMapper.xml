@@ -66,4 +66,18 @@
         where followUserId = #{userId}
     </select>
 
+    <insert id="saveORUpdateViewHistory">
+        insert into history
+        values (#{userId}, #{contentType}, #{contentId}, #{viewDate}) ON DUPLICATE KEY
+        UPDATE
+            userId=
+        values (userId),
+            contentType=
+        values (contentType),
+            contentId=
+        values (contentId),
+            viewDate=
+        values (viewDate)
+    </insert>
+
 </mapper>

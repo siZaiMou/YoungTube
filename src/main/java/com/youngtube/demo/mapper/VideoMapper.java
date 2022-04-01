@@ -1,11 +1,11 @@
 package com.youngtube.demo.mapper;
 
 import com.youngtube.demo.entity.Video;
-import com.youngtube.demo.entity.VideoCategory;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -45,4 +45,8 @@ public interface VideoMapper
     void updateVideoViewCount(@Param("videoId")Integer videoId, @Param("videoViewCount")Integer videoViewCount);
 
     void insertOneVideo(Video video);
+
+    List<Integer> findHistoryVideoIds(@Param("userId") int userId);
+
+    List<Date> findHistoryDates(@Param("userId") int userId);
 }

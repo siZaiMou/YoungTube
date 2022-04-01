@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 01/03/2022 10:17:32
+ Date: 01/04/2022 13:58:54
 */
 
 SET NAMES utf8mb4;
@@ -80,7 +80,7 @@ CREATE TABLE `danmu`  (
   `position` int NULL DEFAULT NULL,
   `danmuAuditStatus` int NULL DEFAULT 0,
   PRIMARY KEY (`danmuId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of danmu
@@ -218,7 +218,7 @@ CREATE TABLE `favorite`  (
   `favoriteName` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `userId` int NULL DEFAULT NULL,
   PRIMARY KEY (`favoriteId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of favorite
@@ -378,12 +378,12 @@ CREATE TABLE `user`  (
   `userCoin` int NULL DEFAULT 0,
   PRIMARY KEY (`userId`) USING BTREE,
   UNIQUE INDEX `userPetName`(`userPetName`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (3, 'avavaava', '这个人很神秘，什么都没有写', 'e10adc3949ba59abbe56e057f20f883e', '/common/pictures/user/userhead/defaulthead.png', NULL, NULL, NULL, '山东省临沂市', '122.6.184.73', '16865213017', NULL, 0, 100, 0, '2022-01-11 04:52:01', 39);
+INSERT INTO `user` VALUES (3, 'avavaava', '这个人很神秘，什么都没有写', 'e10adc3949ba59abbe56e057f20f883e', '/common/pictures/user/userhead/wanwan.jpg', NULL, NULL, NULL, '山东省临沂市', '122.6.184.73', '16865213017', NULL, 0, 100, 0, '2022-01-11 04:52:01', 39);
 INSERT INTO `user` VALUES (5, '资深up主', '这个人很神秘，什么都没有写', 'e10adc3949ba59abbe56e057f20f883e', '/common/pictures/user/userhead/defaulthead.png', NULL, NULL, NULL, '山东省临沂市', '122.6.184.73', '19812323123', NULL, 0, 100, 0, '2022-01-12 00:39:31', 50);
 INSERT INTO `user` VALUES (6, 'user22', '这个人很神秘，什么都没有写', 'e10adc3949ba59abbe56e057f20f883e', '/common/pictures/user/userhead/defaulthead.png', NULL, NULL, NULL, '山东省临沂市', '122.6.184.73', '11111111111', NULL, 0, 100, 0, '2022-01-16 06:00:57', 15);
 
@@ -396,8 +396,8 @@ CREATE TABLE `video`  (
   `videoName` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `videoIntroduction` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `videoCategory` int NULL DEFAULT NULL,
-  `videoFrontSrc` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `videoSrc` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `videoFrontSrc` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `videoSrc` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `videoViewCount` int NULL DEFAULT 0,
   `videoIssuingTime` datetime NULL DEFAULT NULL,
   `videoAuditStatus` int NULL DEFAULT 0,
@@ -405,23 +405,30 @@ CREATE TABLE `video`  (
   `videoTeenagerMode` int NULL DEFAULT 0,
   `videoDuring` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`videoId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of video
 -- ----------------------------
-INSERT INTO `video` VALUES (1, '某科学的超电磁炮精剪', '喜欢我二次元吗?', 1, '/video/videoFont/paojie.png', '/video/paojie.mp4', 3, '2022-01-12 09:03:12', 0, 5, 0, '02:29');
+INSERT INTO `video` VALUES (1, '某科学的超电磁炮精剪', '喜欢我二次元吗?', 1, '/video/videoFont/paojie.png', '/video/paojie.mp4', 4, '2022-01-12 09:03:12', 0, 5, 0, '02:29');
 INSERT INTO `video` VALUES (2, '刀剑神域', '喜欢我刀剑神域吗?', 1, '/video/videoFont/daojian.png', '/video/meimei.mp4', 1, '2022-01-12 09:03:14', 0, 5, 0, '04:31');
-INSERT INTO `video` VALUES (3, '随机对对子不要笑蹭饭大挑战', '喜欢我p大将吗?', 2, 'http://i1.hdslb.com/bfs/archive/85235bc452a3a4da46ac08c4cf4da148e06c4ead.jpg', '/video/xiaoyuan.mp4', 11022, '2022-01-12 09:03:16', 0, 5, 0, '01:25');
+INSERT INTO `video` VALUES (3, '随机对对子不要笑蹭饭大挑战', '喜欢我p大将吗?', 2, 'http://i1.hdslb.com/bfs/archive/85235bc452a3a4da46ac08c4cf4da148e06c4ead.jpg', '/video/xiaoyuan.mp4', 11024, '2022-01-12 09:03:16', 0, 5, 0, '01:25');
 INSERT INTO `video` VALUES (4, '嘉然的战争', '欧内的手哈嘉嘉', 1, '/video/videoFont/bilansuo.png', '/video/longnvpu.mp4', 0, '2022-01-12 09:05:08', 0, 5, 0, '03:02');
-INSERT INTO `video` VALUES (5, '小艾锐评', '早该图图了', 3, 'http://i2.hdslb.com/bfs/archive/8587ccd716c66f44a494b3101a3d0777a4095290.jpg', '/video/longnvpu.mp4', 2, '2022-01-12 12:18:41', 0, 3, 0, '02:15');
-INSERT INTO `video` VALUES (6, '温暖二次元', '闹挺大', 1, '/video/videoFont/zhongerbing.png', '/video/longnvpu.mp4', 231, '2022-01-12 12:19:44', 0, 5, 0, '05:23');
+INSERT INTO `video` VALUES (5, '小艾锐评', '早该图图了', 3, 'http://i2.hdslb.com/bfs/archive/8587ccd716c66f44a494b3101a3d0777a4095290.jpg', '/video/longnvpu.mp4', 3, '2022-01-12 12:18:41', 0, 3, 0, '02:15');
+INSERT INTO `video` VALUES (6, '温暖二次元', '闹挺大', 1, '/video/videoFont/zhongerbing.png', '/video/longnvpu.mp4', 232, '2022-01-12 12:19:44', 0, 5, 0, '05:23');
 INSERT INTO `video` VALUES (7, '美国疫情现状', 'winwin', 3, '/video/videoFont/daojian.png', '/video/longnvpu.mp4', 0, '2022-01-12 13:05:28', 0, 5, 0, '06:44');
 INSERT INTO `video` VALUES (8, '回家', '下北泽金曲', 4, 'http://i0.hdslb.com/bfs/archive/5782f82b46c3c558e6266e97d9b901d139869cd3.jpg', '/video/paojie.mp4', 31, '2022-01-12 13:06:35', 0, 3, 0, '01:58');
-INSERT INTO `video` VALUES (9, '【黑马程序员】java从入门到放弃', '喜欢我计算机吗', 2, 'http://i2.hdslb.com/bfs/archive/7ee0526eb512928ac3f707bbfbd842d64bc313cd.png', '/video/longnvpu.mp4', 21314, '2022-01-17 21:33:47', 0, 5, 0, '23:31');
-INSERT INTO `video` VALUES (10, '【高燃】我患上了玉玉证', '喜欢我玉皇大帝吗?', 2, '/video/videoFont/bilansuo.png', '/video/xiaoyuan.mp4', 991991, '2022-01-17 21:35:05', 0, 3, 0, '04:14');
+INSERT INTO `video` VALUES (9, '【黑马程序员】java从入门到放弃', '喜欢我计算机吗', 2, 'http://i2.hdslb.com/bfs/archive/7ee0526eb512928ac3f707bbfbd842d64bc313cd.png', '/video/longnvpu.mp4', 21315, '2022-01-17 21:33:47', 0, 5, 0, '23:31');
+INSERT INTO `video` VALUES (10, '【高燃】我患上了玉玉证', '喜欢我玉皇大帝吗?', 2, '/video/videoFont/bilansuo.png', '/video/xiaoyuan.mp4', 991996, '2022-01-17 21:35:05', 0, 3, 0, '04:14');
 INSERT INTO `video` VALUES (11, '【秒懂百科】秒懂百科bot', '绝绝子', 5, '/video/videoFont/bilansuo.png', '/video/xiaoyuan.mp4', 0, '2022-01-19 20:02:56', 0, 6, 0, '12:31');
-INSERT INTO `video` VALUES (12, '牛中牛牛', 'npk48', 1, 'http://i1.hdslb.com/bfs/archive/ba8785fe6fa4506c4c21e3d8eb44cb27c5454691.jpg', '//player.bilibili.com/player.html?aid=11200262&cid=18527724&page=1', 2, '2022-02-20 20:01:20', 0, 3, 0, NULL);
+INSERT INTO `video` VALUES (12, '牛中牛牛', 'npk48', 1, 'http://i1.hdslb.com/bfs/archive/ba8785fe6fa4506c4c21e3d8eb44cb27c5454691.jpg', '//player.bilibili.com/player.html?aid=11200262&cid=18527724&page=1', 3, '2022-02-20 20:01:20', 0, 3, 0, NULL);
+INSERT INTO `video` VALUES (17, 'ddd', 'dddd', 3, '/video/videoFont/1648786001335_longyuhu.png', '/video/1648785998278_5076187-1-hd.mp4', 0, '2022-04-01 04:06:38', 0, 3, 0, NULL);
+INSERT INTO `video` VALUES (18, '【一眼顶针】zood', '从理塘到了上海', 3, '/video/videoFont/1648786257472_13817402-1-hd.png', '/video/1648786253221_5082973-1-hd.mp4', 0, '2022-04-01 04:10:53', 0, 3, 0, NULL);
+INSERT INTO `video` VALUES (19, '不要急眼挑战', '我急了', 7, '/video/videoFont/1648786642146_henxiangjianni.png', '/video/1648786640768_10206688-1-hd.mp4', 0, '2022-04-01 04:17:21', 0, 3, 0, NULL);
+INSERT INTO `video` VALUES (20, '【冰与火之歌】爱民如子乔弗里', 'hear me roar', 2, '/video/videoFont/1648786906505_6760443-1-hd.png', '/video/1648786905306_datastract.mp4', 0, '2022-04-01 04:21:45', 0, 3, 0, NULL);
+INSERT INTO `video` VALUES (21, '【燃爆】耗时114514小时，真是绝绝子', '好汉', 3, '/video/videoFont/1648787170131_girlatbluecomputer0.4.png', '/video/1648787167653_binansuo.mp4', 0, '2022-04-01 04:26:08', 0, 3, 0, NULL);
+INSERT INTO `video` VALUES (22, '【嗨🐎程序员】操作系统入门', '操作系统', 6, '/video/videoFont/1648787313350_os.png', '/video/1648787311235_daojian.mp4', 0, '2022-04-01 04:28:31', 0, 3, 0, NULL);
+INSERT INTO `video` VALUES (23, '【血与火】坦格利安', 'got', 4, '/video/videoFont/1648787430674_5076187-1-hd.png', '/video/1648787429465_maijin.mp4', 0, '2022-04-01 04:30:29', 0, 3, 0, NULL);
 
 -- ----------------------------
 -- Table structure for videocategory
@@ -431,7 +438,7 @@ CREATE TABLE `videocategory`  (
   `categoryId` int NOT NULL AUTO_INCREMENT,
   `categoryName` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`categoryId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of videocategory
@@ -515,7 +522,7 @@ CREATE TABLE `videocomment`  (
   `commentAuditStatus` int NULL DEFAULT 0,
   `videoCommentIsTop` int NULL DEFAULT 0,
   PRIMARY KEY (`commentId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of videocomment
@@ -550,6 +557,8 @@ INSERT INTO `videocomment` VALUES (27, 3, 6, '回复@avavaava: 呜呜呜', '2022
 INSERT INTO `videocomment` VALUES (28, 3, 6, '回复@avavaava\r\n                                                    : 呃呃呃', '2022-02-19 09:58:40', 27, 27, 0, 0);
 INSERT INTO `videocomment` VALUES (29, 6, 9, 'eee', '2022-02-22 00:36:48', 0, 0, 0, 0);
 INSERT INTO `videocomment` VALUES (30, 6, 9, '评论', '2022-02-22 00:39:13', 0, 0, 0, 0);
+INSERT INTO `videocomment` VALUES (31, 3, 10, NULL, '2022-03-03 14:36:57', 0, 0, 0, 0);
+INSERT INTO `videocomment` VALUES (32, 3, 10, '556666', '2022-04-01 05:21:06', 0, 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for videocommentclick

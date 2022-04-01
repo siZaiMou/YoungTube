@@ -101,4 +101,20 @@
                 #{videoViewCount}, #{videoIssuingTime}, #{videoAuditStatus}, #{videoUpId}, #{videoTeenagerMode},
                 #{videoDuring})
     </insert>
+
+    <select id="findHistoryVideoIds" resultType="java.lang.Integer">
+        select contentId
+        from history
+        where userId = #{userId}
+          and contentType = 1
+        order by viewDate desc limit 30
+    </select>
+
+    <select id="findHistoryDates" resultType="java.util.Date">
+        select viewDate
+        from history
+        where userId = #{userId}
+          and contentType = 1
+        order by viewDate desc limit 30
+    </select>
 </mapper>

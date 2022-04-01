@@ -116,5 +116,9 @@ public class PageController
         return "videoUpload";
     }
 
-
+    @RequestMapping("/toViewHistory/{userId}")
+    public String toViewHistory(@PathVariable("userId")int userId,HttpSession session)
+    {
+        return "forward:/video/viewHistory/"+userId;
+    }
 }

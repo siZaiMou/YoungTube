@@ -26,6 +26,8 @@ public class User implements Serializable
     private int userIsUp = 0;
     private Date registTime=new Date();
     private int userCoin = 20;
+
+    //以下字段用于显示
     private int userFans=0;//粉丝数
     private int userFollows=0;//关注的人数
     private int userPraise=0;//获赞量

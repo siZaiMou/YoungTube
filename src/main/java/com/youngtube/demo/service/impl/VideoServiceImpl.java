@@ -7,12 +7,11 @@ import com.youngtube.demo.mapper.CategoryMapper;
 import com.youngtube.demo.mapper.DanmuMapper;
 import com.youngtube.demo.mapper.VideoMapper;
 import com.youngtube.demo.service.VideoService;
+import com.youngtube.demo.untils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class VideoServiceImpl implements VideoService
@@ -25,6 +24,9 @@ public class VideoServiceImpl implements VideoService
 
     @Autowired
     DanmuMapper danmuMapper;
+
+    @Autowired
+    RedisUtil redisUtil;
 
     @Override
     public List<VideoCategory> findAllCategory()
@@ -121,5 +123,47 @@ public class VideoServiceImpl implements VideoService
     public void saveVideo(Video video)
     {
         videoMapper.insertOneVideo(video);
+    }
+
+    @Override
+    public List<Video> findViewHistory(int userId)
+    {
+        List<Integer> videoIds = videoMapper.findHistoryVideoIds(userId);
+        List<Video> historyVideos = videoMapper.findVideosByVideoIds(videoIds);
+        List<Date> viewDate = videoMapper.findHistoryDates(userId);
+        int len = historyVideos.size();
+        for(int i=0;i<len;i++)
+        {
+            historyVideos.get(i).setVideoViewDate(viewDate.get(i));
+        }
+        //与redis中数据保持一致
+        Map<Integer,Map<Integer,Date>> historyViewStatusMap = (Map<Integer, Map<Integer, Date>>) redisUtil.get("HistoryViewStatusMap");
+        String uid = String.valueOf(userId); //redis会把Integer的key反序列化为String类型
+        if(historyViewStatusMap!=null&&historyViewStatusMap.get(uid)!=null)
+        {
+            Map<Integer,Date> idAndDate = historyViewStatusMap.get(uid);
+            for(Map.Entry<Integer,Date> entry:idAndDate.entrySet())
+            {
+               Object obj = entry.getKey();
+               int vid = Integer.parseInt(obj.toString());
+               if(!videoIds.contains(vid))//防止缓存和数据库中数据重复
+               {
+                   Video vd = videoMapper.findOneById(vid);
+                   vd.setVideoViewDate(entry.getValue());
+                   historyVideos.add(vd);
+               }
+
+            }
+            //将redis数据加入list后需要重新排队
+            Collections.sort(historyVideos, new Comparator<Video>()
+            {
+                @Override
+                public int compare(Video o1, Video o2)
+                {
+                    return (int) (o2.getVideoViewDate().getTime()-o1.getVideoViewDate().getTime());
+                }
+            });
+        }
+        return historyVideos;
     }
 }
