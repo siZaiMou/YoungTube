@@ -23,7 +23,7 @@ public class ViewHistoryTask
     UserService userService;
 
     //每五分钟将redis所有历史记录写入mysql
-    @Scheduled(fixedDelay = 300000)
+    @Scheduled(fixedDelay = 3000000)
     public void afterDestroy()
     {
         Map<Integer, Map<Integer, Date>>historyViewStatusMap = (Map<Integer, Map<Integer, Date>>) redisUtil.get("HistoryViewStatusMap"); //服务器(缓存)存放所有用户的视频历史(userId,videoId,date)

@@ -59,7 +59,7 @@ public class UserViewHistoryAspect
             nowUserHistoryMap.put(videoId,viewDate); //更新当前用户的视频历史
             historyViewStatusMap.put(userId,nowUserHistoryMap);
             redisUtil.set("HistoryViewStatusMap",historyViewStatusMap);
-            if(historyViewStatusMap.get(uid).size()>50) //缓存中同一用户历史超过五十条,写入数据库
+            if(historyViewStatusMap!=null&&historyViewStatusMap.containsKey(uid)&&historyViewStatusMap.get(uid).size()>50) //缓存中同一用户历史超过五十条,写入数据库
             {
                 userService.saveUserViewHistory(userId,historyViewStatusMap.get(userId));
                 historyViewStatusMap.remove(uid); //清空缓存内容,防止重复写入
