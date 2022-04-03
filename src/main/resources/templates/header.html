@@ -41,7 +41,7 @@
                     <ul>
                         <li class="item item-home"><a th:href="@{/pages/toIndex}">主站</a></li>
                         <!-- <li class="item"><a href="Shopping.sf">周边</a></li> -->
-                        <li class="item"><a href="Shopping.sf">商品购买</a>
+                        <li class="item"><a href="/games.html">小游戏</a>
                         <li class="item"><a th:onclick="toVideoUpload()">我要投稿</a>
                         <li class="item"><a href="forum.sf">进入论坛</a></li>
                         <li class="item" style="width: 300px;">
@@ -116,7 +116,7 @@
             var userId=/*[[${session.nowUser.userId}]]*/'3';
             location.href="/pages/toUserSpace/"+userId;
         }
-        function toVidoeUpload1()
+        function toVideoUpload1()
         {
             var nowUser = /*[[${session.nowUser}]]*/'nowUser';
             if (nowUser == null || nowUser.userId <= 0) {
@@ -137,7 +137,7 @@
                     <ul>
                         <li class="item item-home"><a th:href="@{/pages/toIndex}">主站</a></li>
                         <!-- <li class="item"><a href="Shopping.sf">周边</a></li> -->
-                        <li class="item"><a href="Shopping.sf">商品购买</a>
+                        <li class="item"><a href="/games.html">小游戏</a>
                         <li class="item"><a th:onclick="toVideoUpload1()">我要投稿</a>
                         <li class="item"><a href="forum.sf">进入论坛</a></li>
                         <li class="item" style="width: 300px;">

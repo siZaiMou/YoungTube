@@ -31,10 +31,34 @@
 
             search1();
 
+            //定时器，防止首页加载不出来
+            var t1 = window.setInterval(function ()
+            {
+
+                var scrollTop = $(this).scrollTop();
+                var scrollHeight = $(document).height();
+                var windowHeight = $(this).height();
+                //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+                if (scrollTop + windowHeight == scrollHeight) {
+                    for(i=2;i<=6;i++)
+                    {
+                        $('#video_homepage'+i).load("/video/loadOnHomePageWithCategory/"+i);
+                        $('#video_rank_category'+i).load("/video/loadOnRankWithCategory/"+i);
+                    }
+                    for(j=2;j<=6;j++)
+                    {
+                        $('#area'+j).show();
+                    }
+                    if($('.loadmoreDiv a')){
+                        $('.loadmoreDiv a').click();
+                    }
+                }
+            });
+            window.clearInterval(t1);
         }
     </script>
     <script>
-        $(window).scroll(function() {
+        $(window).scroll(function scro() {
             var scrollTop = $(this).scrollTop();
             var scrollHeight = $(document).height();
             var windowHeight = $(this).height();

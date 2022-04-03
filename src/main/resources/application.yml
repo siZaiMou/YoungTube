@@ -42,7 +42,7 @@ spring:
   redis:
   database: 5
   # 配置redis的主机地址，需要修改成自己的
-  host: 127.0.0.1
+  host: 101.200.141.57
   port: 6379
   password: 123456
   timeout: 5000
