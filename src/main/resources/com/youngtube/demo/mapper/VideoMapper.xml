@@ -95,7 +95,7 @@
         where videoId = #{videoId}
     </update>
 
-    <insert id="insertOneVideo" parameterType="video">
+    <insert id="insertOneVideo" parameterType="video" useGeneratedKeys="true" keyProperty="videoId"  keyColumn="videoId">
         insert into video
         values (#{videoId}, #{videoName}, #{videoIntroduction}, #{videoCategory}, #{videoFrontSrc}, #{videoSrc},
                 #{videoViewCount}, #{videoIssuingTime}, #{videoAuditStatus}, #{videoUpId}, #{videoTeenagerMode},

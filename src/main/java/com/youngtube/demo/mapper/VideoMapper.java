@@ -44,7 +44,7 @@ public interface VideoMapper
     //redis播放量更新到mysql中
     void updateVideoViewCount(@Param("videoId")Integer videoId, @Param("videoViewCount")Integer videoViewCount);
 
-    void insertOneVideo(Video video);
+    int insertOneVideo(Video video);
 
     List<Integer> findHistoryVideoIds(@Param("userId") int userId);
 

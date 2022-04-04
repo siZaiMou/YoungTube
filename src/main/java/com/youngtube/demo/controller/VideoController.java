@@ -321,7 +321,10 @@ public class VideoController
                 }
             }
         }
-        videoService.saveVideo(upVideo);
+        videoService.saveVideo(upVideo,videoTag);
+
+//        videoService.insertTag();
+
         System.out.println("上传结束");
 
         return "videoUpload";

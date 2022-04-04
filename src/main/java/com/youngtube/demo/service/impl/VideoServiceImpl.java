@@ -125,9 +125,15 @@ public class VideoServiceImpl implements VideoService
     }
 
     @Override
-    public void saveVideo(Video video)
+    public void saveVideo(Video video,VideoTag videoTag)
     {
         videoMapper.insertOneVideo(video);
+        int videoId = video.getVideoId();
+        String[] tags = videoTag.getTagName().split(" ");
+        for(int i = 0;i<tags.length;i++)
+        {
+            tagMapper.insertTag(tags[i],videoId);
+        }
     }
 
     @Override
