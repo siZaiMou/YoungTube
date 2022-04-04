@@ -93,7 +93,6 @@ public class CheckController
              * System.out.println("线程休息出错"); e.printStackTrace(); }
              */
         } else {
-            System.out.println("222test");
             VideoUploadEntity video = (VideoUploadEntity) request.getSession().getAttribute("videoFile");
             // 设置编码
             response.setCharacterEncoding("UTF-8");

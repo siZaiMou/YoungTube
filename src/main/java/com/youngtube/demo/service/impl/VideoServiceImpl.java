@@ -3,8 +3,10 @@ package com.youngtube.demo.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.entity.VideoCategory;
+import com.youngtube.demo.entity.VideoTag;
 import com.youngtube.demo.mapper.CategoryMapper;
 import com.youngtube.demo.mapper.DanmuMapper;
+import com.youngtube.demo.mapper.TagMapper;
 import com.youngtube.demo.mapper.VideoMapper;
 import com.youngtube.demo.service.VideoService;
 import com.youngtube.demo.untils.RedisUtil;
@@ -27,6 +29,9 @@ public class VideoServiceImpl implements VideoService
 
     @Autowired
     RedisUtil redisUtil;
+
+    @Autowired
+    TagMapper tagMapper;
 
     @Override
     public List<VideoCategory> findAllCategory()
@@ -165,5 +170,19 @@ public class VideoServiceImpl implements VideoService
             });
         }
         return historyVideos;
+    }
+
+    @Override
+    public List<VideoTag> findTagById(int videoId)
+    {
+        return tagMapper.findTagById(videoId);
+
+    }
+
+    @Override
+    public void insertTag(String tagName,int videoId)
+    {
+
+        tagMapper.insertTag(tagName,videoId);
     }
 }

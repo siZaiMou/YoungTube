@@ -5,6 +5,7 @@ import com.youngtube.demo.entity.User;
 import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.listener.ListenerHandle;
 import com.youngtube.demo.mapper.CategoryMapper;
+import com.youngtube.demo.mapper.TagMapper;
 import com.youngtube.demo.mapper.UserMapper;
 import com.youngtube.demo.mapper.VideoMapper;
 import com.youngtube.demo.untils.RedisUtil;
@@ -39,6 +40,9 @@ class DemoApplicationTests
     RedisUtil redisUtil;
     @Autowired
     ListenerHandle listenerHandle;
+
+    @Autowired
+    TagMapper tagMapper;
 
 
     @Test
@@ -106,5 +110,11 @@ class DemoApplicationTests
     {
         listenerHandle.afterDestroy();
         System.out.println(listenerHandle);
+    }
+
+    @Test
+    void Tagtest()
+    {
+        tagMapper.insertTag("2",2);
     }
 }

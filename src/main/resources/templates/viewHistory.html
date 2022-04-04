@@ -19,11 +19,6 @@
 <!--
 
 -->
-<div>
-    <li th:each="singleVideo:${historyVideos}">
-        [[${singleVideo.videoName}]]&nbsp;[[${singleVideo.videoViewDate}]]
-    </li>
-</div>
 
 
 
@@ -62,7 +57,7 @@
                                 <td class="w3-list-img"><a href="javascript:;"><img th:src="@{${singleVideo.videoFrontSrc}}" alt="" /> </a></td>
                                 <td class="w3-list-info">[[${singleVideo.videoName}]]</td>
                                 <td class="w3-list-info">[[${singleVideo.videoUpId}]]</td>
-                                <td class="w3-list-info"><a href="javascript:;">2022-04-01 12:43:06</a></td>
+                                <td class="w3-list-info"><a href="javascript:;">[[${#dates.format(singleVideo.videoViewDate,'yyyy-MM-dd HH:mm:ss')}]]</a></td>
                                 <td class="w3-list-img"><a href="javascript:;"><img th:src="@{/notcommon/history/images/1.jpg}" alt="" /> </a></td>
                                 <td></td>
                             </tr>

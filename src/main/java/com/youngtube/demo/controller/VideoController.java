@@ -1,16 +1,15 @@
 package com.youngtube.demo.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.youngtube.demo.entity.User;
-import com.youngtube.demo.entity.Video;
-import com.youngtube.demo.entity.VideoCategory;
-import com.youngtube.demo.entity.VideoUploadEntity;
+import com.youngtube.demo.entity.*;
 import com.youngtube.demo.service.FavoriteService;
 import com.youngtube.demo.service.InteractionService;
 import com.youngtube.demo.service.UserService;
 import com.youngtube.demo.service.VideoService;
 import com.youngtube.demo.untils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,6 +46,9 @@ public class VideoController
 
     @Autowired
     RedisUtil redisUtil;
+
+    @Autowired
+    ResourceLoader resourceLoader;
 
     //在主页为用户推荐6个视频，可刷新，不分区
     @RequestMapping("/loadOnRecommand")
@@ -224,8 +226,9 @@ public class VideoController
     }
 
     @RequestMapping("/videoUpload")
-    public String videoUpload(@RequestParam("videoFiles") MultipartFile[] files, HttpServletRequest request, Video upVideo,HttpSession session)
+    public String videoUpload(@RequestParam("videoFiles") MultipartFile[] files, HttpServletRequest request, Video upVideo,VideoTag videoTag,HttpSession session)
     {
+        System.out.println(videoTag);
         if (files != null && files.length > 0) {
             // 循环获取file数组中得文件
             for (int i = 0; i < files.length; i++) {
@@ -248,9 +251,12 @@ public class VideoController
                         System.out.println("文件总大小" + file.getSize());
                         // 文件保存路径
 
-                        String filePath = "D:\\Java_IDE\\SouceCode\\YoungTube\\src\\main\\resources\\static\\video\\" + lable_time+"_"+file.getOriginalFilename();
+                        Resource resource = resourceLoader.getResource("classpath:static/video");
+                        String path = resource.getFile().getPath()+"/";
+//                        String filePath = "D:\\Java_IDE\\SouceCode\\YoungTube\\src\\main\\resources\\static\\video\\" + lable_time+"_"+file.getOriginalFilename();
+                        String filePath = path + lable_time+"_"+file.getOriginalFilename();
                         if(!file.getOriginalFilename().contains(".mp4")) {
-                            filePath = "D:\\Java_IDE\\SouceCode\\YoungTube\\src\\main\\resources\\static\\video\\videoFont\\" + lable_time+"_"+file.getOriginalFilename();
+                            filePath = path + lable_time+"_"+file.getOriginalFilename();
                         }
 
                         System.out.println(filePath);
@@ -329,4 +335,15 @@ public class VideoController
        // List<History> historyVideos = videoService.findViewHistory(userId);
         return "viewHistory";
     }
+
+//    //查询标签
+//    @RequestMapping("/videoTag")
+//    public String videoTag(VideoTag tag,Model model)
+//    {
+//        List<VideoTag> videoTags = videoService.findTagById(v);
+//        model.addAttribute("vedioTags",videoTags);
+//        // List<History> historyVideos = videoService.findViewHistory(userId);
+//        return "videoPlay";
+//    }
+
 }

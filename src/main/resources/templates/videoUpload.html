@@ -53,11 +53,12 @@
             </div>
 
             <div>
-                <div><label for="image_file" style="color: wheat;">标签</label></div>
+                <div><label for="image_file" style="color: wheat;">请添加标签</label></div>
                 <ul id="input_box">
                     <!-- <li class="xm-select-label"><span fsw="xm-select" value="选项 1"><font fsw="xm-select">选项1</font><i fsw="xm-select" class="xm-iconfont icon-close"></i></span></li>-->
 
                     <li class="input_box xm-select-label"><input type="text" name="set_text" id="set_text" value="" /></li>
+                    <input hidden type="text" name="tagName"  id="tagName" />
                 </ul>
             </div>
 
@@ -135,10 +136,13 @@
             //判断结束
             $("#tougao").attr('disabled',true); //将button变成不可点击
             var formData = new FormData($( "#upload_form" )[0]);
+            alert(window.tagName);
             $.ajax({
                 url: '/video/videoUpload' ,
                 type: 'POST',
+                // data: {"formData":formData,"tagName":window.tagName},
                 data: formData,
+                data:{"tagName":window.tagName},
                 async: true,  //设置为同步
                 cache: false,
                 contentType: false,
@@ -199,7 +203,23 @@
         $("#input_box").contentbox({
             elm: "#set_text",
             callback: function(e) {
+                // alert(e);
+                $("#tagName").val(e);
 
+                /*$.ajax({
+                    url: '/video/videoUpload' ,
+                    type: 'POST',
+                    data: JSON.stringify(e),
+                    async: true,  //设置为同步
+                    success: function () {
+                        alert("添加标签成功!");
+                        //location.reload();
+                    },
+                    error: function () {
+                        alert("添加标签失败!");
+                    }
+                });
+*/
             }
 
         })

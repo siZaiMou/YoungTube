@@ -16,6 +16,7 @@
         <typeAlias type="com.youngtube.demo.entity.Dynamic" alias="dynamic"></typeAlias>
         <typeAlias type="com.youngtube.demo.entity.DynamicComment" alias="dynamicComment"></typeAlias>
         <typeAlias type="com.youngtube.demo.entity.Favorite" alias="favorite"></typeAlias>
+        <typeAlias type="com.youngtube.demo.entity.VideoTag" alias="videoTag"></typeAlias>
     </typeAliases>
 
     <plugins>
@@ -33,6 +34,7 @@
         <mapper resource="com/youngtube/demo/mapper/InteractionMapper.xml"></mapper>
         <mapper resource="com/youngtube/demo/mapper/DynamicMapper.xml"></mapper>
         <mapper resource="com/youngtube/demo/mapper/FavoriteMapper.xml"></mapper>
+        <mapper resource="com/youngtube/demo/mapper/TagMapper.xml"></mapper>
     </mappers>
 
 </configuration>
