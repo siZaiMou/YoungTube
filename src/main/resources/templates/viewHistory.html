@@ -15,6 +15,10 @@
 </head>
 <body>
 
+
+<!--
+
+-->
 <div>
     <li th:each="singleVideo:${historyVideos}">
         [[${singleVideo.videoName}]]&nbsp;[[${singleVideo.videoViewDate}]]
@@ -26,6 +30,9 @@
 <div class="faq">
     <h4 class="latest-text w3_faq_latest_text w3_latest_text">历史记录</h4>
 </div>
+
+
+
 
 <div class="container">
 
@@ -43,20 +50,25 @@
                             <th>视频标题</th>
                             <th>UP主</th>
                             <th>浏览日期</th>
-                            <th>（删除按钮）</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td class="w3-list-img"><a href="single.html"><img th:src="@{/notcommon/history/images/c1.jpg}" alt="" /> </a></td>
-                            <td>你好</td>
-                            <td>好人</td>
-                            <td class="w3-list-info"><a href="genres.html">2022.04.03</a></td>
-                            <td class="w3-list-info"><a href="comedy.html">Comedy, Drama</a></td>
-                        </tr>
 
-                        </tbody>
+                        <li th:each="singleVideo:${historyVideos}">
+                            <tbody>
+                            <tr>
+                                <td th:text="${singleVideoStat.count}"></td>
+                                <td class="w3-list-img"><a href="javascript:;"><img th:src="@{${singleVideo.videoFrontSrc}}" alt="" /> </a></td>
+                                <td class="w3-list-info">[[${singleVideo.videoName}]]</td>
+                                <td class="w3-list-info">[[${singleVideo.videoUpId}]]</td>
+                                <td class="w3-list-info"><a href="javascript:;">2022-04-01 12:43:06</a></td>
+                                <td class="w3-list-img"><a href="javascript:;"><img th:src="@{/notcommon/history/images/1.jpg}" alt="" /> </a></td>
+                                <td></td>
+                            </tr>
+
+                            </tbody>
+                        </li>
                     </table>
                 </div>
             </div>

@@ -326,6 +326,7 @@ public class VideoController
     {
         List<Video> historyVideos = videoService.findViewHistory(userId);
         model.addAttribute("historyVideos",historyVideos);
+       // List<History> historyVideos = videoService.findViewHistory(userId);
         return "viewHistory";
     }
 }
