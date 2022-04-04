@@ -3,12 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <link th:href="@{/notcommon/history/css/bootstrap.css}" rel="stylesheet" type="text/css" media="all" />
+    <link th:href="@{/notcommon/history/css/medile.css}" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" th:href="@{/notcommon/history/css/list.css}" type="text/css" media="all" />
+    <link rel="stylesheet" type="text/css" th:href="@{/notcommon/history/css/table-style.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/notcommon/history/css/basictable.css}" />
+
+
+
 </head>
 <body>
+
 <div>
     <li th:each="singleVideo:${historyVideos}">
         [[${singleVideo.videoName}]]&nbsp;[[${singleVideo.videoViewDate}]]
     </li>
 </div>
+
+
+
+<div class="faq">
+    <h4 class="latest-text w3_faq_latest_text w3_latest_text">历史记录</h4>
+</div>
+
+<div class="container">
+
+    <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+
+        <div id="myTabContent" class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+                <div class="agile-news-table">
+
+                    <table id="table-breakpoint">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>视频封面</th>
+                            <th>视频标题</th>
+                            <th>UP主</th>
+                            <th>浏览日期</th>
+                            <th>（删除按钮）</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td class="w3-list-img"><a href="single.html"><img th:src="@{/notcommon/history/images/c1.jpg}" alt="" /> </a></td>
+                            <td>你好</td>
+                            <td>好人</td>
+                            <td class="w3-list-info"><a href="genres.html">2022.04.03</a></td>
+                            <td class="w3-list-info"><a href="comedy.html">Comedy, Drama</a></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
