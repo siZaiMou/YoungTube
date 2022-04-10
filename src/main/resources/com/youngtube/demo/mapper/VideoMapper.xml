@@ -117,4 +117,10 @@
           and contentType = 1
         order by viewDate desc limit 30
     </select>
+
+    <select id="findAllVideo" resultType="video">
+       select  *from video;
+    </select>
+
+
 </mapper>

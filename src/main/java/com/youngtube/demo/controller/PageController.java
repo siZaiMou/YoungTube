@@ -121,4 +121,22 @@ public class PageController
     {
         return "forward:/video/viewHistory/"+userId;
     }
+
+    @RequestMapping("/toViewTag/{videoId}")
+    public String toVedioTag(@PathVariable("videoId")int videoId,HttpSession session)
+    {
+        return "forward:/video/viewTag/"+videoId;
+    }
+
+    @RequestMapping("/toViewTagCosine/{videoId}")
+    public String toVedioTagCosine(@PathVariable("videoId")int videoId,HttpSession session)
+    {
+        return "forward:/video/viewTagCosine/"+videoId;
+    }
+
+    @RequestMapping("/toViewTest/{videoId}")
+    public String toTest(@PathVariable("videoId")int videoId,HttpSession session)
+    {
+        return "forward:/video/viewTest/"+videoId;
+    }
 }

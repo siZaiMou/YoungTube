@@ -6,6 +6,7 @@ import com.youngtube.demo.service.FavoriteService;
 import com.youngtube.demo.service.InteractionService;
 import com.youngtube.demo.service.UserService;
 import com.youngtube.demo.service.VideoService;
+import com.youngtube.demo.untils.CosineUtils;
 import com.youngtube.demo.untils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -339,6 +340,18 @@ public class VideoController
         return "viewHistory";
     }
 
+
+
+     @RequestMapping("/viewTag/{videoId}")
+     public String viewTag(@PathVariable("videoId") int videoId,Model model)
+     {
+         List<VideoTag> videoTags = videoService.findTagById(videoId);
+         model.addAttribute("videoTags",videoTags);
+         // List<History> historyVideos = videoService.findViewHistory(userId);
+         return "test";
+     }
+
+
 //    //查询标签
 //    @RequestMapping("/videoTag")
 //    public String videoTag(VideoTag tag,Model model)
@@ -348,5 +361,63 @@ public class VideoController
 //        // List<History> historyVideos = videoService.findViewHistory(userId);
 //        return "videoPlay";
 //    }
+
+//    @RequestMapping("/viewTag/{videoId}")
+//    public String videoTag(@PathVariable("videoId") int  videoId,Model model)
+//    {
+//        List<VideoTag> videoTags = videoService.findTagById(videoId);
+//        model.addAllAttributes("videoTags",videoTags);
+//        return "test";
+//    }
+
+    @RequestMapping("/viewTagCosine/{videoId}")
+    public String viewTagCosine(@PathVariable("videoId") int videoId,Model model)
+    {
+        //获取当前视频的所有标签
+        List<VideoTag> videoTags = videoService.findTagById(videoId);
+//       model.addAttribute("videoTags",videoTags);
+//
+        //拼接成一个字符串
+        String s="你好 ";
+        for (int i = 0; i <videoTags.size() ; i++) {
+            //System.out.println(videoTags.get(i).getTagName());
+            s+=videoTags.get(i).getTagName()+" ";
+        }
+
+       List<Video> videos=videoService.findAllVideo();//所有的视频
+
+        for (int i = 0; i <videos.size() ; i++) {
+            videoId = videos.get(i).getVideoId();
+            List<VideoTag> tags = videoService.findTagById(videoId);
+            String ss = "你好 ";
+            for (int j = 0; j < tags.size(); j++) {
+                ss += tags.get(j).getTagName() + " ";
+            }
+
+            System.out.println(ss);
+            System.out.println(CosineUtils.getSimilarity(s, ss));
+            //此处应该将结果保存到表里去
+        }
+//        //System.out.println(s);
+//        List<Video> videos=videoService.findAllVideo();chu'zhang
+//        List<VideoCosine> cosineById = videoService.findCosineById(videoId);
+//        System.out.println(cosineById);
+//
+//        List<VideoCosine> cosineById = videoService.findCosineById(videoId);
+//        System.out.println(cosineById);
+        // videoService.insertCosine(1,1,0.22);
+
+        return "test";
+    }
+    @RequestMapping("/viewTest/{videoId}")
+    public String test(@PathVariable("videoId") int videoId,Model model)
+    {
+        List<VideoCosine> greaterCosine = videoService.findGreaterCosine(videoId);
+//        for (int i = 0; i <greaterCosine.size() ; i++) {
+//           System.out.println(greaterCosine.get(i).getVideoId2());
+//        }
+        System.out.println(greaterCosine);
+        return "test";
+    }
 
 }

@@ -15,9 +15,14 @@
     </script>
 </head>
 <body>
-
+<!--
         <ul id="testul1">
             <li  th:fragment="testul1" th:each="category:${categorys1}" th:text="${category.categoryName}">1</li>
         </ul>
+
+ -->
+<ul id="testul1">
+    <li  th:fragment="testul1" th:each="tag:${videoTags}" th:text="${tag.getTagName()}">1</li>
+</ul>
 </body>
 </html>

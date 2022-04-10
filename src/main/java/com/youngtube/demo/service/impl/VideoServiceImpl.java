@@ -3,6 +3,7 @@ package com.youngtube.demo.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.entity.VideoCategory;
+import com.youngtube.demo.entity.VideoCosine;
 import com.youngtube.demo.entity.VideoTag;
 import com.youngtube.demo.mapper.CategoryMapper;
 import com.youngtube.demo.mapper.DanmuMapper;
@@ -190,5 +191,35 @@ public class VideoServiceImpl implements VideoService
     {
 
         tagMapper.insertTag(tagName,videoId);
+    }
+
+    @Override
+    public void findAllTag() {
+
+    }
+
+    @Override
+    public List<Video> findAllVideo()
+    {
+        return videoMapper.findAllVideo();
+    }
+
+    @Override
+    public List<VideoCosine> findCosineById(int videoId)
+    {
+        return videoMapper.findCosineById(videoId);
+    }
+
+    @Override
+    public void insertCosine(int videoId1, int videoId2,double cosine)
+    {
+       // System.out.println(videoId1+" "+videoId2+" "+cosine);
+        videoMapper.insertCosine(videoId1,videoId2,cosine);
+        //videoMapper.insertCosine(videoId1,videoId2,cosine);
+    }
+
+    @Override
+   public List<VideoCosine> findGreaterCosine(int videoId){
+      return videoMapper.findGreaterCosine(videoId);
     }
 }

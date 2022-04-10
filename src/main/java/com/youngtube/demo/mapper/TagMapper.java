@@ -15,4 +15,6 @@ public interface TagMapper {
     List<VideoTag> findTagById(@Param("videoId") int videoId);
 
     void insertTag(@Param("tagName")String tagName,@Param("videoId") int videoId);
+
+    List<VideoTag> findAllTag();
 }

@@ -11,4 +11,8 @@
     <insert id="insertTag" parameterType="videoTag">
         insert into videoTag values (0,#{tagName},#{videoId})
     </insert>
+
+    <select id="findAllTag" resultType="videoTag">
+        select * from videoTag
+    </select>
 </mapper>

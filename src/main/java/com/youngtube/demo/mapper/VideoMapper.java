@@ -1,6 +1,7 @@
 package com.youngtube.demo.mapper;
 
 import com.youngtube.demo.entity.Video;
+import com.youngtube.demo.entity.VideoCosine;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -49,4 +50,12 @@ public interface VideoMapper
     List<Integer> findHistoryVideoIds(@Param("userId") int userId);
 
     List<Date> findHistoryDates(@Param("userId") int userId);
+
+    List<Video> findAllVideo();
+
+    List<VideoCosine> findCosineById(@Param("videoId") int videoId);
+
+    void insertCosine(@Param("videoId1") int videoId1,@Param("videoId2") int videoId2,@Param("cosine") double cosine);
+
+    List<VideoCosine> findGreaterCosine(@Param("videoId") int videoId);
 }

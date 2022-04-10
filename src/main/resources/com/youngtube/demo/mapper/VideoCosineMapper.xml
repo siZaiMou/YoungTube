@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.youngtube.demo.mapper.VideoMapper">
+
+
+    <select id="findCosineById" resultType="videoCosine">
+        select * from videoCosine where videoId1=#{videoId}
+    </select>
+
+    <insert id="insertCosine" parameterType="videoCosine">
+        insert into videoTag values (#{videoId1},#{videoId2},#{cosine})
+    </insert>
+
+    <select id="findGreaterCosine" resultType="videoCosine">
+        select * from videoCosine where videoId1=#{videoId} order by cosine desc limit 20
+    </select>
+</mapper>
