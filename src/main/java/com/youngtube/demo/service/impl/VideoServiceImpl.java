@@ -74,7 +74,13 @@ public class VideoServiceImpl implements VideoService
     @Override
     public List<Video> findVideoToRelate(int videoId)
     {
-        List<Video>videos = videoMapper.find20WithVideoId();//查询参数应由算法计算得出
+        List<Video>videos = new ArrayList<>();
+        List<VideoCosine> greaterCosine = this.findGreaterCosine(videoId);
+        for(VideoCosine vc:greaterCosine)
+        {
+            int vid = vc.getVideoId2();
+            videos.add(videoMapper.findOneById(vid));
+        }
         int len = videos.size();
         for(int i=0;i<len;i++)
         {
