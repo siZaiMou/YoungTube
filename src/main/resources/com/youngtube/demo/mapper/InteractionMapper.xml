@@ -14,6 +14,7 @@
         from videoClick
         where userId = #{userId}
           and videoId = #{videoId}
+          and clickType = 0
     </delete>
 
     <select id="findVideoPraiseCount" resultType="java.lang.Integer">
@@ -29,6 +30,34 @@
         where videoId = #{videoId}
           and userId = #{userId}
           and clickType = 0
+    </select>
+
+    <insert id="insertOneVideoDisPraise">
+        insert into videoClick
+        values (#{userId}, #{videoId}, #{praiseDate}, 1)
+    </insert>
+
+    <delete id="deleteOneVideoDisPraise">
+        delete
+        from videoClick
+        where userId = #{userId}
+          and videoId = #{videoId}
+          and clickType = 1
+    </delete>
+
+    <select id="findVideoDisPraiseCount" resultType="java.lang.Integer">
+        select count(userId)
+        from videoClick
+        where videoId = #{videoId}
+          and clickType = 1
+    </select>
+
+    <select id="findVideoDisPraiseByVideoIdAndUserId" resultType="java.lang.Integer">
+        select count(*)
+        from videoClick
+        where videoId = #{videoId}
+          and userId = #{userId}
+          and clickType = 1
     </select>
 
     <insert id="insertOneVideoCoin">
