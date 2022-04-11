@@ -1,14 +1,8 @@
 package com.youngtube.demo.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.youngtube.demo.entity.Video;
-import com.youngtube.demo.entity.VideoCategory;
-import com.youngtube.demo.entity.VideoCosine;
-import com.youngtube.demo.entity.VideoTag;
-import com.youngtube.demo.mapper.CategoryMapper;
-import com.youngtube.demo.mapper.DanmuMapper;
-import com.youngtube.demo.mapper.TagMapper;
-import com.youngtube.demo.mapper.VideoMapper;
+import com.youngtube.demo.entity.*;
+import com.youngtube.demo.mapper.*;
 import com.youngtube.demo.service.VideoService;
 import com.youngtube.demo.untils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +27,12 @@ public class VideoServiceImpl implements VideoService
 
     @Autowired
     TagMapper tagMapper;
+
+    @Autowired
+    VideoHeatMapper videoHeatMapper ;
+
+    @Autowired
+    VideoClickMapper videoClickMapper ;
 
     @Override
     public List<VideoCategory> findAllCategory()
@@ -228,4 +228,29 @@ public class VideoServiceImpl implements VideoService
    public List<VideoCosine> findGreaterCosine(int videoId){
       return videoMapper.findGreaterCosine(videoId);
     }
-}
+
+
+    @Override
+    public List<VideoHeat>  findTotalHeat(int categoryId)
+    {
+        return videoHeatMapper.findTotalHeat(categoryId);
+    }
+
+
+    @Override
+    public void insertTotalHeat( int videoId,int categoryId, double totalHeat){
+        videoHeatMapper.insertTotalHeat(videoId,categoryId,totalHeat);
+    }
+
+    @Override
+    public int findLikeCount(int videoId){
+        return videoClickMapper.findLikeCount(videoId);
+    }
+
+    @Override
+    public int findDislikeCount(int videoId){
+        return videoClickMapper.findDislikeCount(videoId);
+    }
+
+
+ }

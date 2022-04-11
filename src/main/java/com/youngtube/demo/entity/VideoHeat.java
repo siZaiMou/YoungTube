@@ -11,4 +11,5 @@ public class VideoHeat {
     private double weekHeat;
     private double yearHeat;
     private double cityHeat;
+    private double totalHeat;
 }

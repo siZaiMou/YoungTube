@@ -1,9 +1,6 @@
 package com.youngtube.demo.service;
 
-import com.youngtube.demo.entity.Video;
-import com.youngtube.demo.entity.VideoCategory;
-import com.youngtube.demo.entity.VideoCosine;
-import com.youngtube.demo.entity.VideoTag;
+import com.youngtube.demo.entity.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -50,4 +47,13 @@ public interface VideoService
     void insertCosine(int videoId1, int videoId2,double cosine);
 
     List<VideoCosine> findGreaterCosine(int videoId);
+
+    List<VideoHeat> findTotalHeat(int categoryId);
+    void insertTotalHeat( int videoId,int categoryId, double totalHeat);
+
+    int findLikeCount(int videoId);
+
+    int findDislikeCount(int videoId);
+
+
 }

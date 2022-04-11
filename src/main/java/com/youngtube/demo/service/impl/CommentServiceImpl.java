@@ -106,4 +106,14 @@ public class CommentServiceImpl implements CommentService
     {
         commentMapper.deleteOneVideoCommentPraise(userId,commentId);
     }
+
+    @Override
+    public int findOneVideoCommentCount(int videoId){
+        return commentMapper.findCommentPraiseCount(videoId);
+    }
+
+    @Override
+    public List<VideoComment> findLastComment(int videoId){
+        return commentMapper.findLastComment(videoId);
+    }
 }

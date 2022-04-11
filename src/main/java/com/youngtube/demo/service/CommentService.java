@@ -3,6 +3,7 @@ package com.youngtube.demo.service;
 import com.youngtube.demo.entity.Dynamic;
 import com.youngtube.demo.entity.DynamicComment;
 import com.youngtube.demo.entity.VideoComment;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -26,4 +27,8 @@ public interface CommentService
     void saveVideoCommentPraise(int userId, int commentId, Date date);
 
     void cancelVideoCommentPraise(int userId, int commentId);
+
+    int findOneVideoCommentCount(int videoId);
+
+    List<VideoComment> findLastComment(int videoId);
 }

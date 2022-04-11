@@ -324,7 +324,8 @@ public class VideoController
         }
         videoService.saveVideo(upVideo,videoTag);
 
-//        videoService.insertTag();
+        //videoService.insertTag(videoTag.getTagId());
+        //List<Video>
 
         System.out.println("上传结束");
 
@@ -388,15 +389,17 @@ public class VideoController
 
         for (int i = 0; i <videos.size() ; i++) {
             videoId = videos.get(i).getVideoId();
+
             List<VideoTag> tags = videoService.findTagById(videoId);
             String ss = "你好 ";
             for (int j = 0; j < tags.size(); j++) {
                 ss += tags.get(j).getTagName() + " ";
             }
 
-            System.out.println(ss);
-            System.out.println(CosineUtils.getSimilarity(s, ss));
+//            System.out.println(ss);
+//            System.out.println();
             //此处应该将结果保存到表里去
+            videoService.insertCosine(videoId,videos.get(i).getVideoId(),CosineUtils.getSimilarity(s, ss));
         }
 //        //System.out.println(s);
 //        List<Video> videos=videoService.findAllVideo();chu'zhang

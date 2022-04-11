@@ -119,8 +119,10 @@
     </select>
 
     <select id="findAllVideo" resultType="video">
-       select videoId from video;
+       select videoId,videoViewCount,videoIssuingTime from video;
+
     </select>
+
 
 
 </mapper>

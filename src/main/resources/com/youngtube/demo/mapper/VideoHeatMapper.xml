@@ -3,6 +3,12 @@
 
 <mapper namespace="com.youngtube.demo.mapper.VideoHeatMapper">
 
+    <select id="findTotalHeat" resultType="videoHeat">
+        select videoId from videoHeat where categoryId=#{categoryId} order by totalHeat desc
+    </select>
 
+    <insert id="insertTotalHeat" parameterType="videoHeat">
+        insert into videoHeat values (#{videoId},#{categoryId},0,0,0,0,#{totalHeat})
+    </insert>
 
 </mapper>

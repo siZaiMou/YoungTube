@@ -37,4 +37,8 @@ public interface CommentMapper
     void insertOneVideoCommentPraise(@Param("userId") int userId, @Param("commentId") int commentId, @Param("clickDate")Date date, @Param("clickMode") int clickMode);
 
     void deleteOneVideoCommentPraise(@Param("userId") int userId, @Param("commentId") int commentId);
+
+    int findOneVideoCommentCount(@Param("videoId") int videoId);
+
+    List<VideoComment>findLastComment(@Param("videoId") int videoId);
 }

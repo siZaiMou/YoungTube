@@ -84,4 +84,17 @@
           and userId = #{userId}
           and clickMode = 0
     </delete>
+
+    <select id="findOneVideoCommentCount" resultType="java.lang.Integer">
+        select count(*)
+        from videoComment
+        where videoId = #{videoId}
+    </select>
+
+    <select id="findLastComment" resultType="videoComment">
+        select commentDate,commentId from videoComment
+        where videoId=#{videoId}
+        order by commentDate desc
+    </select>
+
 </mapper>
