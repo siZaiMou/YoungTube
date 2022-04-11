@@ -1,8 +1,12 @@
 package com.youngtube.demo.controller;
 
 import com.youngtube.demo.entity.User;
+import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.entity.VideoCategory;
+import com.youngtube.demo.entity.VideoClick;
+import com.youngtube.demo.service.CommentService;
 import com.youngtube.demo.service.VideoService;
+import com.youngtube.demo.untils.HeatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -18,6 +25,9 @@ public class PageController
 {
     @Autowired
     VideoService videoService;
+    @Autowired
+    CommentService commentService;
+
 
 
     @RequestMapping("/framtest")
@@ -39,10 +49,34 @@ public class PageController
         model.addAttribute("loginStatus",true);
         return "login";
     }
-
     @RequestMapping("/toIndex")
-    public String toIndex(HttpSession session)
-    {
+    public String toIndex(HttpSession session) throws ParseException {
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Video> allVideo = videoService.findAllVideo();
+        for (int i = 0; i < allVideo.size(); i++) {
+            int videoViewCount = allVideo.get(i).getVideoViewCount();
+            int videoLikeCount = videoService.findLikeCount(allVideo.get(i).getVideoId());
+            int videoDislikeCount = videoService.findDislikeCount(allVideo.get(i).getVideoId());
+            String videoIssuingTime = sf.format(allVideo.get(i).getVideoIssuingTime());
+            int commentCount = commentService.findOneVideoCommentCount(allVideo.get(i).getVideoId());
+            int commentLikeCount = 0;
+            int commentDislikeCount = 0;
+            String commentLast = "";
+            if (commentService.findLastComment(allVideo.get(i).getVideoId()).isEmpty()) {
+                commentLast = "1970-01-01 00:00:00";
+            } else {
+                commentLast = sf.format((commentService.findLastComment(allVideo.get(i).getVideoId()).get(0).getCommentDate()));
+            }
+
+
+            String nowTime = sf.format(new Date());
+
+
+            HeatUtils heatUtils = new HeatUtils(videoViewCount, videoLikeCount, videoDislikeCount, videoIssuingTime, commentCount, commentLikeCount, commentDislikeCount, commentLast, nowTime);
+            //HeatUtils heatUtils= new HeatUtils(10,5,1,"2022-01-12 09:03:12",10,0,0,"2022-02-19 09:46:51","2022-04-11 17:02:50");
+            //System.out.println(heatUtils.getHeat() + " " + allVideo.get(i).getVideoId());
+videoService.insertTotalHeat(allVideo.get(i).getVideoId(),allVideo.get(i).getVideoCategory(),heatUtils.getHeat());
+        }
         return "index";
     }
 

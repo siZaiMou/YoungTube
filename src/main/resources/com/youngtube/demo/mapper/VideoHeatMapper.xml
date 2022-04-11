@@ -4,7 +4,7 @@
 <mapper namespace="com.youngtube.demo.mapper.VideoHeatMapper">
 
     <select id="findTotalHeat" resultType="videoHeat">
-        select videoId from videoHeat where categoryId=#{categoryId} order by totalHeat desc
+        select videoId from videoHeat where categoryId=#{categoryId} order by totalHeat desc limit 7
     </select>
 
     <insert id="insertTotalHeat" parameterType="videoHeat">

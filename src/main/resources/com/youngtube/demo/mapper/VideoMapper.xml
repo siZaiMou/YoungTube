@@ -119,7 +119,7 @@
     </select>
 
     <select id="findAllVideo" resultType="video">
-       select videoId,videoViewCount,videoIssuingTime from video;
+       select videoId,videoViewCount,videoIssuingTime,videoCategory from video;
 
     </select>
 

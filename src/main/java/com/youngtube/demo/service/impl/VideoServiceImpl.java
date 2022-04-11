@@ -58,7 +58,15 @@ public class VideoServiceImpl implements VideoService
     @Override
     public List<Video> findVideoToRank(int videoCategory)
     {
-        return videoMapper.find7ByCategoryAndRank(videoCategory);
+        List<Video>videos = new ArrayList<>();
+        List<VideoHeat> totalHeat = videoHeatMapper.findTotalHeat(videoCategory);
+        for(VideoHeat vc:totalHeat)
+        {
+            int vid = vc.getVideoId();
+            videos.add(videoMapper.findOneById(vid));
+        }
+
+        return videos;
     }
 
     //播放页,按videoId查询一个视频
