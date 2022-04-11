@@ -94,6 +94,50 @@ public class InteractionServiceImpl implements InteractionService
     }
 
     @Override
+    public void insertVideoDisPraise(int videoId, int userId)
+    {
+        interactionMapper.insertOneVideoDisPraise(videoId,userId,new Date());
+        if(redisUtil.hasKey("videoId"+videoId)) //点赞后保持redis中数据一致性
+        {
+            Video video=(Video)redisUtil.get("videoId"+videoId);
+            video.setVideoPraiseCount(video.getVideoDisPraiseCount()+1);
+            redisUtil.set("videoId"+videoId,video,24*60*60);
+        }
+    }
+
+    @Override
+    public void deleteVideoDisPraise(int videoId, int userId)
+    {
+        interactionMapper.deleteOneVideoDisPraise(videoId,userId);
+        if(redisUtil.hasKey("videoId"+videoId)) //取消点赞后保持redis中数据一致性
+        {
+            Video video=(Video)redisUtil.get("videoId"+videoId);
+            video.setVideoPraiseCount(video.getVideoDisPraiseCount()-1);
+            redisUtil.set("videoId"+videoId,video,24*60*60);
+        }
+    }
+
+    @Override
+    public Integer getVideoDisPraiseCount(int videoId)
+    {
+        return interactionMapper.findVideoDisPraiseCount(videoId);
+    }
+
+    @Override
+    public boolean videoIsDisPraiseByUserId(int videoId, int userId)
+    {
+        Integer cnt = interactionMapper.findVideoDisPraiseByVideoIdAndUserId(videoId,userId);
+        if(cnt>0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    @Override
     public void insertVideoCoin(int videoId, int userId,int coinCount)
     {
         interactionMapper.insertOneVideoCoin(videoId,userId,coinCount,new Date());

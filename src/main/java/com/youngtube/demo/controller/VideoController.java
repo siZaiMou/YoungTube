@@ -114,9 +114,11 @@ public class VideoController
         {
             video = videoService.findOneByVideoId(videoId);
             int praiseCount = interactionService.getVideoPraiseCount(videoId);
+            int disPraiseCount = interactionService.getVideoDisPraiseCount(videoId);
             int coinCount = interactionService.getVideoCoinCount(videoId);
 //            int favoriteCount = favoriteService.findVideoFavoriteCount(videoId);
             video.setVideoPraiseCount(praiseCount);
+            video.setVideoDisPraiseCount(disPraiseCount);
             video.setVideoCoinCount(coinCount);
 //            video.setVideoFavoriteCount(favoriteCount);
         }
@@ -182,6 +184,30 @@ public class VideoController
     public boolean videoIsPraise(int videoId, int userId)
     {
         return interactionService.videoIsPraiseByUserId(videoId, userId);
+    }
+
+    //视频点踩
+    @RequestMapping("/sendVideoDisPraise")
+    @ResponseBody
+    public void sendVideoDisPraise(int videoId, int userId)
+    {
+        interactionService.insertVideoDisPraise(videoId, userId);
+    }
+
+    //取消点踩
+    @RequestMapping("/cancelVideoDisPraise")
+    @ResponseBody
+    public void cancelVideoDisPraise(int videoId, int userId)
+    {
+        interactionService.deleteVideoDisPraise(videoId, userId);
+    }
+
+    //判断当前用户是否给视频点踩
+    @RequestMapping("/videoIsDisPraise")
+    @ResponseBody
+    public boolean videoIsDisPraise(int videoId, int userId)
+    {
+        return interactionService.videoIsDisPraiseByUserId(videoId, userId);
     }
 
     //视频投币

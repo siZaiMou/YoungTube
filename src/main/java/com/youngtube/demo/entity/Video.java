@@ -22,6 +22,7 @@ public class Video implements Serializable
     //    以下字段用于显示，承载视图功能
     private int videoViewCount = 0;
     private int videoPraiseCount = 0;
+    private int videoDisPraiseCount = 0;
     private int videoFavoriteCount = 0;
     private int videoCoinCount = 0;
     private int videoTransmitCount = 0;

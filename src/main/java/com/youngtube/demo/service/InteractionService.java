@@ -19,6 +19,14 @@ public interface InteractionService
 
     boolean videoIsPraiseByUserId(int videoId, int userId);
 
+    void insertVideoDisPraise(int videoId, int userId);
+
+    void deleteVideoDisPraise(int videoId, int userId);
+
+    Integer getVideoDisPraiseCount(int videoId);
+
+    boolean videoIsDisPraiseByUserId(int videoId, int userId);
+
     void insertVideoCoin(int videoId, int userId,int coinCount);
 
     boolean videoIsCoinByUserId(int videoId, int userId);

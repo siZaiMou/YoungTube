@@ -21,6 +21,15 @@ public interface InteractionMapper
 
     Integer findVideoPraiseByVideoIdAndUserId(@Param("videoId") int videoId, @Param("userId") int userId);
 
+    //数据库中clickType=1为点踩,clickType=0为点赞
+    void insertOneVideoDisPraise(int videoId, int userId, Date date);
+
+    void deleteOneVideoDisPraise(@Param("videoId") int videoId, @Param("userId") int userId);
+
+    Integer findVideoDisPraiseCount(@Param("videoId") int videoId);
+
+    Integer findVideoDisPraiseByVideoIdAndUserId(@Param("videoId") int videoId, @Param("userId") int userId);
+
     void insertOneVideoCoin(@Param("videoId") int videoId, @Param("userId") int userId, @Param("coinCount") int coinCount, @Param("coinDate") Date date);
 
     Integer findVideoCoinByVideoIdAndUserId(@Param("videoId") int videoId, @Param("userId") int userId);
@@ -34,4 +43,6 @@ public interface InteractionMapper
     void deleteOneDynamicPraise(@Param("userId") int userId, @Param("dynamicId") int dynamicId);
 
     Integer findDynamicPraiseByDynamicIdAndUserId(@Param("dynamicId") int dynamicId, @Param("userId") int userId);
+
+
 }
