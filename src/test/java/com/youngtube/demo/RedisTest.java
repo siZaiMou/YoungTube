@@ -1,5 +1,6 @@
 package com.youngtube.demo;
 
+import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.untils.RedisUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,20 @@ public class RedisTest
     {
         System.out.println(redisUtil.hasKey("ttt"));
         
+    }
+
+    @Test
+    public void objectUpdateTest()
+    {
+        if(redisUtil.hasKey("videoId"+10)) //点赞后保持redis中数据一致性
+        {
+            Video video=(Video)redisUtil.get("videoId"+10);
+            System.out.println(video);
+            int disp = video.getVideoDisPraiseCount();
+            System.out.println(disp);
+            video.setVideoDisPraiseCount(10+disp);
+            System.out.println(video);
+            redisUtil.set("videoId"+10,video,24*60*60);
+        }
     }
 }

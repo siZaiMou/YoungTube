@@ -6,7 +6,7 @@
 
     <insert id="insertOneVideoPraise">
         insert into videoClick
-        values (#{userId}, #{videoId}, #{praiseDate}, 0)
+        values (#{userId}, #{videoId}, #{clickDate}, 0)
     </insert>
 
     <delete id="deleteOneVideoPraise">
@@ -34,7 +34,7 @@
 
     <insert id="insertOneVideoDisPraise">
         insert into videoClick
-        values (#{userId}, #{videoId}, #{praiseDate}, 1)
+        values (#{userId}, #{videoId}, #{clickDate}, 1)
     </insert>
 
     <delete id="deleteOneVideoDisPraise">

@@ -2,7 +2,7 @@
 <html lang="ch" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="referrer" content="no-referrer" />
+    <meta name="referrer" content="no-referrer"/>
     <!--    <script th:src="@{/notcommon/Homepage/js/jquery.min.js}"></script>-->
 
     <script th:src="@{/common/js/jquery-3.3.1.js}"></script>
@@ -1394,6 +1394,7 @@
         $('#video_relate').load("/video/loadOnRelate/" + vid);
         loadCommentArea();
         videoPraise();
+        videoDisPraise();
         videoCoin();
         upFollow();
         search2();
@@ -1460,6 +1461,11 @@
 	     			   	<span id="video_praise" title="点赞数0" type="number" class="like"><i id="video_praise_count"
                                                                                            class="van-icon-videodetails_like"
                                                                                            style=""></i>[[${video.videoPraiseCount}]]
+                       </span>
+
+                    <span id="video_dispraise" title="点踩数0" type="number" class="like"><i id="video_dispraise_count"
+                                                                                       class="van-icon-videodetails_like"
+                                                                                       style="transform: rotateX(180deg);"></i>[[${video.videoDisPraiseCount}]]
                        </span>
                     <span title="投硬币枚数" id="video_coin" class="coin">
                         <i id="coin" class="van-icon-videodetails_throw" style=""></i>
@@ -1635,6 +1641,61 @@
                         }
                     }
 
+                    function videoDisPraise() {//视频点踩
+                        var nowUser = /*[[${session.nowUser}]]*/'nowUser';
+                        var vid =/*[[${video.videoId}]]*/'1';
+                        var isDisPraise = false;
+                        if (nowUser != null && nowUser.userId > 0) {
+                            var uid =/*[[${session.nowUser.userId}]]*/'3';
+                            $.ajaxSettings.async = false; //关闭异步，否则无法正确为isPraise赋值
+                            $.get("/video/videoIsDisPraise", {"videoId": vid, "userId": uid}, function (flag) {
+                                isDisPraise = flag;
+                            });
+                            $.ajaxSettings.async = true;
+                            if (isDisPraise == 'true' || isDisPraise) //已点赞,问题：typeof得到isPraise的数据类型为string,无法转为bool
+                            {
+                                $("#video_dispraise_count").css("color", "#00a1d6");
+                                $("#video_dispraise").click(function () {
+                                    var uid =/*[[${session.nowUser.userId}]]*/'3';
+                                    $.post("/video/cancelVideoDisPraise", {"videoId": vid, "userId": uid}, function () {
+                                        var cnt = parseInt($("#video_dispraise").text()) - 1;
+                                        if (cnt < 0) {
+                                            cnt = 0;
+                                        }
+                                        $("#video_dispraise").html("<i id=\"video_dispraise_count\" class=\"van-icon-videodetails_like\" style=\"transform: rotateX(180deg);\"></i>" + cnt);
+                                        $("#video_dispraise_count").css("color", "#757575");
+                                        $("#video_dispraise").unbind("click");
+                                    });
+                                });
+                            } else//未点踩
+                            {
+                                $("#video_dispraise_count").css("color", "#757575");
+                                $("#video_dispraise").click(function () {
+                                    var uid =/*[[${session.nowUser.userId}]]*/'3';
+                                    $.post("/video/sendVideoDisPraise", {"videoId": vid, "userId": uid}, function () {
+                                        $("#video_dispraise").html("<i id=\"video_dispraise_count\" class=\"van-icon-videodetails_like\" style=\"transform: rotateX(180deg);\"></i>" + (parseInt($("#video_dispraise").text()) + 1));
+                                        $("#video_dispraise_count").css("color", "#00a1d6");
+                                        $("#video_dispraise").unbind("click");
+                                    });
+                                });
+                            }
+
+                        } else {
+                            $("#video_dispraise").click(function () {
+                                alert("hello");
+                                if (nowUser == null || nowUser.userId <= 0) {
+                                    alert("请先登录!");
+                                    return;
+                                }
+                                var uid =/*[[${session.nowUser.userId}]]*/'3';
+                                $.post("/video/sendVideoDisPraise", {"videoId": vid, "userId": uid}, function () {
+                                    $("#video_dispraise").html("<i id=\"video_dispraise_count\" class=\"van-icon-videodetails_like\" style=\"transform: rotateX(180deg);\"></i>" + (parseInt($("#video_dispraise").text()) + 1));
+                                    $("#video_dispraise_count").css("color", "#00a1d6");
+                                });
+                            });
+                        }
+                    }
+
                     //视频投币相关事件
                     function videoCoin() {
                         var nowUser = /*[[${session.nowUser}]]*/'nowUser';
@@ -1713,7 +1774,7 @@
 
                 <!--测试有没有东西-->
                 <ul class="tag-area clearfix">
-                 11111111111
+                    11111111111
                 </ul>
 
                 <!---->
@@ -1767,14 +1828,19 @@
                                 <!--回复区域 begin-->
                                 <div id="comment_load" class="comment-show">
 
-                                    <div th:fragment="comment_hot" th:each="singleVideoComment:${videoComments_hot}" class="comment-show-con clearfix">
+                                    <div th:fragment="comment_hot" th:each="singleVideoComment:${videoComments_hot}"
+                                         class="comment-show-con clearfix">
                                         <div class="comment-show-con-img pull-left"><img
-                                                th:src="|${commentUsers_hot[singleVideoComment.userId].userHeadSrc}|" th:onclick="|toUserSpace(${commentUsers_hot[singleVideoComment.userId].userId})|"
+                                                th:src="|${commentUsers_hot[singleVideoComment.userId].userHeadSrc}|"
+                                                th:onclick="|toUserSpace(${commentUsers_hot[singleVideoComment.userId].userId})|"
                                                 alt="">
                                         </div>
                                         <div class="comment-show-con-list pull-left clearfix">
                                             <div class="pl-text clearfix">
-                                                <a href="#" th:commentId="${singleVideoComment.commentId}" th:fatherId="${singleVideoComment.commentId}" th:onclick="|toUserSpace(${commentUsers_hot[singleVideoComment.userId].userId})|" class="comment-size-name">[[${commentUsers_hot[singleVideoComment.userId].userPetName}]]
+                                                <a href="#" th:commentId="${singleVideoComment.commentId}"
+                                                   th:fatherId="${singleVideoComment.commentId}"
+                                                   th:onclick="|toUserSpace(${commentUsers_hot[singleVideoComment.userId].userId})|"
+                                                   class="comment-size-name">[[${commentUsers_hot[singleVideoComment.userId].userPetName}]]
                                                     : </a>
                                                 <span class="my-pl-con">&nbsp;[[${singleVideoComment.commentContent}]]</span>
                                             </div>
@@ -1787,24 +1853,33 @@
                                                     <a href="javascript:;"
                                                        class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
                                                     <span class="pull-left date-dz-line">|</span>
-                                                    <a th:if="${singleVideoComment.commentIsPraise==true}" href="javascript:;" class="date-dz-z pull-left date-dz-z-click">
+                                                    <a th:if="${singleVideoComment.commentIsPraise==true}"
+                                                       href="javascript:;" class="date-dz-z pull-left date-dz-z-click">
                                                         <i class="date-dz-z-click-red red"></i>
-                                                        赞 (<i th:commentId="${singleVideoComment.commentId}" class="z-num">[[${singleVideoComment.commentPraiseCount}]]</i>)
+                                                        赞 (<i th:commentId="${singleVideoComment.commentId}"
+                                                              class="z-num">[[${singleVideoComment.commentPraiseCount}]]</i>)
                                                     </a>
-                                                    <a th:if="${singleVideoComment.commentIsPraise==false}" href="javascript:;" class="date-dz-z pull-left">
+                                                    <a th:if="${singleVideoComment.commentIsPraise==false}"
+                                                       href="javascript:;" class="date-dz-z pull-left">
                                                         <i class="date-dz-z-click-red"></i>
-                                                        赞 (<i th:commentId="${singleVideoComment.commentId}" class="z-num">[[${singleVideoComment.commentPraiseCount}]]</i>)
+                                                        赞 (<i th:commentId="${singleVideoComment.commentId}"
+                                                              class="z-num">[[${singleVideoComment.commentPraiseCount}]]</i>)
                                                     </a>
                                                 </div>
                                             </div>
-                                                    <!--楼中楼-->
+                                            <!--楼中楼-->
                                             <div class="hf-list-con">
                                                 <div class="all-pl-con"
                                                      th:each="singleReplyComment:${singleVideoComment.replyCommentList}">
                                                     <div class="pl-text hfpl-text clearfix">
-                                                        <a href="#" th:fatherId="${singleVideoComment.commentId}" th:commentId="${singleReplyComment.commentId}" th:onclick="|toUserSpace(${commentUsers_hot[singleReplyComment.userId].userId})|" class="comment-size-name">[[${commentUsers_hot[singleReplyComment.userId].userPetName}]]:</a>
+                                                        <a href="#" th:fatherId="${singleVideoComment.commentId}"
+                                                           th:commentId="${singleReplyComment.commentId}"
+                                                           th:onclick="|toUserSpace(${commentUsers_hot[singleReplyComment.userId].userId})|"
+                                                           class="comment-size-name">[[${commentUsers_hot[singleReplyComment.userId].userPetName}]]:</a>
                                                         <span class="my-pl-con">回复
-                                                        <a href="#" th:onclick="|toUserSpace(${commentUsers_hot[singleReplyComment.replyUserId].userId})|" class="atName">@[[${commentUsers_hot[singleReplyComment.replyUserId].userPetName}]]</a>[[${singleReplyComment.commentContent}]]</span>
+                                                        <a href="#"
+                                                           th:onclick="|toUserSpace(${commentUsers_hot[singleReplyComment.replyUserId].userId})|"
+                                                           class="atName">@[[${commentUsers_hot[singleReplyComment.replyUserId].userPetName}]]</a>[[${singleReplyComment.commentContent}]]</span>
                                                     </div>
                                                     <div class="date-dz"><span
                                                             class="date-dz-left pull-left comment-time">[[${#dates.format(singleReplyComment.commentDate,'yyyy-MM-dd HH:mm:ss')}]]</span>
@@ -1816,13 +1891,18 @@
                                                                class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
                                                             <span
                                                                     class="pull-left date-dz-line">|</span>
-                                                            <a th:if="${singleReplyComment.commentIsPraise==true}" href="javascript:;" class="date-dz-z pull-left date-dz-z-click">
+                                                            <a th:if="${singleReplyComment.commentIsPraise==true}"
+                                                               href="javascript:;"
+                                                               class="date-dz-z pull-left date-dz-z-click">
                                                                 <i class="date-dz-z-click-red red"></i>
-                                                                赞 (<i th:commentId="${singleReplyComment.commentId}" class="z-num">[[${singleReplyComment.commentPraiseCount}]]</i>)
+                                                                赞 (<i th:commentId="${singleReplyComment.commentId}"
+                                                                      class="z-num">[[${singleReplyComment.commentPraiseCount}]]</i>)
                                                             </a>
-                                                            <a th:if="${singleReplyComment.commentIsPraise==false}" href="javascript:;" class="date-dz-z pull-left">
+                                                            <a th:if="${singleReplyComment.commentIsPraise==false}"
+                                                               href="javascript:;" class="date-dz-z pull-left">
                                                                 <i class="date-dz-z-click-red"></i>
-                                                                赞 (<i th:commentId="${singleReplyComment.commentId}" class="z-num">[[${singleReplyComment.commentPraiseCount}]]</i>)
+                                                                赞 (<i th:commentId="${singleReplyComment.commentId}"
+                                                                      class="z-num">[[${singleReplyComment.commentPraiseCount}]]</i>)
                                                             </a>
                                                         </div>
                                                     </div>
@@ -1841,6 +1921,7 @@
                                 function toUserSpace(userId) {
                                     location.href = "/pages/toUserSpace/" + userId;
                                 }
+
                                 function sendComment(commentContent, fatherCommentId, replyCommentId) {
                                     var html = "";
 
@@ -1968,7 +2049,7 @@
                                     var oHfVal = $(this).siblings('.flex-text-wrap').find('.hf-input').val();
 
                                     //发送评论
-                                    sendComment(oHfVal,fatherCommentId,replyCommentId);
+                                    sendComment(oHfVal, fatherCommentId, replyCommentId);
 
                                     console.log(oHfVal)
                                     var oHfName = $(this).parents('.hf-con').parents('.date-dz').siblings('.pl-text').find('.comment-size-name').html();
@@ -2031,17 +2112,23 @@
                                         return;
                                     }
                                     var zNum = $(this).find('.z-num').html();
-                                    var commentId=$(this).find('.z-num').attr("commentId");
-                                    var userId=/*[[${session.nowUser.userId}]]*/'3';
+                                    var commentId = $(this).find('.z-num').attr("commentId");
+                                    var userId =/*[[${session.nowUser.userId}]]*/'3';
                                     if ($(this).is('.date-dz-z-click')) {
                                         zNum--;
-                                        $.post("/comment/cancelVideoCommentPraise",{"userId":userId,"commentId":commentId});
+                                        $.post("/comment/cancelVideoCommentPraise", {
+                                            "userId": userId,
+                                            "commentId": commentId
+                                        });
                                         $(this).removeClass('date-dz-z-click red');
                                         $(this).find('.z-num').html(zNum);
                                         $(this).find('.date-dz-z-click-red').removeClass('red');
                                     } else {
                                         zNum++;
-                                        $.post("/comment/sendVideoCommentPraise",{"userId":userId,"commentId":commentId});
+                                        $.post("/comment/sendVideoCommentPraise", {
+                                            "userId": userId,
+                                            "commentId": commentId
+                                        });
                                         $(this).addClass('date-dz-z-click');
                                         $(this).find('.z-num').html(zNum);
                                         $(this).find('.date-dz-z-click-red').addClass('red');
@@ -2417,7 +2504,7 @@
             api: "/danmu/insertDanmu/",
 
             /* api: 'http://127.0.0.1:8000/get_dm',*/
-             // addition: ['https://s-sh-17-dplayercdn.oss.dogecdn.com/1678963.json']
+            // addition: ['https://s-sh-17-dplayercdn.oss.dogecdn.com/1678963.json']
         }
     });
 

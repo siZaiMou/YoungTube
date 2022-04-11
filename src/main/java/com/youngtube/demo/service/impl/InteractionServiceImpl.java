@@ -100,7 +100,7 @@ public class InteractionServiceImpl implements InteractionService
         if(redisUtil.hasKey("videoId"+videoId)) //点赞后保持redis中数据一致性
         {
             Video video=(Video)redisUtil.get("videoId"+videoId);
-            video.setVideoPraiseCount(video.getVideoDisPraiseCount()+1);
+            video.setVideoDisPraiseCount(1+video.getVideoDisPraiseCount());
             redisUtil.set("videoId"+videoId,video,24*60*60);
         }
     }
@@ -112,6 +112,7 @@ public class InteractionServiceImpl implements InteractionService
         if(redisUtil.hasKey("videoId"+videoId)) //取消点赞后保持redis中数据一致性
         {
             Video video=(Video)redisUtil.get("videoId"+videoId);
+            System.out.println(video);
             video.setVideoPraiseCount(video.getVideoDisPraiseCount()-1);
             redisUtil.set("videoId"+videoId,video,24*60*60);
         }

@@ -13,7 +13,7 @@ import java.util.Date;
 public interface InteractionMapper
 {
 
-    void insertOneVideoPraise(@Param("videoId") int videoId, @Param("userId") int userId, @Param("praiseDate") Date date);
+    void insertOneVideoPraise(@Param("videoId") int videoId, @Param("userId") int userId, @Param("clickDate") Date date);
 
     void deleteOneVideoPraise(@Param("videoId") int videoId, @Param("userId") int userId);
 
@@ -22,7 +22,7 @@ public interface InteractionMapper
     Integer findVideoPraiseByVideoIdAndUserId(@Param("videoId") int videoId, @Param("userId") int userId);
 
     //数据库中clickType=1为点踩,clickType=0为点赞
-    void insertOneVideoDisPraise(int videoId, int userId, Date date);
+    void insertOneVideoDisPraise(@Param("videoId") int videoId, @Param("userId") int userId, @Param("clickDate") Date date);
 
     void deleteOneVideoDisPraise(@Param("videoId") int videoId, @Param("userId") int userId);
 
