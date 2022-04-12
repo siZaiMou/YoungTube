@@ -20,10 +20,12 @@
             $('#area4').hide()
             $('#area5').hide()
             $('#area6').hide()
+
+            var userId = /*[[${session.nowUser.userId}]]*/'1';
             //thymleaf整合ajax局部加载数据
             $('#top_barr').load("/pages/getCategory1");
 
-            $('#video_recommend').load("/video/loadOnRecommand/"+3);
+            $('#video_recommend').load("/video/loadOnRecommand/"+userId);
 
             $('#video_homepage1').load("/video/loadOnHomePageWithCategory/1");
             $('#video_rank_category1').load("/video/loadOnRankWithCategory/1");

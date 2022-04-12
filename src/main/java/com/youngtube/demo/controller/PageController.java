@@ -51,6 +51,7 @@ public class PageController
     }
     @RequestMapping("/toIndex")
     public String toIndex(HttpSession session) throws ParseException {
+        System.out.println((User)session.getAttribute("nowUser"));
        /* SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<Video> allVideo = videoService.findAllVideo();
         for (int i = 0; i < allVideo.size(); i++) {

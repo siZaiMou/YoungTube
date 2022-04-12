@@ -142,7 +142,6 @@
                 type: 'POST',
                 // data: {"formData":formData,"tagName":window.tagName},
                 data: formData,
-                data:{"tagName":window.tagName},
                 async: true,  //设置为同步
                 cache: false,
                 contentType: false,
@@ -204,7 +203,7 @@
             elm: "#set_text",
             callback: function(e) {
                 // alert(e);
-                $("#tagName").val(e);
+                $("#tagName").val($("#tagName").val()+e.toString()+" ");
 
                 /*$.ajax({
                     url: '/video/videoUpload' ,

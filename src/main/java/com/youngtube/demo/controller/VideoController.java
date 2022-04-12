@@ -256,10 +256,12 @@ public class VideoController
     public String videoUpload(@RequestParam("videoFiles") MultipartFile[] files, HttpServletRequest request, Video upVideo,VideoTag videoTag,HttpSession session)
     {
         System.out.println(videoTag);
+        int upId = ((User) (session.getAttribute("nowUser"))).getUserId();
         if (files != null && files.length > 0) {
             // 循环获取file数组中得文件
             for (int i = 0; i < files.length; i++) {
                 MultipartFile file = files[i];
+                System.out.println(file);
                 Long timelable = System.currentTimeMillis();
                 String lable_time=timelable+"";
                 //myvideo.set
@@ -281,9 +283,9 @@ public class VideoController
                         Resource resource = resourceLoader.getResource("classpath:static/video");
                         String path = resource.getFile().getPath()+"/";
 //                        String filePath = "D:\\Java_IDE\\SouceCode\\YoungTube\\src\\main\\resources\\static\\video\\" + lable_time+"_"+file.getOriginalFilename();
-                        String filePath = path + lable_time+"_"+file.getOriginalFilename();
+                        String filePath = path + lable_time+lable_time +"_"+upId+ "_" +file.getOriginalFilename();
                         if(!file.getOriginalFilename().contains(".mp4")) {
-                            filePath = path + lable_time+"_"+file.getOriginalFilename();
+                            filePath = path + lable_time+ lable_time +"_"+upId+ "_" +file.getOriginalFilename();
                         }
 
                         System.out.println(filePath);
@@ -332,14 +334,15 @@ public class VideoController
                         System.out.println("上传成功");
 
 
+
                         if(file.getOriginalFilename().contains(".mp4")) {
-                            upVideo.setVideoSrc("/video/" + lable_time + "_" + file.getOriginalFilename());
+                            upVideo.setVideoSrc("/video/" + lable_time +"_"+upId+ "_" + file.getOriginalFilename());
                         }else {
-                            upVideo.setVideoFrontSrc("/video/videoFont/" + lable_time + "_" + file.getOriginalFilename());
+                            upVideo.setVideoFrontSrc("/video/videoFont/"+ lable_time +"_"+upId+ "_" + file.getOriginalFilename());
 
                         }
 
-                        upVideo.setVideoUpId(((User)session.getAttribute("nowUser")).getUserId());
+                        upVideo.setVideoUpId(upId);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

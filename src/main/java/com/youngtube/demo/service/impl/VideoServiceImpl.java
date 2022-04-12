@@ -58,7 +58,7 @@ public class VideoServiceImpl implements VideoService
         List<Video>videos=new ArrayList<>();
 
        // return videoMapper.find6WithRecommend();
-        videos=findVideoToRecommendLogin(7);
+        videos=findVideoToRecommendLogin(userId);
         return videos;
     }
 
