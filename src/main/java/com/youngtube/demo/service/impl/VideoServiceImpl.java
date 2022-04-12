@@ -3,6 +3,7 @@ package com.youngtube.demo.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.youngtube.demo.entity.*;
 import com.youngtube.demo.mapper.*;
+import com.youngtube.demo.service.RecommentService;
 import com.youngtube.demo.service.VideoService;
 import com.youngtube.demo.untils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class VideoServiceImpl implements VideoService
     @Autowired
     VideoClickMapper videoClickMapper ;
 
+    @Autowired
+    RecommentServiceImpl recommentService;
+
     @Override
     public List<VideoCategory> findAllCategory()
     {
@@ -49,10 +53,46 @@ public class VideoServiceImpl implements VideoService
 
     //使用推荐算法查询6个主页推荐视频
     @Override
-    public List<Video> findVideoToRecommend()
+    public List<Video> findVideoToRecommend(int userId)
     {
-        return videoMapper.find6WithRecommend();
+        List<Video>videos=new ArrayList<>();
+
+       // return videoMapper.find6WithRecommend();
+        videos=findVideoToRecommendLogin(7);
+        return videos;
     }
+
+    //登录状态推荐
+    public List<Video> findVideoToRecommendLogin(int userId)
+    {
+        List<Video>videos=new ArrayList<Video>();
+        int userId2= recommentService.findAppropriateUser(userId).get(0).getUserId2();//相似的用户
+
+        List<Integer> historyVideoIds = videoMapper.findHistoryVideoIds(userId);//当前用户看过的视频
+        List<Integer> historyVideoIdss = videoMapper.findHistoryVideoIds(userId2);//相似的用户看过的视频
+
+//        System.out.println("当前的用户是:"+userId+"相似的用户是:"+userId2);
+//        System.out.println("相似的用户看过的视频:"+historyVideoIdss);
+//        System.out.println("当前的用户看过的视频:"+historyVideoIds);
+
+        for (int i = 0; i <historyVideoIdss.size() ; i++) {
+
+     if(!historyVideoIds.contains(historyVideoIdss.get(i)))
+     {
+
+
+         videos.add(findOneByVideoId(historyVideoIdss.get(i)));
+     }
+
+
+        }
+        LinkedHashSet<Video> hashSet = new LinkedHashSet<>(videos);
+        ArrayList<Video> listWithoutDuplicates = new ArrayList<>(hashSet);
+
+        return listWithoutDuplicates ;
+    }
+
+
 
     //按分区查询7个分区热榜视频
     @Override
@@ -259,6 +299,7 @@ public class VideoServiceImpl implements VideoService
     public int findDislikeCount(int videoId){
         return videoClickMapper.findDislikeCount(videoId);
     }
+
 
 
  }

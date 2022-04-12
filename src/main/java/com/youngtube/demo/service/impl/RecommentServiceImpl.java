@@ -1,6 +1,7 @@
 package com.youngtube.demo.service.impl;
 
 import com.youngtube.demo.entity.UserSimiliarity;
+import com.youngtube.demo.entity.Video;
 import com.youngtube.demo.entity.VideoScore;
 import com.youngtube.demo.mapper.CommentMapper;
 import com.youngtube.demo.mapper.UserSimiliarityMapper;
@@ -38,4 +39,10 @@ public class RecommentServiceImpl implements RecommentService {
     public void  insertUserSimiliarity( int userId1,  int userId2,double similiarity){
         userSimiliarityMapper.insertUserSimiliarity(userId1,userId2,similiarity);
     }
+
+    @Override
+   public List<UserSimiliarity> findAppropriateUser(int userId1){
+        return userSimiliarityMapper.findAppropriateUser(userId1);
+    }
+
 }

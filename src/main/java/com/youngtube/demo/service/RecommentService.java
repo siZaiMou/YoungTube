@@ -15,4 +15,5 @@ public interface RecommentService {
 
     void  insertUserSimiliarity( int userId1,  int userId2,double similiarity);
 
+    List<UserSimiliarity> findAppropriateUser(int userId1);
 }

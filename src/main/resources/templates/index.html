@@ -14,6 +14,7 @@
     <script th:src="@{/notcommon/bilibiliIndex/js/script.js}"></script>
     <script th:inline="javascript">
         window.onload = function () {
+
             $('#area2').hide()
             $('#area3').hide()
             $('#area4').hide()
@@ -22,7 +23,7 @@
             //thymleaf整合ajax局部加载数据
             $('#top_barr').load("/pages/getCategory1");
 
-            $('#video_recommend').load("/video/loadOnRecommand");
+            $('#video_recommend').load("/video/loadOnRecommand/"+3);
 
             $('#video_homepage1').load("/video/loadOnHomePageWithCategory/1");
             $('#video_rank_category1').load("/video/loadOnRankWithCategory/1");

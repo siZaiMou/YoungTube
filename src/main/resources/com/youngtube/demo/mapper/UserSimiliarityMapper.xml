@@ -11,5 +11,8 @@
         insert into videoScore values (#{userId1},#{userId2},#{similiarity})
     </insert>
 
+    <select id="findAppropriateUser" resultType="userSimiliarity">
+        select userId2 from userSimiliarity where userId1=#{userId1}  order by similiarity desc limit 1
+    </select>
 
 </mapper>

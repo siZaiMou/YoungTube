@@ -73,8 +73,7 @@ public class PageController
 
 
             HeatUtils heatUtils = new HeatUtils(videoViewCount, videoLikeCount, videoDislikeCount, videoIssuingTime, commentCount, commentLikeCount, commentDislikeCount, commentLast, nowTime);
-            //HeatUtils heatUtils= new HeatUtils(10,5,1,"2022-01-12 09:03:12",10,0,0,"2022-02-19 09:46:51","2022-04-11 17:02:50");
-            //System.out.println(heatUtils.getHeat() + " " + allVideo.get(i).getVideoId());
+
 videoService.insertTotalHeat(allVideo.get(i).getVideoId(),allVideo.get(i).getVideoCategory(),heatUtils.getHeat());
         }*/
         return "index";

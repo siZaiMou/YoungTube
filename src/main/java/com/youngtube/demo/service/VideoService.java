@@ -12,7 +12,7 @@ public interface VideoService
 
     List<Video> findVideoToHomePage(int videoCategory);
 
-    List<Video> findVideoToRecommend();
+    List<Video> findVideoToRecommend(int userId);
 
     List<Video> findVideoToRank(int videoCategory);
 
@@ -55,5 +55,5 @@ public interface VideoService
 
     int findDislikeCount(int videoId);
 
-
+   // List<>findUserHistoryVideo
 }

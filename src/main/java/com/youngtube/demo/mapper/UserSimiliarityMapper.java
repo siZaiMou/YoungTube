@@ -15,4 +15,6 @@ public interface UserSimiliarityMapper {
     List<UserSimiliarity>findAllUserSimiliarity();
 
     void  insertUserSimiliarity(@Param("userId1") int userId1, @Param("userId2") int userId2, @Param("similiarity") double similiarity);
+
+    List<UserSimiliarity> findAppropriateUser(@Param("userId1") int userId1);
 }

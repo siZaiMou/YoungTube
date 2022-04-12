@@ -25,9 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/video")
@@ -52,10 +50,12 @@ public class VideoController
     ResourceLoader resourceLoader;
 
     //在主页为用户推荐6个视频，可刷新，不分区
-    @RequestMapping("/loadOnRecommand")
-    public String loadOnRecommand(Model model)
+    @RequestMapping("/loadOnRecommand/{userId}")
+    public String loadOnRecommand(@PathVariable("userId")int userId, Model model)
     {
-        List<Video> videos = videoService.findVideoToRecommend();
+        System.out.println("uid"+userId);
+        List<Video> videos = videoService.findVideoToRecommend(userId);
+        //List<Video> videos = videoService.findVideoToRecommendLogin();
         Map<Integer, String> userNames = userService.findUserNames(videos);
         model.addAttribute("videos_recommend", videos);
         model.addAttribute("userNames_recommend", userNames);
@@ -448,5 +448,7 @@ public class VideoController
         System.out.println(greaterCosine);
         return "test";
     }
+
+
 
 }

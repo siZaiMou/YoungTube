@@ -58,4 +58,6 @@ public interface VideoMapper
     void insertCosine(@Param("videoId1") int videoId1,@Param("videoId2") int videoId2,@Param("cosine") double cosine);
 
     List<VideoCosine> findGreaterCosine(@Param("videoId") int videoId);
+
+    //List<History>findUserHistoryVideo
 }
