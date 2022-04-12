@@ -51,7 +51,7 @@ public class PageController
     }
     @RequestMapping("/toIndex")
     public String toIndex(HttpSession session) throws ParseException {
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+       /* SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<Video> allVideo = videoService.findAllVideo();
         for (int i = 0; i < allVideo.size(); i++) {
             int videoViewCount = allVideo.get(i).getVideoViewCount();
@@ -76,7 +76,7 @@ public class PageController
             //HeatUtils heatUtils= new HeatUtils(10,5,1,"2022-01-12 09:03:12",10,0,0,"2022-02-19 09:46:51","2022-04-11 17:02:50");
             //System.out.println(heatUtils.getHeat() + " " + allVideo.get(i).getVideoId());
 videoService.insertTotalHeat(allVideo.get(i).getVideoId(),allVideo.get(i).getVideoCategory(),heatUtils.getHeat());
-        }
+        }*/
         return "index";
     }
 

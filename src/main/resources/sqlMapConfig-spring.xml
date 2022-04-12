@@ -20,6 +20,8 @@
         <typeAlias type="com.youngtube.demo.entity.VideoCosine" alias="videoCosine"></typeAlias>
         <typeAlias type="com.youngtube.demo.entity.VideoHeat" alias="videoHeat"></typeAlias>
         <typeAlias type="com.youngtube.demo.entity.VideoClick" alias="videoClick"></typeAlias>
+        <typeAlias type="com.youngtube.demo.entity.VideoScore" alias="videoScore"></typeAlias>
+        <typeAlias type="com.youngtube.demo.entity.UserSimiliarity" alias="userSimiliarity"></typeAlias>
     </typeAliases>
 
     <plugins>
@@ -41,6 +43,8 @@
         <mapper resource="com/youngtube/demo/mapper/VideoCosineMapper.xml"></mapper>
         <mapper resource="com/youngtube/demo/mapper/VideoHeatMapper.xml"></mapper>
         <mapper resource="com/youngtube/demo/mapper/VideoClickMapper.xml"></mapper>
+        <mapper resource="com/youngtube/demo/mapper/VideoScoreMapper.xml"></mapper>
+        <mapper resource="com/youngtube/demo/mapper/UserSimiliarityMapper.xml"></mapper>
     </mappers>
 
 </configuration>
