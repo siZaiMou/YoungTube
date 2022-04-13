@@ -17,7 +17,7 @@ public class recomedTest {
 
     @Test
     public void selectTest() throws ParseException {
-        System.out.println(videoService.findVideoToRecommendLogin(-1));
+        System.out.println(videoService.findVideoToRecommendLogin(9));
 
     }
 

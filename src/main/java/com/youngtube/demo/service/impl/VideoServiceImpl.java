@@ -59,6 +59,7 @@ public class VideoServiceImpl implements VideoService
 
        // return videoMapper.find6WithRecommend();
         videos=findVideoToRecommendLogin(userId);
+        System.out.println("给用户推荐的视频"+videos);
         return videos;
     }
 
@@ -81,8 +82,6 @@ public class VideoServiceImpl implements VideoService
 
 
         //登录状态
-
-
         int userId2= recommentService.findAppropriateUser(userId).get(0).getUserId2();//相似的用户
 
         List<Integer> historyVideoIds = videoMapper.findHistoryVideoIds(userId);//当前用户看过的视频
@@ -94,12 +93,11 @@ public class VideoServiceImpl implements VideoService
 
      if(!historyVideoIds.contains(historyVideoIdss.get(i)))
      {
-
          videos.add(findOneByVideoId(historyVideoIdss.get(i)));
      }
-
-
         }
+
+
         LinkedHashSet<Video> hashSet = new LinkedHashSet<>(videos);
         ArrayList<Video> listWithoutDuplicates = new ArrayList<>(hashSet);
         //数量不够六个的情况
@@ -107,7 +105,7 @@ public class VideoServiceImpl implements VideoService
         for (VideoHeat video:totalHeat
         ) {
             int videoId = video.getVideoId();
-            if(videos.size()<6)
+            if(listWithoutDuplicates.size()<6)
             {
                 listWithoutDuplicates.add(videoMapper.findOneById(videoId));
             }

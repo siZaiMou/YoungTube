@@ -14,7 +14,7 @@
                videoTeenagerMode,
                videoDuring
         from video
-        order by videoViewCount desc limit 8
+        order by videoIssuingTime desc limit 8
 
     </select>
 

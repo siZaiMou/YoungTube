@@ -11,7 +11,7 @@ public class PearsonUtils {
         List<Double>l1=new ArrayList<>();
         List<Double>l2=new ArrayList<>();
         double []b1=new double[]{1,0,0,0,2};
-        double []b2=new double[]{1,0,0,1,2};
+        double []b2=new double[]{0,0,0,0,0};
         for(int i=0;i<b1.length;i++)
         {
          l1.add(b1[i]);
