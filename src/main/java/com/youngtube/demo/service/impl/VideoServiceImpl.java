@@ -63,23 +63,37 @@ public class VideoServiceImpl implements VideoService
     }
 
     //登录状态推荐
-    public List<Video> findVideoToRecommendLogin(int userId)
-    {
-        List<Video>videos=new ArrayList<Video>();
+    public List<Video> findVideoToRecommendLogin(int userId) {
+        List<Video> videos = new ArrayList<>();
+
+
+        if (userId == -1)
+        {
+
+            //没登录状态
+            List<VideoHeat> totalHeat = videoHeatMapper.find6TotalHeat();
+            for (VideoHeat video:totalHeat
+            ) {
+                videos.add(videoMapper.findOneById(video.getVideoId()));
+            }
+             return videos;
+        }
+
+
+        //登录状态
+
+
         int userId2= recommentService.findAppropriateUser(userId).get(0).getUserId2();//相似的用户
 
         List<Integer> historyVideoIds = videoMapper.findHistoryVideoIds(userId);//当前用户看过的视频
         List<Integer> historyVideoIdss = videoMapper.findHistoryVideoIds(userId2);//相似的用户看过的视频
 
-//        System.out.println("当前的用户是:"+userId+"相似的用户是:"+userId2);
-//        System.out.println("相似的用户看过的视频:"+historyVideoIdss);
-//        System.out.println("当前的用户看过的视频:"+historyVideoIds);
+
 
         for (int i = 0; i <historyVideoIdss.size() ; i++) {
 
      if(!historyVideoIds.contains(historyVideoIdss.get(i)))
      {
-
 
          videos.add(findOneByVideoId(historyVideoIdss.get(i)));
      }
@@ -88,7 +102,18 @@ public class VideoServiceImpl implements VideoService
         }
         LinkedHashSet<Video> hashSet = new LinkedHashSet<>(videos);
         ArrayList<Video> listWithoutDuplicates = new ArrayList<>(hashSet);
-
+        //数量不够六个的情况
+        List<VideoHeat> totalHeat = videoHeatMapper.find6TotalHeat();
+        for (VideoHeat video:totalHeat
+        ) {
+            int videoId = video.getVideoId();
+            if(videos.size()<6)
+            {
+                listWithoutDuplicates.add(videoMapper.findOneById(videoId));
+            }
+            else
+                break;
+        }
         return listWithoutDuplicates ;
     }
 
@@ -300,6 +325,17 @@ public class VideoServiceImpl implements VideoService
         return videoClickMapper.findDislikeCount(videoId);
     }
 
+    @Override
+   public List<Integer> findLikeVideo(int userId){
+     return videoMapper.findLikeVideo(userId);
+    }
+    @Override
+   public List<Integer> findCommentVideo(int userId){
+        return videoMapper.findCommentVideo(userId);
+    }
 
-
+    @Override
+    public List<Integer>findCoinVideo(int userId){
+        return videoMapper.findCoinVideo(userId);
+    }
  }

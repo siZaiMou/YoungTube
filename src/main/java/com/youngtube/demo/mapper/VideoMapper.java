@@ -59,5 +59,14 @@ public interface VideoMapper
 
     List<VideoCosine> findGreaterCosine(@Param("videoId") int videoId);
 
-    //List<History>findUserHistoryVideo
+    List<Integer> findLikeVideo(@Param("userId")int userId);
+
+    List<Integer> findCommentVideo(@Param("userId")int userId);
+
+    List<Integer>findCoinVideo(@Param("userId")int userId);
+
+    List<Integer>findFavId(@Param("userId")int userId);
+
+    List<Integer> findFavVideoId (@Param("favoriteId")int favoriteId);
+    List<Integer> findDisikeVideo(@Param("userId")int userId);
 }

@@ -7,8 +7,18 @@
     </select>
 
     <insert id="insertVideoScore" parameterType="videoScore">
-        insert into videoScore values (#{userId},#{videoId},#{score})
+        insert into videoScore values (#{userId},#{videoId},#{score})ON DUPLICATE KEY
+        UPDATE
+            userId=
+        values (userId),
+            videoId=
+        values (videoId),
+            score=
+        values (score)
     </insert>
 
+    <select id="getOneScore" resultType="java.lang.Integer">
+        select score from videoScore where userId=#{userId}
+    </select>
 
 </mapper>

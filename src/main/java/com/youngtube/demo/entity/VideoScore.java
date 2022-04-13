@@ -7,5 +7,5 @@ import lombok.Data;
 public class VideoScore {
     private int userId;
     private int videoId;
-    private double score;
+    private int score;
 }

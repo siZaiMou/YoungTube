@@ -20,6 +20,6 @@
     </insert>
 
     <select id="findGreaterCosine" resultType="videoCosine">
-        select * from videoCosine where videoId1=#{videoId} order by cosine desc limit 10
+        select * from videoCosine where videoId1=#{videoId} order by cosine desc limit 5
     </select>
 </mapper>

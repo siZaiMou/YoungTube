@@ -55,5 +55,9 @@ public interface VideoService
 
     int findDislikeCount(int videoId);
 
-   // List<>findUserHistoryVideo
+    List<Integer> findLikeVideo(int userId);
+
+    List<Integer> findCommentVideo(int userId);
+
+    List<Integer>findCoinVideo(int userId);
 }

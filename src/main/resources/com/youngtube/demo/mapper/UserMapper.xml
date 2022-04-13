@@ -80,4 +80,8 @@
         values (viewDate)
     </insert>
 
+    <select id="findAllUser" resultType="user">
+    select userId from user
+    </select>
+
 </mapper>

@@ -8,7 +8,18 @@
     </select>
 
     <insert id="insertTotalHeat" parameterType="videoHeat">
-        insert into videoHeat values (#{videoId},#{categoryId},0,0,0,0,#{totalHeat})
+        insert into videoHeat values (#{videoId},#{categoryId},0,0,0,0,#{totalHeat})ON DUPLICATE KEY
+        UPDATE
+            videoId=
+        values (videoId),
+            categoryId=
+        values (categoryId),
+            totalHeat=
+        values (totalHeat)
+
     </insert>
 
+    <select id="find6TotalHeat" resultType="videoHeat">
+        select videoId from videoHeat order by totalHeat desc limit 6
+    </select>
 </mapper>

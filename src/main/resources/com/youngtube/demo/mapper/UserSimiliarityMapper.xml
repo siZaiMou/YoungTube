@@ -8,11 +8,20 @@
     </select>
 
     <insert id="insertUserSimiliarity" parameterType="userSimiliarity">
-        insert into videoScore values (#{userId1},#{userId2},#{similiarity})
+        insert into userSimiliarity values (#{userId1},#{userId2},#{similiarity})ON DUPLICATE KEY
+        UPDATE
+            userId1=
+        values (userId1),
+            userId2=
+        values (userId2),
+            similiarity=
+        values (similiarity)
+
+
     </insert>
 
     <select id="findAppropriateUser" resultType="userSimiliarity">
-        select userId2 from userSimiliarity where userId1=#{userId1}  order by similiarity desc limit 1
+        select userId2 from userSimiliarity where userId1=#{userId1}  order by similiarity desc limit 3
     </select>
 
 </mapper>

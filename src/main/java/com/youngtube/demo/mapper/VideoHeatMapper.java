@@ -13,6 +13,6 @@ public interface VideoHeatMapper {
     List<VideoHeat> findTotalHeat(@Param("categoryId") int categoryId);
     void insertTotalHeat(@Param("videoId") int videoId,@Param("categoryId") int categoryId,@Param("totalHeat") double totalHeat);
 
-
+   List<VideoHeat> find6TotalHeat();
 
 }

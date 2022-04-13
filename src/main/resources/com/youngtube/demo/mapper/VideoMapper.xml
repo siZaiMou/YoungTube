@@ -123,4 +123,29 @@
 
     </select>
 
+
+
+    <select id="findLikeVideo" resultType="java.lang.Integer">
+       select videoId from videoClick where userid=#{userId} and clickType=0
+    </select>
+
+    <select id="findCommentVideo" resultType="java.lang.Integer">
+       select videoId from videoComment where userid=#{userId}
+    </select>
+
+    <select id="findCoinVideo" resultType="java.lang.Integer">
+       select videoId from videoCoin where userid=#{userId}
+    </select>
+
+    <select id="findFavId" resultType="java.lang.Integer">
+       select favoriteId from favorite where userid=#{userId}
+    </select>
+
+    <select id="findFavVideoId" resultType="java.lang.Integer">
+       select videoId from videoFavorite where favoriteId=#{favoriteId}
+    </select>
+
+    <select id="findDisikeVideo" resultType="java.lang.Integer">
+       select videoId from videoClick where userid=#{userId} and clickType=1
+    </select>
 </mapper>
