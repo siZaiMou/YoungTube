@@ -131,7 +131,7 @@ public class UserSimiliarityTask {
                     userSimiliarityMapper.insertUserSimiliarity(user1.getUserId(),user2.getUserId(),0);
                 else
                 {
-                    System.out.println(user1.getUserId()+" "+user2.getUserId()+" "+PearsonUtils.getPearsonBydim(vector11,vector22)+"vector1"+vector11+"vector2"+vector22);
+                   // System.out.println(user1.getUserId()+" "+user2.getUserId()+" "+PearsonUtils.getPearsonBydim(vector11,vector22)+"vector1"+vector11+"vector2"+vector22);
                     userSimiliarityMapper.insertUserSimiliarity(user1.getUserId(),user2.getUserId(), PearsonUtils.getPearsonBydim(vector11,vector22));
                 }
 

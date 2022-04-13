@@ -116,10 +116,12 @@ public class VideoController
             int praiseCount = interactionService.getVideoPraiseCount(videoId);
             int disPraiseCount = interactionService.getVideoDisPraiseCount(videoId);
             int coinCount = interactionService.getVideoCoinCount(videoId);
+            List<VideoTag>videoTags = videoService.findTagById(videoId);
 //            int favoriteCount = favoriteService.findVideoFavoriteCount(videoId);
             video.setVideoPraiseCount(praiseCount);
             video.setVideoDisPraiseCount(disPraiseCount);
             video.setVideoCoinCount(coinCount);
+            video.setVideoTags(videoTags);
 //            video.setVideoFavoriteCount(favoriteCount);
         }
         if (up == null)

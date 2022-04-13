@@ -1763,19 +1763,15 @@
             <!-- 视频标签区 -->
 
             <div id="v_tag" class="s_tag report-wrap-module report-scroll-module">
-
                 <ul class="tag-area clearfix">
-                    <li class="tag">
+                    <li th:each="singleTag:${video.videoTags}" class="tag">
 
                         <a href="//search.bilibili.com/all?keyword=%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97&amp;from_source=video_tag"
-                           target="_blank">${video.videoName}</a><!----><!---->
-                    </li><!----><a class="btn-add"><span class="one"></span><span class="two"></span></a><!---->
+                           target="_blank">[[${singleTag.tagName}]]</a><!----><!---->
+                    </li>
                 </ul>
 
-                <!--测试有没有东西-->
-                <ul class="tag-area clearfix">
-                    11111111111
-                </ul>
+
 
                 <!---->
             </div><!---->

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class Video implements Serializable
@@ -29,4 +30,5 @@ public class Video implements Serializable
     private int videoDanmuCount = 0;
     private String videoDuring;//时长(显示用)
     private Date videoViewDate; //历史视频观看时间(显示用)
+    private List<VideoTag> videoTags;
 }
