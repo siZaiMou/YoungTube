@@ -20,8 +20,8 @@ public class HeatTask {
     @Autowired
     CommentService commentService;
 
-    //每五分钟将redis播放量写入mysql
-    @Scheduled(fixedDelay = 30000000)
+    //每隔一天计算一次热度
+    @Scheduled(fixedDelay = 86400000)
     public void updateHeat() throws ParseException {
 
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

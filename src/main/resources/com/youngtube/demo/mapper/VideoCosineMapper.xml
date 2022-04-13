@@ -9,7 +9,14 @@
     </select>
 
     <insert id="insertCosine" parameterType="videoCosine">
-        insert into videoCosine values (#{videoId1},#{videoId2},#{cosine})
+        insert into videoCosine values (#{videoId1},#{videoId2},#{cosine})ON DUPLICATE KEY
+        UPDATE
+            videoId1=
+        values (videoId1),
+            videoId2=
+        values (videoId2),
+            cosine=
+        values (cosine)
     </insert>
 
     <select id="findGreaterCosine" resultType="videoCosine">
