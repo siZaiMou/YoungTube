@@ -10,7 +10,10 @@
     <link rel="stylesheet" type="text/css" th:href="@{/notcommon/history/css/table-style.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/notcommon/history/css/basictable.css}" />
 
+<style>
 
+
+</style>
 
 </head>
 <body>
@@ -35,7 +38,6 @@
 
         <div id="myTabContent" class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
-                <div class="agile-news-table">
 
                     <table id="table-breakpoint">
                         <thead>
@@ -50,11 +52,11 @@
                         </tr>
                         </thead>
 
-                        <li th:each="singleVideo:${historyVideos}">
+                        <li th:each="singleVideo:${historyVideos}"style="list-style-type: none;" >
                             <tbody>
                             <tr>
                                 <td th:text="${singleVideoStat.count}"></td>
-                                <td class="w3-list-img"><a href="javascript:;"><img th:src="@{${singleVideo.videoFrontSrc}}" alt="" /> </a></td>
+                                <td class="w3-list-img"><a th:href="|@{/pages/toVideoPlay}/${singleVideo.videoId}|"><img th:src="@{${singleVideo.videoFrontSrc}}" alt="" /> </a></td>
                                 <td class="w3-list-info">[[${singleVideo.videoName}]]</td>
                                 <td class="w3-list-info">[[${singleVideo.videoUpId}]]</td>
                                 <td class="w3-list-info"><a href="javascript:;">[[${#dates.format(singleVideo.videoViewDate,'yyyy-MM-dd HH:mm:ss')}]]</a></td>
@@ -65,7 +67,7 @@
                             </tbody>
                         </li>
                     </table>
-                </div>
+
             </div>
         </div>
     </div>
