@@ -53,9 +53,10 @@ public class DanmuServiceImpl implements DanmuService
     @Override
     public int saveDanmu_MQ_producer(Danmu danmu)
     {
+        System.out.println(danmu);
         try
         {
-            rabbitTemplate.convertAndSend(RabbitMQConfig_producer.EXCHANGE_NAME,"videoComment",danmu);
+            rabbitTemplate.convertAndSend(RabbitMQConfig_producer.EXCHANGE_NAME,"danmu",danmu);
             if(redisUtil.hasKey("danmu_videoId"+danmu.getVideoId()))
             {
                 List<Danmu> danmuList = (List<Danmu>) redisUtil.get("danmu_videoId"+danmu.getVideoId());
@@ -74,6 +75,7 @@ public class DanmuServiceImpl implements DanmuService
     @RabbitListener(queues = "danmu",concurrency = "5-10",containerFactory = "mqConsumerlistenerContainer")
     public void saveDanmu_MQ_consumer(Danmu danmu)
     {
+        System.out.println(danmu);
         danmuMapper.insertOne(danmu);
     }
 

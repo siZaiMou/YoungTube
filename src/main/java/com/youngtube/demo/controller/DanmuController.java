@@ -37,7 +37,7 @@ public class DanmuController
         danmu.setDcolor(param.get("color"));
         danmu.setPosition(Integer.parseInt(param.get("type")));
         int status=0;
-        status = danmuService.saveDanmu(danmu);
+        status = danmuService.saveDanmu_MQ_producer(danmu);
         map.put("code",status);
         return map;
     }
