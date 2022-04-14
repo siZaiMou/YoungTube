@@ -51,10 +51,23 @@ public class DanmuServiceImpl implements DanmuService
     }
 
     @Override
-    public void saveDanmu_MQ_producer(Danmu danmu)
+    public int saveDanmu_MQ_producer(Danmu danmu)
     {
-        rabbitTemplate.convertAndSend(RabbitMQConfig_producer.EXCHANGE_NAME,"videoComment",danmu);
-
+        try
+        {
+            rabbitTemplate.convertAndSend(RabbitMQConfig_producer.EXCHANGE_NAME,"videoComment",danmu);
+            if(redisUtil.hasKey("danmu_videoId"+danmu.getVideoId()))
+            {
+                List<Danmu> danmuList = (List<Danmu>) redisUtil.get("danmu_videoId"+danmu.getVideoId());
+                danmuList.add(danmu);
+                redisUtil.set("danmu_videoId"+danmu.getVideoId(),danmuList,24*60*60); //更新redis中弹幕
+            }
+        }
+        catch (Exception e)
+        {
+            return 1;
+        }
+        return 0;
     }
 
     @Override

@@ -8,7 +8,7 @@ public interface DanmuService
 {
     int saveDanmu(Danmu danmu);
 
-    void saveDanmu_MQ_producer(Danmu danmu);
+    int saveDanmu_MQ_producer(Danmu danmu);
 
     void saveDanmu_MQ_consumer(Danmu danmu);
 
