@@ -93,47 +93,8 @@ public class RecommentTest {
        // System.out.println(videoService.findVideoToRecommendLogin(7));
       //  System.out.println(recommentService.findAppropriateUser(7));
         //System.out.println(videoScoreMapper.getOneScore(3,4));
-System.out.println(videoScoreMapper.findAllScore());
 
-        List<User> allUser = userMapper.findAllUser();
-        List<VideoScore> allScore = videoScoreMapper.findAllScore();
-
-
-
-        for (User user1:allUser
-             ) {
-            List<Integer> vector1=new ArrayList<>();//按照顺序为第一个用户对每个视频的打分
-
-            vector1.addAll(videoScoreMapper.getOneScore(user1.getUserId()));
-
-            for (User user2:allUser
-                 ) {
-                List<Integer> vector2=new ArrayList<>();//按照顺序为第二个用户对每个视频的打分
-if(user1.getUserId()==user2.getUserId())
-    continue;
-                vector2.addAll(videoScoreMapper.getOneScore(user2.getUserId()));
-
-                List<Double> vector11=new ArrayList<>();//按照顺序为第一个用户对每个视频的打分
-                List<Double> vector22=new ArrayList<>();//按照顺序为第二个用户对每个视频的打分
-
-                for (Integer vector:vector1
-                     ) {
-                    vector11.add(Double.valueOf(vector.toString()));
-                }
-
-                for (Integer vector:vector2
-                ) {
-                    vector22.add(Double.valueOf(vector.toString()));
-                }
-
-               // System.out.println("第一个用户的打分:"+vector11+"第二个用户的打分:"+ vector22+ PearsonUtils.getPearsonBydim(vector11,vector22));
-
-            userSimiliarityMapper.insertUserSimiliarity(user1.getUserId(),user2.getUserId(),PearsonUtils.getPearsonBydim(vector11,vector22));
-            }
-
-            }
-
-
+        System.out.println( videoService.findVideoToRecommendLogin(11));
 
     }
 }

@@ -40,9 +40,12 @@ public class HeatUtils {
 
     double y1=calLastedTime(videoIssuingTime,nowTime)+1;//当这个视频发表的时间越早，这个值越大
    double y2=(calLastedTime(commentLast,nowTime)/2) ;//这个视频的最后一条评论发表的时间越早
-//System.out.println(commentLast+" "+nowTime);
+//System.out.println(commentLast+" "+nowTime+" "+videoIssuingTime+" "+y1+"  "+y2);
+
        double y3=Math.pow((y1-y2),1.5);
-      // System.out.println(x1+" "+x2+" "+y3);
+       if(Double.isNaN(y3))
+           y3=10000;
+       //System.out.println(x1+" "+x2+" "+y3);
     double heat=(x1+x2)/y3;
     if(Double.isNaN(heat))
     return -1;

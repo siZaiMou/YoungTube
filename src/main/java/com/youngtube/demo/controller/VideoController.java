@@ -53,6 +53,7 @@ public class VideoController
     @RequestMapping("/loadOnRecommand/{userId}")
     public String loadOnRecommand(@PathVariable("userId")int userId, Model model)
     {
+        System.out.println("当前要推荐的用户的id"+userId);
         List<Video> videos = videoService.findVideoToRecommend(userId);
         //List<Video> videos = videoService.findVideoToRecommendLogin();
         Map<Integer, String> userNames = userService.findUserNames(videos);
@@ -277,6 +278,7 @@ public class VideoController
                         System.out.println("文件总大小" + file.getSize());
                         // 文件保存路径
 
+                        //  /video/1649926096431_9_deguoguke.mp4
                         Resource resource = resourceLoader.getResource("classpath:static/video");
                         String path = resource.getFile().getPath()+"/";
 //                        String filePath = "D:\\Java_IDE\\SouceCode\\YoungTube\\src\\main\\resources\\static\\video\\" + lable_time+"_"+file.getOriginalFilename();
@@ -284,7 +286,7 @@ public class VideoController
                         if(!file.getOriginalFilename().contains(".mp4")) {
                             filePath = path+"videoFont/" +  lable_time +"_"+upId+ "_" +file.getOriginalFilename();
                         }
-
+                        System.out.println("filepath"+filePath);
                         /******************** 测试 **************************/
                         File storeFile = new File(filePath);
                         // 得到输入流

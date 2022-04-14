@@ -22,7 +22,7 @@ public class ViewCountTask
     VideoService videoService;
 
     //每五分钟将redis播放量写入mysql
-    @Scheduled(fixedDelay = 300000)
+    @Scheduled(fixedDelay = 30000)
     public void afterDestroy()
     {
         Set keys = redisTemplate.keys("videoId_viewCount*");

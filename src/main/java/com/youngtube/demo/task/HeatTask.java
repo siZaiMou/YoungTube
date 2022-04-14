@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,7 +22,7 @@ public class HeatTask {
     CommentService commentService;
 
     //每隔一天计算一次热度
-    @Scheduled(fixedDelay = 86400000)
+    @Scheduled(fixedDelay = 30000)
     public void updateHeat() throws ParseException {
 
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -47,6 +48,7 @@ public class HeatTask {
 
             HeatUtils heatUtils = new HeatUtils(videoViewCount, videoLikeCount, videoDislikeCount, videoIssuingTime, commentCount, commentLikeCount, commentDislikeCount, commentLast, nowTime);
 
+           // System.out.println(allVideo.get(i).getVideoId()+"   "+allVideo.get(i).getVideoCategory()+"   "+heatUtils.getHeat());
             videoService.insertTotalHeat(allVideo.get(i).getVideoId(),allVideo.get(i).getVideoCategory(),heatUtils.getHeat());
         }
 

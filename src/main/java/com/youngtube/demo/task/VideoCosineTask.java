@@ -22,7 +22,7 @@ public class VideoCosineTask {
     CommentService commentService;
 
     //每隔一天计算一次视频的相似度
-    @Scheduled(fixedDelay = 86400000)
+    @Scheduled(fixedDelay = 30000)
     public void updateVideoCosine() throws ParseException {
 
         List<Video> videoss=videoService.findAllVideo();//所有的视频

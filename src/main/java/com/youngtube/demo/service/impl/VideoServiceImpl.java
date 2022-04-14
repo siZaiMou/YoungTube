@@ -56,7 +56,7 @@ public class VideoServiceImpl implements VideoService
     public List<Video> findVideoToRecommend(int userId)
     {
         List<Video>videos=new ArrayList<>();
-
+System.out.println("准备调用Login"+userId);
        // return videoMapper.find6WithRecommend();
         videos=findVideoToRecommendLogin(userId);
 //        System.out.println("给用户推荐的视频"+videos);
@@ -83,20 +83,22 @@ public class VideoServiceImpl implements VideoService
 
         //登录状态
         int userId2= recommentService.findAppropriateUser(userId).get(0).getUserId2();//相似的用户
-
+System.out.println("相似用户:"+userId2);
         List<Integer> historyVideoIds = videoMapper.findHistoryVideoIds(userId);//当前用户看过的视频
+        System.out.println(historyVideoIds);
         List<Integer> historyVideoIdss = videoMapper.findHistoryVideoIds(userId2);//相似的用户看过的视频
 
-
-
+        System.out.println(historyVideoIdss);
+System.out.println("推荐用户的历史视频个数:"+historyVideoIdss.size());
         for (int i = 0; i <historyVideoIdss.size() ; i++) {
 
      if(!historyVideoIds.contains(historyVideoIdss.get(i)))
      {
+         System.out.println(historyVideoIdss.get(i));
          videos.add(findOneByVideoId(historyVideoIdss.get(i)));
      }
         }
-
+System.out.println("去重后的video"+videos);
 
         LinkedHashSet<Video> hashSet = new LinkedHashSet<>(videos);
         ArrayList<Video> listWithoutDuplicates = new ArrayList<>(hashSet);
@@ -112,6 +114,7 @@ public class VideoServiceImpl implements VideoService
             else
                 break;
         }
+        System.out.println("当前用户推荐的6个视频:"+listWithoutDuplicates);
         return listWithoutDuplicates ;
     }
 

@@ -40,7 +40,8 @@ public class UserSimiliarityTask {
     VideoScoreMapper videoScoreMapper;
 
     //每隔一天计算用户-视频-得分
-    @Scheduled(fixedDelay = 86400000)
+    //86400000
+    @Scheduled(fixedDelay = 30000)
     public void updateHeat() throws ParseException {
 
         List<Video> allVideo = videoService.findAllVideo();
@@ -74,7 +75,7 @@ public class UserSimiliarityTask {
     }
 
     //每隔一天计算用户-视频-得分
-    @Scheduled(fixedDelay = 86400000)
+    @Scheduled(fixedDelay = 30000)
     public void updateUserSimiliarity() throws ParseException {
 
 
