@@ -59,7 +59,7 @@ public class VideoServiceImpl implements VideoService
 
        // return videoMapper.find6WithRecommend();
         videos=findVideoToRecommendLogin(userId);
-        System.out.println("给用户推荐的视频"+videos);
+//        System.out.println("给用户推荐的视频"+videos);
         return videos;
     }
 

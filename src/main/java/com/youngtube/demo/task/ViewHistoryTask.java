@@ -34,7 +34,7 @@ public class ViewHistoryTask
             {
                 Object obj = userIdAndMap.getKey(); //接收key(数据类型问题)
                 int userId = Integer.parseInt(obj.toString());
-                System.out.println(userId);
+//                System.out.println(userId);
                 Map<Integer,Date> map = userIdAndMap.getValue();
                 userService.saveUserViewHistory(userId,map);
             }

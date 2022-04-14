@@ -35,7 +35,7 @@ public class ViewCountTask
                 int viewCount = (int) redisTemplate.opsForValue().get(s.toString());
                 videoIdAndViewCount.put(videoId,viewCount);
             }
-            System.out.println("vac"+videoIdAndViewCount);
+//            System.out.println("vac"+videoIdAndViewCount);
             videoService.updateVideoViewCount(videoIdAndViewCount);
         }
     }
