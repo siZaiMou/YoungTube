@@ -1,4 +1,4 @@
-;(function() {
+$(function() {
 	$.prototype.contentbox = function(e) {
 		var that, defaults, dom;
 		that = this;

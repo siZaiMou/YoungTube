@@ -65,6 +65,7 @@ public class VideoController
     @RequestMapping("/loadOnHomePageWithCategory/{videoCategory}")
     public String loadOnHomePageWithCategory(Model model, @PathVariable("videoCategory") int videoCategory)
     {
+        System.out.println(videoCategory);
         List<Video> videos = videoService.findVideoToHomePage(videoCategory);
         Map<Integer, String> userNames = userService.findUserNames(videos);
         model.addAttribute("videos", videos);

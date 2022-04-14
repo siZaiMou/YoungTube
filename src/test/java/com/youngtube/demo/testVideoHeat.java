@@ -8,6 +8,7 @@ import com.youngtube.demo.mapper.CommentMapper;
 import com.youngtube.demo.mapper.VideoClickMapper;
 import com.youngtube.demo.mapper.VideoHeatMapper;
 import com.youngtube.demo.mapper.VideoMapper;
+import com.youngtube.demo.service.VideoService;
 import com.youngtube.demo.untils.HeatUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,13 @@ public class testVideoHeat {
     @Autowired
     CommentMapper commentMapper;
 
+    @Autowired
+    VideoService videoService;
+
+
     @Test
     public void selectTest() throws ParseException {
 
-        System.out.println(videoMapper.find8ByCategory(2));
 
     }
 }

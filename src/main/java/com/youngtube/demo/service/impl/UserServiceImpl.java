@@ -55,6 +55,8 @@ public class UserServiceImpl implements UserService
         Map<Integer, String> userName = new HashMap<>();
         for(Video video:videos)
         {
+            System.out.println(video);
+            System.out.println(userMapper.findOneByUserId(video.getVideoUpId();
             userName.put(video.getVideoUpId(), (userMapper.findOneByUserId((video.getVideoUpId())).getUserPetName()));
         }
         return userName;
