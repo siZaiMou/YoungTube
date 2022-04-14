@@ -53,7 +53,6 @@ public class VideoController
     @RequestMapping("/loadOnRecommand/{userId}")
     public String loadOnRecommand(@PathVariable("userId")int userId, Model model)
     {
-        System.out.println("uid"+userId);
         List<Video> videos = videoService.findVideoToRecommend(userId);
         //List<Video> videos = videoService.findVideoToRecommendLogin();
         Map<Integer, String> userNames = userService.findUserNames(videos);
@@ -67,7 +66,6 @@ public class VideoController
     public String loadOnHomePageWithCategory(Model model, @PathVariable("videoCategory") int videoCategory)
     {
         List<Video> videos = videoService.findVideoToHomePage(videoCategory);
-        Collections.shuffle(videos); //乱序，数据不够，测试使用
         Map<Integer, String> userNames = userService.findUserNames(videos);
         model.addAttribute("videos", videos);
         model.addAttribute("userNames", userNames);
@@ -79,7 +77,6 @@ public class VideoController
     public String loadOnRankWithCategory(Model model, @PathVariable("videoCategory") int videoCategory)
     {
         List<Video> videos = videoService.findVideoToRank(videoCategory);
-        Collections.shuffle(videos); //乱序，数据不够，测试使用
         model.addAttribute("videos_rank", videos);
         return "index::video_rank_category" + videoCategory;
     }
@@ -92,7 +89,6 @@ public class VideoController
         Map<Integer, String> userNames = userService.findUserNames(videos);
         model.addAttribute("vidos_timeHot", videos);
         model.addAttribute("ups_timeHot", userNames);
-        System.out.println(videos);
         return "videoList::videos_timeHot";
     }
 
@@ -235,10 +231,10 @@ public class VideoController
     {
         List<Video> videoList = videoService.searchVideos(categoryId, searchTex, searchMode, currentPage);
         Map<Integer, String> upNames = userService.findVideosUpNames(videoList);
-//        System.out.println(upNames);
+
         List<VideoCategory> videoCategoryList = videoService.findAllCategory();
         PageInfo<Video> pageInfo = new PageInfo(videoList);
-//        System.out.println(pageInfo);
+
         model.addAttribute("videos_page", pageInfo);
         model.addAttribute("video_up_names", upNames);
         model.addAttribute("video_categorys", videoCategoryList);
@@ -257,13 +253,11 @@ public class VideoController
     @RequestMapping("/videoUpload")
     public String videoUpload(@RequestParam("videoFiles") MultipartFile[] files, HttpServletRequest request, Video upVideo,VideoTag videoTag,HttpSession session)
     {
-        System.out.println(videoTag);
         int upId = ((User) (session.getAttribute("nowUser"))).getUserId();
         if (files != null && files.length > 0) {
             // 循环获取file数组中得文件
             for (int i = 0; i < files.length; i++) {
                 MultipartFile file = files[i];
-                System.out.println(file);
                 Long timelable = System.currentTimeMillis();
                 String lable_time=timelable+"";
                 //myvideo.set
@@ -285,12 +279,11 @@ public class VideoController
                         Resource resource = resourceLoader.getResource("classpath:static/video");
                         String path = resource.getFile().getPath()+"/";
 //                        String filePath = "D:\\Java_IDE\\SouceCode\\YoungTube\\src\\main\\resources\\static\\video\\" + lable_time+"_"+file.getOriginalFilename();
-                        String filePath = path + lable_time+lable_time +"_"+upId+ "_" +file.getOriginalFilename();
+                        String filePath = path + lable_time +"_"+upId+ "_" +file.getOriginalFilename();
                         if(!file.getOriginalFilename().contains(".mp4")) {
-                            filePath = path + lable_time+ lable_time +"_"+upId+ "_" +file.getOriginalFilename();
+                            filePath = path+"videoFont/" +  lable_time +"_"+upId+ "_" +file.getOriginalFilename();
                         }
 
-                        System.out.println(filePath);
                         /******************** 测试 **************************/
                         File storeFile = new File(filePath);
                         // 得到输入流
@@ -334,7 +327,6 @@ public class VideoController
                         in.close();// 关闭
                         videoFile.setTag(1);// 标记为1的时候表示上传成功
                         System.out.println("上传成功");
-
 
 
                         if(file.getOriginalFilename().contains(".mp4")) {

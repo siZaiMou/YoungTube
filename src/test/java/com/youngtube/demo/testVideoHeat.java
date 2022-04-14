@@ -28,17 +28,7 @@ public class testVideoHeat {
     @Test
     public void selectTest() throws ParseException {
 
-       // System.out.println(videoHeatMapper.findTotalHeat(1));
-        //videoHeatMapper.insertTotalHeat(2,2,12);
-        //System.out.println(videoClickMapper.findDislikeCount(5));
-        //System.out.println(commentMapper.findOneVideoCommentCount(1));
-        System.out.println();
-//        if(commentMapper.findLastComment(100).isEmpty())
-//        {
-//            System.out.println("哈哈");
-//        }
-//        HeatUtils heatUtils=new HeatUtils(10,5,1,"2022-01-12 09:03:12",10,0,0,"2022-02-19 09:46:51","2022-04-11 17:02:50");
-//        System.out.println(heatUtils.getHeat());
+        System.out.println(videoMapper.find8ByCategory(2));
 
     }
 }

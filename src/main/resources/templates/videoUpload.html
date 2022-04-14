@@ -136,7 +136,7 @@
             //判断结束
             $("#tougao").attr('disabled',true); //将button变成不可点击
             var formData = new FormData($( "#upload_form" )[0]);
-            alert(window.tagName);
+
             $.ajax({
                 url: '/video/videoUpload' ,
                 type: 'POST',

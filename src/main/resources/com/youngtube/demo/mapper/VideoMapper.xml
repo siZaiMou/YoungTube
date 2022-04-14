@@ -14,6 +14,7 @@
                videoTeenagerMode,
                videoDuring
         from video
+        where videoCategory = #{videoCategory}
         order by videoIssuingTime desc limit 8
 
     </select>

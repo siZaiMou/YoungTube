@@ -77,7 +77,6 @@ public class CheckController
             throws IOException {
         if (request.getSession().getAttribute("videoFile") == null) {
             // new 出一个实体
-            System.out.println("111test");
             VideoUploadEntity video = new VideoUploadEntity();
             video.setPercent(0);
             video.setFileName("请稍后..");
@@ -100,7 +99,6 @@ public class CheckController
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
             String sbb = gson.toJson(video);
-            System.out.println(sbb);
             out.write(sbb);
         }
 

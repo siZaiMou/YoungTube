@@ -15,7 +15,7 @@ public interface VideoMapper
 {
 
     //查询8条推荐视频(分区)
-    List<Video> find8ByCategory(int videoCategory);
+    List<Video> find8ByCategory(@Param("videoCategory") int videoCategory);
 
     //查询6条推荐视频(不分区)
     List<Video> find6WithRecommend();
